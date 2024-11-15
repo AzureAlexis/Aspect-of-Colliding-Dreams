@@ -1,12 +1,15 @@
 using UnityEngine;
+using System.Collections.Generic;
 
-public class playerShoot : MonoBehaviour
+public class PlayerShoot : MonoBehaviour
 {
     List<float> cooldowns = new List<float>();
+    PlayerStats playerStats;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        cooldowns.Add(0);
+        playerStats = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -14,7 +17,7 @@ public class playerShoot : MonoBehaviour
     {
         if(IsActive())
         {
-            if(Input.GetKey(KeyCode.Z) && cooldowns[0] )
+            if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
             {
                 Fire(playerStats.bullet1, 0);
             }
@@ -25,19 +28,20 @@ public class playerShoot : MonoBehaviour
 
     void UpdateCooldowns()
     {
-        foreach(float cooldown in cooldowns)
+        for(int i = 0; i < cooldowns.Count; i++)
         {
-            cooldown = Mathf.Max(cooldown - Time.deltaTime, 0);
+            cooldowns[i] = Mathf.Max(cooldowns[i] - Time.deltaTime, 0);
         }
     }
 
     void Fire(GameObject prefab, int slot)
     {
-        PlayerBulletStats bulletStats = bullet.GetComponent<PlayerBulletStats>();
-        GameObject bullet = Instantiate(prefab, transform.position, transfor)
+        PlayerBulletStats bulletStats = prefab.GetComponent<PlayerBulletStats>();
+        GameObject bullet = Instantiate(prefab, transform.position, transform.rotation);
 
-        cooldown[slot] == bulletStats.cooldown;
+        cooldowns[slot] = bulletStats.cooldown;
     }
+    
     bool IsActive()
     {
         return true;

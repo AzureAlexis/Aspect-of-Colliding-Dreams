@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class playerMove : MonoBehaviour
 {
+    PlayerStats playerStats;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        playerStats = GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
@@ -26,19 +27,19 @@ public class playerMove : MonoBehaviour
 
         if(Input.GetKey(KeyCode.RightArrow))
         {
-            moveVector.x += Time.deltaTime * stats.speed;
+            moveVector.x += Time.deltaTime * playerStats.speed;
         }
         if(Input.GetKey(KeyCode.LeftArrow))
         {
-            moveVector.x -= Time.deltaTime * stats.speed;
+            moveVector.x -= Time.deltaTime * playerStats.speed;
         }
         if(Input.GetKey(KeyCode.UpArrow))
         {
-            moveVector.y += Time.deltaTime * stats.speed;
+            moveVector.y += Time.deltaTime * playerStats.speed;
         }
         if(Input.GetKey(KeyCode.DownArrow))
         {
-            moveVector.y -= Time.deltaTime * stats.speed;
+            moveVector.y -= Time.deltaTime * playerStats.speed;
         }
         if(Input.GetKey(KeyCode.LeftShift))
         {

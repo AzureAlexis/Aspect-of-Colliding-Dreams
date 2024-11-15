@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class stats : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
-    static public float power = 0;
-    static public float magic = 0;
-    static public float durability = 0;
-    static public float evasion = 0;
-    static public float speed = 10;
+    public float power = 0;
+    public float magic = 0;
+    public float durability = 0;
+    public float evasion = 0;
+    public float speed = 10;
+
+    public GameObject bullet1;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
