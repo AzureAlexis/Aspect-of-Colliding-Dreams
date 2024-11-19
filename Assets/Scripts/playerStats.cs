@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    public static GameObject player;
     public float power = 0;
     public float magic = 0;
     public float durability = 0;
@@ -13,12 +14,12 @@ public class PlayerStats : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        player = gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        player = gameObject;
     }
 }

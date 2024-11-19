@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class PlayerBulletMove : MonoBehaviour
 {
@@ -24,6 +25,15 @@ public class PlayerBulletMove : MonoBehaviour
         moveVector *= Time.deltaTime;
 
         transform.position += moveVector;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Enemy")
+        {
+            other.gameObject.GetComponent<enemyHP>().Damage(1);
+            Destroy(gameObject);
+        }
     }
 
 
