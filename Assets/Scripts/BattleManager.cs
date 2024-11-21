@@ -3,20 +3,9 @@ using UnityEngine;
 
 public class BattleManager : MonoBehaviour
 {
-    static bool active;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    static public bool active;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    bool IsActive()
+    public static bool IsActive()
     {
         return active;
     }
