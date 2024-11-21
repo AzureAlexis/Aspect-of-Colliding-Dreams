@@ -15,7 +15,7 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(IsActive())
+        if(BattleManager.IsActive())
         {
             if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
             {
@@ -37,7 +37,7 @@ public class PlayerShoot : MonoBehaviour
     void Fire(GameObject prefab, int slot)
     {
         PlayerBulletStats bulletStats = prefab.GetComponent<PlayerBulletStats>();
-        GameObject bullet = Instantiate(prefab, transform.position, transform.rotation);
+        GameObject bullet = Instantiate(prefab, transform.position, transform.rotation, GameObject.Find("Bullets").transform);
 
         cooldowns[slot] = bulletStats.cooldown;
     }
