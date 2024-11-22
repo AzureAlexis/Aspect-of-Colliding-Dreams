@@ -18,14 +18,11 @@ public class PatternManager : MonoBehaviour
 
     static void CreateInitialShots()
     {
-        shots.Add(new Shot {
-            name = "8 Way Normal Bullet at Player",
-            bullets = new List<RawBulletData> {
-                new RawBulletData {
-                    speed = 
-                }
-            }
-        });
+        shots.Add(new Shot());
+        shots[0].name = "8 Way Normal Bullet at Player";
+
+        shots[0].bullets = new List<RawBulletData>;
+        shots[0].bullets
     }
 
     static void CreateInitialPatterns()
@@ -65,8 +62,17 @@ public class RawBulletData // The raw data of a bullet, before it's applied to a
 
 public class Movement // Stores bullet movements
 {
-    public string name;
-    public float speed;
-    public float minSpeed;
+    public string name;                         // Name of the movement, for debug purposes
+    public float speed = 1;                     // How fast the bullet will move when this movement is triggered (unity units/sec)
+    public float dir = 0;                       // What direction the bullet moves in (degrees)
+    public float acc = 0;                       // How fast the bullet accelerates (unity units/sec^2)
+    public float time = 0;                      // After how long the bullet has to exist before this movement triggers (seconds)
+    public string behavior = "MoveToPosition";  // The way the bullet figures out where to move
+    /*
+        Types of bullet move behaviors:
+            -MoveToPosition: Points towards a specific position (in cam space), and moves foward indefinitly
+            -MoveFoward: Moves foward based on dir passed
+            -MoveToPlayer: Points towards the players position and moves foward indefinitly
+    */
 
 }
