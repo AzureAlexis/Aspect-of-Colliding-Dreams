@@ -29,6 +29,10 @@ public class EnemyShoot : MonoBehaviour
         {
             time += Time.deltaTime;
             FireShotsReady();
+            if(time >= pattern.length)
+            {
+                time = 0;
+            }
         }
     }
 
@@ -56,11 +60,11 @@ public class EnemyShoot : MonoBehaviour
             GameObject bullet = Instantiate(bulletBase, GameObject.Find("Bullets").transform);
             switch (bullets[i].posBehavior)
             {
-                case "enemyPosition":
+                case "enemy":
                     bullet.transform.position = transform.position;
                     break;
 
-                case "enemyPositionMod":
+                case "enemyMod":
                     Vector3 position = new Vector3(0, 0, 0);
                     position.x = transform.position.x + bullets[i].x;
                     position.y = transform.position.y + bullets[i].y;
@@ -69,16 +73,20 @@ public class EnemyShoot : MonoBehaviour
             }
             switch (bullets[i].dirBehavior)
             {
-                case "moveToPlayer":
+                case "toPlayer":
                     bullet.transform.LookAt(player.transform);
                     break;
 
-                case "moveFoward":
+                case "normal":
                     bullet.transform.rotation = Quaternion.Euler(0, 0, bullets[i].dir);
                     break;
             }
-            bullet.GetComponent<EnemyBulletStats>().speed = bullets[i].speed;
-            bullet.GetComponent<EnemyBulletStats>().acc = bullets[i].acc;
+            bullet.GetComponent<EnemyBullet>().speed = bullets[i].speed;
+            bullet.GetComponent<EnemyBullet>().acc = bullets[i].acc;
+            bullet.GetComponent<EnemyBullet>().movements = bullets[i].movements;
+            bullet.GetComponent<EnemyBullet>().posBehavior = bullets[i].posBehavior;
+            bullet.GetComponent<EnemyBullet>().dirBehavior = bullets[i].dirBehavior;
+            bullet.GetComponent<EnemyBullet>().accBehavior = bullets[i].accBehavior;
 
         }
     }

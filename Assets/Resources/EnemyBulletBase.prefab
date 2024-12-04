@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 7157067031680529073}
   - component: {fileID: 181765327971636105}
   - component: {fileID: 1829250328105691703}
-  - component: {fileID: 8404786609567999937}
-  - component: {fileID: 5050429300409355223}
+  - component: {fileID: 1332555971397005309}
   m_Layer: 0
   m_Name: EnemyBulletBase
   m_TagString: Untagged
@@ -164,7 +163,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.5, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8404786609567999937
+--- !u!114 &1332555971397005309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,20 +172,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3847849405102336762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd11e4784087949ac821fbb5fb0ea569, type: 3}
+  m_Script: {fileID: 11500000, guid: e67d36bda60c2410da1c6e4a42d32654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time: 0
   speed: 1
   acc: 0
---- !u!114 &5050429300409355223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3847849405102336762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8639db751aed0421790192a7cb73c64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  posBehavior: enemy
+  accBehavior: compound
+  dirBehavior: normal
+  persist: 0

@@ -27,19 +27,19 @@ public class playerMove : MonoBehaviour
 
         if(Input.GetKey(KeyCode.RightArrow))
         {
-            moveVector.x += Time.deltaTime * playerStats.speed;
+            moveVector.x += Time.deltaTime * playerStats.speed * 0.4f;
         }
         if(Input.GetKey(KeyCode.LeftArrow))
         {
-            moveVector.x -= Time.deltaTime * playerStats.speed;
+            moveVector.x -= Time.deltaTime * playerStats.speed * 0.4f;
         }
         if(Input.GetKey(KeyCode.UpArrow))
         {
-            moveVector.y += Time.deltaTime * playerStats.speed;
+            moveVector.y += Time.deltaTime * playerStats.speed * 0.4f;
         }
         if(Input.GetKey(KeyCode.DownArrow))
         {
-            moveVector.y -= Time.deltaTime * playerStats.speed;
+            moveVector.y -= Time.deltaTime * playerStats.speed * 0.4f;
         }
         if(Input.GetKey(KeyCode.LeftShift))
         {
