@@ -48,46 +48,8 @@ public class EnemyShoot : MonoBehaviour
             float shotTime = pattern.shotTimes[i];
             if(time - Time.deltaTime < shotTime && time > shotTime)
             {
-                Fire(pattern.shots[i].bullets);
+                DanmakuManager.Fire(pattern.shots[i].bullets);
             }
-        }
-    }
-
-    void Fire(List<RawBulletData> bullets)
-    {
-        for(int i = 0; i < bullets.Count; i++)
-        {
-            GameObject bullet = Instantiate(bulletBase, GameObject.Find("Bullets").transform);
-            switch (bullets[i].posBehavior)
-            {
-                case "enemy":
-                    bullet.transform.position = transform.position;
-                    break;
-
-                case "enemyMod":
-                    Vector3 position = new Vector3(0, 0, 0);
-                    position.x = transform.position.x + bullets[i].x;
-                    position.y = transform.position.y + bullets[i].y;
-                    bullet.transform.position = position;
-                    break;
-            }
-            switch (bullets[i].dirBehavior)
-            {
-                case "toPlayer":
-                    bullet.transform.LookAt(player.transform);
-                    break;
-
-                case "normal":
-                    bullet.transform.rotation = Quaternion.Euler(0, 0, bullets[i].dir);
-                    break;
-            }
-            bullet.GetComponent<EnemyBullet>().speed = bullets[i].speed;
-            bullet.GetComponent<EnemyBullet>().acc = bullets[i].acc;
-            bullet.GetComponent<EnemyBullet>().movements = bullets[i].movements;
-            bullet.GetComponent<EnemyBullet>().posBehavior = bullets[i].posBehavior;
-            bullet.GetComponent<EnemyBullet>().dirBehavior = bullets[i].dirBehavior;
-            bullet.GetComponent<EnemyBullet>().accBehavior = bullets[i].accBehavior;
-
         }
     }
 }

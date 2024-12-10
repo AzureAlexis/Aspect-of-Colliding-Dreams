@@ -6,11 +6,9 @@ public class PatternManager : MonoBehaviour
 {
     static List<Pattern> patterns = new List<Pattern>();
     static List<Shot> shots = new List<Shot>();
-    static GameObject player;
 
     void Start()
     {
-        player = GameObject.Find("Player");
         DontDestroyOnLoad(gameObject);
         PatternManager.CreateInitialShots();
         PatternManager.CreateInitialPatterns();
@@ -21,10 +19,10 @@ public class PatternManager : MonoBehaviour
         shots.Add(new Shot());
         shots[0].name = "8 Way Normal Bullet";
 
-        shots[0].bullets = new List<RawBulletData>();
+        shots[0].bullets = new List<Bullet>();
         for(int i = 0; i < 8; i++)
         {
-            shots[0].bullets.Add(new RawBulletData());
+            shots[0].bullets.Add(new Bullet());
             shots[0].bullets[i].speed = 5;
             shots[0].bullets[i].dir = i * 45;
             shots[0].bullets[i].dirBehavior = "normal";
@@ -33,9 +31,9 @@ public class PatternManager : MonoBehaviour
 
         shots.Add(new Shot());
         shots[1].name = "Random player-focusing";
-        shots[1].bullets = new List<RawBulletData>();
+        shots[1].bullets = new List<Bullet>();
 
-        shots[1].bullets.Add(new RawBulletData());
+        shots[1].bullets.Add(new Bullet());
         shots[1].bullets[0].speed = 6;
         shots[1].bullets[0].acc = 0.5f;
         shots[1].bullets[0].dir = Random.Range(0f, 360f);
@@ -77,13 +75,6 @@ public class PatternManager : MonoBehaviour
         patterns[1].length = 0.1f;
     }
 
-    static float PointToPlayer(Vector3 position)
-    {
-        float y = player.transform.position.y - position.y;
-        float x = player.transform.position.x - position.x;
-        return Mathf.Atan2(y, x);
-    }
-
     public static Pattern GetPattern(int id)
     {
         return patterns[id];
@@ -106,15 +97,16 @@ public class Pattern // Stores patterns that enemies fire
 public class Shot // A list of bullets that fire at the same time
 {
     public string name;
-    public List<RawBulletData> bullets;
+    public List<Bullet> bullets;
 }
 
-public class RawBulletData // The raw data of a bullet, before it's applied to a specific instance
+public class Bullet // The raw data of a bullet, before it's applied to a specific instance
 {
     public List<Movement> movements;
     public string name;                         // Name of the movement, for debug purposes
-    public float x = 0;
-    public float y = 0;
+    public Vector2 position;
+    public Material material;
+    public bool complex = false;
     public float dir = 0;                       // What direction the bullet moves in (degrees)
     public float speed = 1;                     // How fast the bullet will move when this movement is triggered (unity units/sec)
     public float acc = 0;                       // How fast the bullet accelerates (unity units/sec^2)
