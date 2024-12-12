@@ -19,7 +19,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
             {
-                Fire(playerStats.bullet1, 0);
+                Fire(playerStats.danmaku1, 0);
             }
         }
 
@@ -36,10 +36,10 @@ public class PlayerShoot : MonoBehaviour
 
     void Fire(GameObject prefab, int slot)
     {
-        PlayerBulletStats bulletStats = prefab.GetComponent<PlayerBulletStats>();
-        GameObject bullet = Instantiate(prefab, transform.position, transform.rotation, GameObject.Find("Bullets").transform);
+        PlayerDanmakuStats danmakuStats = prefab.GetComponent<PlayerDanmakuStats>();
+        GameObject danmaku = Instantiate(prefab, transform.position, transform.rotation, GameObject.Find("Danmakus").transform);
 
-        cooldowns[slot] = bulletStats.cooldown;
+        cooldowns[slot] = danmakuStats.cooldown;
     }
     
     bool IsActive()

@@ -2,15 +2,15 @@ using UnityEngine;
 using System;
 using Unity.VisualScripting;
 
-public class PlayerBulletMove : MonoBehaviour
+public class PlayerDanmakuMove : MonoBehaviour
 {
-    PlayerBulletStats bulletStats;
+    PlayerDanmakuStats danmakuStats;
     Camera cam;
     private bool destroy = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        bulletStats = GetComponent<PlayerBulletStats>();
+        danmakuStats = GetComponent<PlayerDanmakuStats>();
         cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
@@ -26,7 +26,7 @@ public class PlayerBulletMove : MonoBehaviour
     {
         Vector3 moveVector;
         moveVector = transform.right;
-        moveVector *= bulletStats.speed;
+        moveVector *= danmakuStats.speed;
         moveVector *= Time.deltaTime;
 
         transform.position += moveVector;

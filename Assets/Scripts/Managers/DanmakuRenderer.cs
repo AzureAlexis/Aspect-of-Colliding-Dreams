@@ -4,19 +4,34 @@ using UnityEngine;
 
 public static class DanmakuRenderer
 {
-    public static void RenderBatch(DanmakuBatch batch)
+    public static void Update()
     {
-        RenderParams params = new RenderParams(batch.material)
-        Mesh mesh = new Mesh();
-        Material material = batch.material;
-        List<Matrix4x4> matrix = BuildMatrix(batch);
-
-        Graphics.RenderMeshInstanced(params, mesh, 0, matrix)
+        for(int i = 0; i < DanmakuManager.simpleDanmaku.Count; i++)
+        {
+            RenderBatch(DanmakuManager.simpleDanmaku[i]);
+        }
+        for(int i = 0; i < DanmakuManager.complexDanmaku.Count; i++)
+        {
+            RenderBatch(DanmakuManager.complexDanmaku[i]);
+        }
     }
 
-    static List<Matrix4x4> BuildMatrix(List<Bullet> batch)
+    public static void RenderBatch(DanmakuBatch batch)
     {
-        List<Matrix4x4> matrix = new List<Matrix4x4>(batch.Count);
+        if(batch.Count() > 0)
+        {
+            RenderParams rParams = new RenderParams(batch.material);
+            Mesh mesh = new Mesh();
+            Material material = batch.material;
+            List<Matrix4x4> matrix = BuildMatrix(batch);
+
+            Graphics.RenderMeshInstanced(rParams, mesh, 0, matrix);
+        }
+    }
+
+    static List<Matrix4x4> BuildMatrix(DanmakuBatch batch)
+    {
+        List<Matrix4x4> matrix = new List<Matrix4x4>(batch.Count());
 
         for(int i = 0; i < matrix.Count; i++)
         {

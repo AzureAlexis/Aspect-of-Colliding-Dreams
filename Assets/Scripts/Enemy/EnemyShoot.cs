@@ -7,15 +7,12 @@ public class EnemyShoot : MonoBehaviour
     public int patternId = 0;
     private Pattern pattern;
     GameObject player;
-    GameObject bulletBase;
     float time;
     bool active = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GameObject.Find("Player");
-        bulletBase = Resources.Load("EnemyBulletBase") as GameObject;
-        pattern = PatternManager.GetPattern(patternId);
     }
 
     // Update is called once per frame
@@ -24,6 +21,7 @@ public class EnemyShoot : MonoBehaviour
         if(pattern == null)
         {
             pattern = PatternManager.GetPattern(patternId);
+            Debug.Log("Assigned Pattern");
         }
         if(IsActive())
         {
@@ -46,9 +44,9 @@ public class EnemyShoot : MonoBehaviour
         for(int i = 0; i < pattern.shots.Count; i++)
         {
             float shotTime = pattern.shotTimes[i];
-            if(time - Time.deltaTime < shotTime && time > shotTime)
+            if(time - Time.deltaTime < shotTime && time >= shotTime)
             {
-                DanmakuManager.Fire(pattern.shots[i].bullets);
+                DanmakuManager.Fire(pattern.shots[i].danmaku, gameObject);
             }
         }
     }

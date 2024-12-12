@@ -4,53 +4,60 @@ using UnityEngine;
 
 public class DanmakuBatch
 {
-    bool complex;       // Marks this batch as either simple (false) or complex (true)
-    Material material;  // Only bullets with the same material can be added
-    List<Bullet> batch; // The actual list of bullets
+    public bool complex;       // Marks this batch as either simple (false) or complex (true)
+    public Material material;  // Only danmakus with the same material can be added
+    public List<Danmaku> batch = new List<Danmaku>(128); // The actual list of danmakus
 
-    public DanmakuBatch(bool isComplex)
+    public DanmakuBatch(bool isComplex, Material defaultMaterial)
     {
         complex = isComplex;
+        material = defaultMaterial;
     }
 
-    public void Add(Bullet bullet)
+    public Danmaku this[int index] {get => batch[index];}
+    public void Add(Danmaku danmaku)
     {
+        if(batch.Count == 0)
+        {
+            ReassignBatch(danmaku);
+            return;
+        }
         if(batch.Capacity == batch.Count)
         {
-            Debug.LogError("Tried to add a bullet to a batch without space");
+            Debug.LogError("Tried to add a danmaku to a batch without space");
             return;
         }
-        if(batch.count == 0)
+        if(danmaku.material != material)
         {
-            ReassignBatch(bullet);
+            Debug.LogError("Tried to add a danmaku to a batch with differing materials");
             return;
         }
-        if(bullet.material != material)
+        if(danmaku.complex != complex)
         {
-            Debug.LogError("Tried to add a bullet to a batch with differing materials");
-            return;
-        }
-        if(bullet.complex != complex)
-        {
-            Debug.LogError("Tried to add a bullet to a batch with differing complexities");
+            Debug.LogError("Tried to add a danmaku to a batch with differing complexities");
             return;
         }
         if(true)
         {
-            batch.Add(bullet);
+            batch.Add(danmaku);
             return;
         }
     }
 
-    void ReassignBatch(Bullet bullet)
+    void ReassignBatch(Danmaku danmaku)
     {
-        complex = bullet.complex;
-        material = bullet.material;
-        batch.Add(bullet);
+        complex = danmaku.complex;
+        material = danmaku.material;
+        batch.Add(danmaku);
     }
 
-    public List<Bullet> Batch()
+    public List<Danmaku> Batch()
     {
         return batch;
+    }
+
+    public int Count()
+    {
+        return batch.Count;
     }
 }

@@ -10,7 +10,7 @@ public class PlayerStats : MonoBehaviour
     public float speed = 20;        // Determines how fast the player moves. Increases speed by 0.4 units/sec per point
     public float charge = 20;       // Determines how much temp HP/AP is gained by grazing. Increases gain by 1% per point
 
-    public GameObject bullet1;
+    public GameObject danmaku1;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
