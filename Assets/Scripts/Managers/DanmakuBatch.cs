@@ -20,6 +20,11 @@ public class DanmakuBatch
             Debug.LogError("Tried to add a bullet to a batch without space");
             return;
         }
+        if(batch.count == 0)
+        {
+            ReassignBatch(bullet);
+            return;
+        }
         if(bullet.material != material)
         {
             Debug.LogError("Tried to add a bullet to a batch with differing materials");
@@ -30,6 +35,17 @@ public class DanmakuBatch
             Debug.LogError("Tried to add a bullet to a batch with differing complexities");
             return;
         }
+        if(true)
+        {
+            batch.Add(bullet);
+            return;
+        }
+    }
+
+    void ReassignBatch(Bullet bullet)
+    {
+        complex = bullet.complex;
+        material = bullet.material;
         batch.Add(bullet);
     }
 
