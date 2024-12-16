@@ -1,8 +1,8 @@
 /* 
-This is the superscript for danmaku, and instantiates/updates every other danmaku-related script.
-DanmakuManager is the only danmaku-releated script that's a monobehavior, to provide a way to
-update every script that needs to be updated via Unity's Update() function. There's probably
-a more efficent way to do this, but I'm dumb so we're going with this :p
+    This is the superscript for danmaku, and instantiates/updates every other danmaku-related script.
+    DanmakuManager is the only danmaku-releated script that's a monobehavior, to provide a way to
+    update every script that needs to be updated via Unity's Update() function. There's probably
+    a more efficent way to do this, but I'm dumb so we're going with this :p
 */
 
 using System.Collections.Generic;

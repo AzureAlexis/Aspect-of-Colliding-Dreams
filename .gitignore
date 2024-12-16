@@ -65,3 +65,7 @@ crashlytics-build.properties
 .DS_Store
 
 .vscode/
+
+Assets/Unity.VisualScripting.Generated.meta
+
+Assets/Unity.VisualScripting.Generated/
