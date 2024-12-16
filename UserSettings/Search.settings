@@ -22,7 +22,7 @@ providers = {
 		defaultAction = null
 	}
 	adb = {
-		active = false
+		active = true
 		priority = 2500
 		defaultAction = null
 	}
@@ -65,6 +65,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	""
 ]
 searchItemFavorites = [
 ]
@@ -75,7 +76,7 @@ expandedQueries = [
 ]
 queryBuilder = true
 ignoredProperties = "id;name;classname;imagecontentshash"
-helperWidgetCurrentArea = "all"
+helperWidgetCurrentArea = "find:"
 disabledIndexers = ""
 minIndexVariations = 2
 findProviderIndexHelper = true

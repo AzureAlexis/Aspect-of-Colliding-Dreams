@@ -18,13 +18,13 @@ public class PatternManager : MonoBehaviour
 
     static void LoadMaterials()
     {
-        material = Resources.Load("material", typeof(Material)) as Material;
+        material = Resources.Load("enemyBulletRed_0", typeof(Material)) as Material;
     }
     static void CreateInitialShots()
     {
         shots.Add(new Shot());
         shots[0].name = "8 way spread";
-        shots[0].danmaku = new List<DanmakuData>(8);
+        shots[0].danmaku = new List<DanmakuData>();
 
         for(int i = 0; i < 8; i++)
         {
@@ -37,7 +37,6 @@ public class PatternManager : MonoBehaviour
 
     static void CreateInitialPatterns()
     {
-        Debug.Log("Made patterns");
         patterns.Add(new Pattern());
         patterns[0].name = "debug shot";
         patterns[0].length = 2;
@@ -88,21 +87,6 @@ public class DanmakuData // The raw data of a danmaku, before it's applied to a 
     public string dirBehavior = "normal";  // The way the danmaku figures out where to move
     public string posBehavior = "enemy";
     public string accBehavior = "compound";
-}
-
-public class Danmaku
-{
-    public List<Movement> movements;
-    public string name;                         // Name of the movement, for debug purposes
-    public Vector2 position;
-    public Material material;
-    public bool complex = false;
-    public float dir = 0;                       // What direction the danmaku moves in (degrees)
-    public float speed = 1;                     // How fast the danmaku will move when this movement is triggered (unity units/sec)
-    public float acc = 0;                       // How fast the danmaku accelerates (unity units/sec^2)
-    public float time = 0;                      // How long has the danmaku existed (seconds)
-    public string dirBehavior = "normal";  // The way the danmaku figures out where to move
-    public string posBehavior = "normal";
 }
 
 public class Movement // Stores danmaku movements

@@ -21,7 +21,6 @@ public class EnemyShoot : MonoBehaviour
         if(pattern == null)
         {
             pattern = PatternManager.GetPattern(patternId);
-            Debug.Log("Assigned Pattern");
         }
         if(IsActive())
         {
