@@ -3,10 +3,12 @@ using UnityEngine;
 public class playerMove : MonoBehaviour
 {
     PlayerStats playerStats;
+    Animator animator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         playerStats = GetComponent<PlayerStats>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -14,11 +16,38 @@ public class playerMove : MonoBehaviour
     {
         Vector3 moveVector = MakeMoveVector();
         UpdatePosition(moveVector);
+        UpdateAnimation(moveVector);
     }
 
     void UpdatePosition(Vector3 moveVector) 
     {
         transform.position += moveVector;
+    }
+
+    void UpdateAnimation(Vector3 moveVector)
+    {
+        Vector2 animVector = new(0, 0);
+
+        if(moveVector.x > 0)
+        {
+            animVector.x = 1;
+        }
+        else if(moveVector.x < 0)
+        {
+            animVector.x = -1;
+        }
+        
+        if(moveVector.y > 0)
+        {
+            animVector.y = 1;
+        }
+        else if(moveVector.y < 0)
+        {
+            animVector.y = -1;
+        }
+
+        animator.SetFloat("X", animVector.x);
+        animator.SetFloat("Y", animVector.y);
     }
 
     Vector3 MakeMoveVector()
