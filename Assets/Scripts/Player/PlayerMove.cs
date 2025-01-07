@@ -1,29 +1,97 @@
 using UnityEngine;
+using UnityEngine.Diagnostics;
 
 public class playerMove : MonoBehaviour
 {
     PlayerStats playerStats;
     Animator animator;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    // Vars related to determining player control
+    bool canControl = true;     // Can the player control themselves? Used for cutscenes
+
+    // Vars related to forced movement
+    public Vector3 forcedMoveTarget;   // Where the player is being forced to move to
+    float forcedMoveSpeed;      // How fast the player force-moves
+    float forcedMoveTime;       // How long until forced movement ends
+    Vector3 oldPosition;
+
+    public void ForceMovement(Vector3 target, float time)
+    {
+        canControl = false;
+        oldPosition = transform.position;
+        forcedMoveTarget = target;
+        forcedMoveTime = time;
+        forcedMoveSpeed = Vector3.Distance(target, transform.position);
+    }
+    public void EnterBattle()
+    {
+        ForceMovement(UIManager.cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3((float)(Screen.width * 0.5), (float)(Screen.height * 0.1))) + new Vector3(0, 0, 10), 1);
+    }
+    public void ExitBattle()
+    {
+        ForceMovement(oldPosition, 1);
+    }
+
     void Start()
     {
         playerStats = GetComponent<PlayerStats>();
         animator = GetComponent<Animator>();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        Vector3 moveVector = MakeMoveVector();
-        UpdatePosition(moveVector);
-        UpdateAnimation(moveVector);
+        if(canControl && PlayerManager.inBattle)
+        {
+            DoBattleMovement();
+        }
+        else if(canControl && !PlayerManager.inBattle)
+        {
+            DoMapMovement();
+        }
+        else if(!canControl)
+        {
+            DoForcedMovement();
+            UpdateForcedMovement();
+        }
     }
-
-    void UpdatePosition(Vector3 moveVector) 
+    void DoMapMovement()
     {
-        transform.position += moveVector;
+        transform.position += MakeMoveVector();
+        UpdateAnimation(MakeMoveVector());
     }
+    void DoBattleMovement()
+    {
+        DoMapMovement();
 
+        Vector3 bounds = UIManager.cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3((float)(Screen.width * 0.5 + 800), (float)(Screen.height * 0.5 + 800)));
+        if(transform.position.x > bounds.x)
+        {
+            transform.position = new Vector3(bounds.x, transform.position.y, 0);
+        }
+        if(transform.position.x < -bounds.x)
+        {
+            transform.position = new Vector3(-bounds.x, transform.position.y, 0);
+        }
+        if(transform.position.y > bounds.x)
+        {
+            transform.position = new Vector3(transform.position.x, bounds.y, 0);
+        }
+        if(transform.position.y < -bounds.x)
+        {
+            transform.position = new Vector3(transform.position.x, -bounds.y, 0);
+        }
+    }
+    void DoForcedMovement()
+    {
+        transform.position = Vector3.Lerp(transform.position, forcedMoveTarget, forcedMoveSpeed * Time.deltaTime);
+    }
+    void UpdateForcedMovement()
+    {
+        forcedMoveTime -= Time.deltaTime;
+        if(forcedMoveTime <= 0)
+        {
+            canControl = true;
+        }
+    }
     void UpdateAnimation(Vector3 moveVector)
     {
         Vector2 animVector = new(0, 0);
@@ -49,7 +117,6 @@ public class playerMove : MonoBehaviour
         animator.SetFloat("X", animVector.x);
         animator.SetFloat("Y", animVector.y);
     }
-
     Vector3 MakeMoveVector()
     {
         Vector3 moveVector = new Vector3(0, 0, 0);

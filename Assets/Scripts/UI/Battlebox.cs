@@ -8,6 +8,7 @@ public class Battlebox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateState();
         if(openingTick != 1 && active)
         {
             UpdateOpening();
@@ -16,6 +17,11 @@ public class Battlebox : MonoBehaviour
         {
             UpdateClosing();
         }
+    }
+
+    void UpdateState()
+    {
+        active = BattleManager.active;
     }
 
     void UpdateOpening()
