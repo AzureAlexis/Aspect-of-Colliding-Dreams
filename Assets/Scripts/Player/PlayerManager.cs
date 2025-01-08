@@ -22,11 +22,13 @@ public class PlayerManager : MonoBehaviour
     {
         inBattle = true;
         player.GetComponent<playerMove>().EnterBattle();
+        player.GetComponent<Animator>().SetBool("Battle", true);
     }
 
     public static void ExitBattle()
     {
         inBattle = false;
         player.GetComponent<playerMove>().ExitBattle();
+        player.GetComponent<Animator>().SetBool("Battle", false);
     }
 }

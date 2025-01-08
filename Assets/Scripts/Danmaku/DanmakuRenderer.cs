@@ -35,7 +35,6 @@ public static class DanmakuRenderer
             Mesh mesh = defaultMesh;
 
             Graphics.RenderMeshInstanced(rParams, mesh, 0, matrix);
-            Debug.Log(batch[1].position);
         }
     }
 

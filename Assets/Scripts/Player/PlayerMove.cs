@@ -62,22 +62,22 @@ public class playerMove : MonoBehaviour
     {
         DoMapMovement();
 
-        Vector3 bounds = UIManager.cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3((float)(Screen.width * 0.5 + 800), (float)(Screen.height * 0.5 + 800)));
-        if(transform.position.x > bounds.x)
+        Vector3 bounds = UIManager.cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3((float)(Screen.width * 0.5), (float)(Screen.height * 0.5)));
+        if(transform.position.x > bounds.x + 3.3)
         {
-            transform.position = new Vector3(bounds.x, transform.position.y, 0);
+            transform.position = new Vector3(bounds.x + 3.3f, transform.position.y, 0);
         }
-        if(transform.position.x < -bounds.x)
+        if(transform.position.x < bounds.x - 3.3)
         {
-            transform.position = new Vector3(-bounds.x, transform.position.y, 0);
+            transform.position = new Vector3(bounds.x - 3.3f, transform.position.y, 0);
         }
-        if(transform.position.y > bounds.x)
+        if(transform.position.y > bounds.y + 2.8)
         {
-            transform.position = new Vector3(transform.position.x, bounds.y, 0);
+            transform.position = new Vector3(transform.position.x, bounds.y + 2.8f, 0);
         }
-        if(transform.position.y < -bounds.x)
+        if(transform.position.y < bounds.y - 3.7)
         {
-            transform.position = new Vector3(transform.position.x, -bounds.y, 0);
+            transform.position = new Vector3(transform.position.x, bounds.y - 3.7f, 0);
         }
     }
     void DoForcedMovement()
