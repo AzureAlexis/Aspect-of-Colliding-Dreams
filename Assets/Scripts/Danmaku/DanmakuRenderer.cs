@@ -47,7 +47,7 @@ public static class DanmakuRenderer
         {
             Vector3 position = batch[i].position;
             Quaternion rotation = Quaternion.Euler(0, 0, 0);
-            Vector3 scale = new Vector3(sprite.rect.width / 48, sprite.rect.height / 48, 1);
+            Vector3 scale = new Vector3(sprite.rect.width / 96, sprite.rect.height / 96, 1);
 
             matrix.Add(Matrix4x4.TRS(position, rotation, scale));
         }
