@@ -1,9 +1,13 @@
 ==prefight==
+#leftPortrait: player
+#rightPortrait: doremy
+#leftEmotion: embarrassed
+#rightEmotion: curious
 You've been sheltered all your life in your little grove, and you think you can face a threat from another world? #doremy #curious
 Huh? You really think I can't hold my own out there? #player #curious
 Of course I can! #player #boasting
 Really? But I had to drag you here? #doremy #smug
-Eheh... they just got lucky! Just let me at em' again! #player #emberessed
+Eheh... they just got lucky! Just let me at em' again! #player #embarrassed
 If you keep throwing yourself at an enemy you don't understand, you'll fail every time #doremy #neutral
 The reason I swept you away from there is to teach you how to survive #doremy #happy
 ...Fine. Just tell me what you want to do. #player #exausted
