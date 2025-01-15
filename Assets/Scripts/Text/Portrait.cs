@@ -1,20 +1,29 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Portrait : MonoBehaviour
 {
+    // Public refrences
     public string charName;
     public Sprite[] emotions;
+
+    // Bools used to make descicions about how to render
     public bool flipped;
     public bool active;
     public bool done = false;
+
+    // Vector to determine how big the textbox should be
+    Vector2 textboxSize;
+
     const float moveDistance = 282.842712475f;
 
     void Update()
     {
         UpdatePosition();
         UpdateColor();
+        UpdateTextbox();
     }
 
     void UpdatePosition()
@@ -24,13 +33,13 @@ public class Portrait : MonoBehaviour
         Vector2 newPosition = GetComponent<RectTransform>().anchoredPosition;
 
         if(active && !flipped)
-            newPosition = Vector2.Lerp(position, new Vector2(400, 0), speed);
+            newPosition = Vector2.Lerp(position, new Vector2(300, 0), speed);
         else if(active && flipped)
-            newPosition = Vector2.Lerp(position, new Vector2(-400, 0), speed);
+            newPosition = Vector2.Lerp(position, new Vector2(-300, 0), speed);
         else if(!active && !flipped)
-            newPosition = Vector2.Lerp(position, new Vector2(200, -200), speed);
+            newPosition = Vector2.Lerp(position, new Vector2(100, -200), speed);
         else if(!active && flipped)
-            newPosition = Vector2.Lerp(position, new Vector2(-200, -200), speed);
+            newPosition = Vector2.Lerp(position, new Vector2(-100, -200), speed);
 
 
         GetComponent<RectTransform>().anchoredPosition = newPosition;
@@ -46,6 +55,17 @@ public class Portrait : MonoBehaviour
             newColor = Mathf.Max(newColor - Time.deltaTime * 3, 0.40f);
 
         GetComponent<Image>().color = new Color(newColor, newColor, newColor, 1);
+    }
+
+    void UpdateTextbox()
+    {
+        float speed = moveDistance * Time.deltaTime * 0.1f;
+        RectTransform textbox = transform.GetChild(0).GetComponent<RectTransform>();
+
+        if(active)
+            textbox.localScale = Vector2.Lerp(textbox.sizeDelta, textboxSize, speed);
+        else if(!active)
+            textbox.localScale = Vector2.Lerp(textbox.sizeDelta, new Vector2(0, 0), speed);
     }
 
     public void FirstActivation(bool isFlipped)
@@ -92,7 +112,7 @@ public class Portrait : MonoBehaviour
         Vector2 textSize = tmp.GetRenderedValues(false);
         Vector2 padding = new Vector2(96, 192);
 
-        textbox.sizeDelta = textSize + padding;
+        textboxSize = textSize + padding;
     }
 
     public void Activate()
