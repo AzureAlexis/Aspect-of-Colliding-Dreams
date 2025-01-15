@@ -1,8 +1,8 @@
 ==prefight==
-#leftPortrait: player
-#rightPortrait: doremy
-#leftEmotion: embarrassed
-#rightEmotion: curious
+#player
+#doremy
+#embarrassed
+#curious
 You've been sheltered all your life in your little grove, and you think you can face a threat from another world? #doremy #curious
 Huh? You really think I can't hold my own out there? #player #curious
 Of course I can! #player #boasting
