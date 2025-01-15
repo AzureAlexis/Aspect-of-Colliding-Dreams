@@ -33,6 +33,7 @@ public class TextManager : MonoBehaviour
         if(story.canContinue)
         {
             currentLine = story.Continue();
+            Debug.LogAssertion(story.currentTags[0]);
             if(leftPortrait.GetComponent<Portrait>().charName == story.currentTags[0])
             {
                 leftPortrait.GetComponent<Portrait>().Activate(currentLine, story.currentTags[1]);
@@ -56,11 +57,12 @@ public class TextManager : MonoBehaviour
 
     public static void StartConversation(string id)
     {
+        active = true;
         story.ChoosePathString(id);
         List<string> sceneTags = story.TagsForContentAtPath("prefight");
         Debug.Log("portraits/" + sceneTags[0] + ".prefab");
         leftPortrait = Instantiate(Resources.Load("portraits/" + sceneTags[0]) as GameObject, GameObject.Find("Canvas").transform);
-        rightPortrait = Instantiate(Resources.Load("portraits/" + sceneTags[0]) as GameObject, GameObject.Find("Canvas").transform);
+        rightPortrait = Instantiate(Resources.Load("portraits/" + sceneTags[1]) as GameObject, GameObject.Find("Canvas").transform);
         leftPortrait.GetComponent<Portrait>().FirstActivation(false);
         rightPortrait.GetComponent<Portrait>().FirstActivation(true);
         leftPortrait.GetComponent<Portrait>().SetEmotion(sceneTags[2]);
@@ -73,5 +75,6 @@ public class TextManager : MonoBehaviour
     {
         leftPortrait.GetComponent<Portrait>().Done();
         rightPortrait.GetComponent<Portrait>().Done();
+        active = false;
     }
 }

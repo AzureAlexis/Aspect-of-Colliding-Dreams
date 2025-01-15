@@ -15,7 +15,6 @@ public class Portrait : MonoBehaviour
     public bool done = false;
 
     // Vector to determine how big the textbox should be
-    Vector2 textboxSize;
 
     const float moveDistance = 282.842712475f;
 
@@ -59,13 +58,12 @@ public class Portrait : MonoBehaviour
 
     void UpdateTextbox()
     {
-        float speed = moveDistance * Time.deltaTime * 0.1f;
         RectTransform textbox = transform.GetChild(0).GetComponent<RectTransform>();
 
         if(active)
-            textbox.localScale = Vector2.Lerp(textbox.sizeDelta, textboxSize, speed);
+            textbox.localScale = Vector3.Min(textbox.localScale + new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime) * 4, Vector3.one);
         else if(!active)
-            textbox.localScale = Vector2.Lerp(textbox.sizeDelta, new Vector2(0, 0), speed);
+            textbox.localScale = Vector3.Max(textbox.localScale - new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime) * 4, Vector3.zero);
     }
 
     public void FirstActivation(bool isFlipped)
@@ -110,9 +108,9 @@ public class Portrait : MonoBehaviour
         tmp.ForceMeshUpdate();
 
         Vector2 textSize = tmp.GetRenderedValues(false);
-        Vector2 padding = new Vector2(96, 192);
+        Vector2 padding = new Vector2(96, 96);
 
-        textboxSize = textSize + padding;
+        textbox.sizeDelta = textSize + padding;
     }
 
     public void Activate()
