@@ -19,7 +19,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
             {
-                Fire(playerStats.danmaku1, 0);
+                Fire(GetComponent<PlayerStats>().danmaku1, 0);
             }
         }
 
@@ -37,7 +37,7 @@ public class PlayerShoot : MonoBehaviour
     void Fire(GameObject prefab, int slot)
     {
         PlayerDanmakuStats danmakuStats = prefab.GetComponent<PlayerDanmakuStats>();
-        GameObject danmaku = Instantiate(prefab, transform.position, transform.rotation, GameObject.Find("Danmakus").transform);
+        GameObject danmaku = Instantiate(prefab, transform.position, prefab.transform.rotation, GameObject.Find("DanmakuManager").transform);
 
         cooldowns[slot] = danmakuStats.cooldown;
     }

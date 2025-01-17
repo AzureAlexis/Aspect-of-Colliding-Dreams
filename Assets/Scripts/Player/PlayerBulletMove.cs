@@ -11,7 +11,7 @@ public class PlayerDanmakuMove : MonoBehaviour
     void Start()
     {
         danmakuStats = GetComponent<PlayerDanmakuStats>();
-        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
+        cam = GameObject.Find("Camera").GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -55,7 +55,11 @@ public class PlayerDanmakuMove : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if(other.transform.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+            other.transform.gameObject.GetComponent<Enemy>().hp -= 1;
+        }
     }
 
 

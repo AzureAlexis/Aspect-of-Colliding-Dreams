@@ -8,9 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 724972817603088855, guid: 261c5b36792a84635a3a4ff89531767c, type: 3}
+      propertyPath: patternIDs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 724972817603088855, guid: 261c5b36792a84635a3a4ff89531767c, type: 3}
+      propertyPath: 'patternIDs.Array.data[0]'
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2989980880125342872, guid: 261c5b36792a84635a3a4ff89531767c, type: 3}
       propertyPath: m_Name
-      value: enemyBase Variant
+      value: doremy
       objectReference: {fileID: 0}
     - target: {fileID: 5491540782789354792, guid: 261c5b36792a84635a3a4ff89531767c, type: 3}
       propertyPath: patternIDs.Array.size

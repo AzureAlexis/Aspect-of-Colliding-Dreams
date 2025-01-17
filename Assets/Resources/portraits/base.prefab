@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: this is a new thing of text! aaaaaaaaaaaaaassfd dsfdsfdsf fdsfdsfs fdsfdsfdsfsdfsdfsdffff
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3dc2726e5dc170e4cbe8e9210580b9e2, type: 2}
-  m_sharedMaterial: {fileID: -5836087634287999316, guid: 3dc2726e5dc170e4cbe8e9210580b9e2, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3b7c0ddd5749f44cbafdd27a2417af92, type: 2}
+  m_sharedMaterial: {fileID: -5167049607696220658, guid: 3b7c0ddd5749f44cbafdd27a2417af92, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

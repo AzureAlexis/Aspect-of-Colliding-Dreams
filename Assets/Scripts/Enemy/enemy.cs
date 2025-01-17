@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     // Public variables
     public int[] patternIDs;
-    float hp;
+    public float hp;
 
     // Refrences
     GameObject player;
@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
 
     // Stuff for patterns
     private int currentPatternIndex = 0;
-    private int currentPatternId = 0;
+    private int currentPatternId;
     private Pattern pattern;
     float loopTime;
     float patternTime;
@@ -26,9 +26,11 @@ public class Enemy : MonoBehaviour
     // Misc vars
     float mhp;
     bool active = true;
+    public bool boss = false;
 
     void Start()
     {
+        currentPatternId = patternIDs[0];
         player = PlayerStats.player;
         mhp = hp;
     }
@@ -39,9 +41,10 @@ public class Enemy : MonoBehaviour
         player = PlayerStats.player;
         if(IsActive())
         {
-            UpdatePosition();
+            // UpdatePosition();
             UpdatePattern();
             UpdateShots();
+            UpdateHP();
         }
     }
 
@@ -108,6 +111,15 @@ public class Enemy : MonoBehaviour
             transform.position = Vector3.Lerp(waypointOld, waypointPosition, factor);
             waypointTime += Time.deltaTime;
         }
+    }
+
+    void UpdateHP()
+    {
+        if(hp <= 0)
+            Destroy(gameObject);
+
+        if(boss)
+            UIManager.UpdateBossHp(hp, mhp);
     }
 
     void MakeWaypoint(string template)

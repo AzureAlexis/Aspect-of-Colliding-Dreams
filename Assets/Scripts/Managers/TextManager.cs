@@ -34,7 +34,6 @@ public class TextManager : MonoBehaviour
         if(story.canContinue)
         {
             currentLine = story.Continue();
-            Debug.LogAssertion(story.currentTags[0]);
             if(leftPortrait.GetComponent<Portrait>().charName == story.currentTags[0])
             {
                 leftPortrait.GetComponent<Portrait>().Activate(currentLine, story.currentTags[1]);

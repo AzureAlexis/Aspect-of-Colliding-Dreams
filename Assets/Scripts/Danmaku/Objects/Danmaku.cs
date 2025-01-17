@@ -14,11 +14,13 @@ public class Danmaku
     public float time = 0;                      // How long has the danmaku existed (seconds)
     public string dirBehavior = "normal";  // The way the danmaku figures out where to move
     public string posBehavior = "normal";
+    public DanmakuBatch batch;
 
     public void Update()
     {
         UpdatePosition();
         UpdateTime();
+        UpdateDestroy();
     }
 
     void UpdatePosition()
@@ -34,6 +36,13 @@ public class Danmaku
     void UpdateTime()
     {
         time += Time.deltaTime;
+    }
+
+    void UpdateDestroy()
+    {
+        Vector2 camPos = UIManager.cam.GetComponent<Camera>().WorldToViewportPoint(position);
+        if(camPos.x > 1.1 || camPos.x < -0.1 || camPos.y > 1.1 || camPos.y < -0.1)
+            batch.batch.Remove(this);
     }
 }
 

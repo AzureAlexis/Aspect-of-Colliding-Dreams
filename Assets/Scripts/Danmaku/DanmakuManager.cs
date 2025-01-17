@@ -98,10 +98,12 @@ public class DanmakuManager : MonoBehaviour
         if(danmaku.complex)
         {
             complexDanmaku[index].Add(danmaku);
+            danmaku.batch = complexDanmaku[index];
         }
         else
         {
             simpleDanmaku[index].Add(danmaku);
+            danmaku.batch = simpleDanmaku[index];
         }
     }
 

@@ -27,15 +27,15 @@ public class Battlebox : MonoBehaviour
     void UpdateOpening()
     {
         openingTick = Mathf.Min(openingTick + Time.deltaTime, 1);
-        GetComponent<RectTransform>().sizeDelta = new Vector2(openingTick * 1000, openingTick * 1000);
-        GetComponent<RectTransform>().rotation = Quaternion.Euler(0f, 0f, openingTick * 180);
+        GetComponent<RectTransform>().localScale = new Vector2(openingTick, openingTick);
+        GetComponent<RectTransform>().rotation = Quaternion.Euler(0f, 0f, openingTick * 360);
     }
 
     void UpdateClosing()
     {
         openingTick = Mathf.Max(openingTick - Time.deltaTime, 0);
         GetComponent<RectTransform>().sizeDelta = new Vector2(openingTick * 1000, openingTick * 1000);
-        GetComponent<RectTransform>().rotation = Quaternion.Euler(0f, 0f, openingTick * 180);
+        GetComponent<RectTransform>().rotation = Quaternion.Euler(0f, 0f, openingTick * 360);
     }
 
 }

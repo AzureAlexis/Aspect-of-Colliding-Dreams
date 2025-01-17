@@ -6,7 +6,7 @@ public class DanmakuBatch
 {
     public bool complex;       // Marks this batch as either simple (false) or complex (true)
     public Material material;  // Only danmakus with the same material can be added
-    public List<Danmaku> batch = new List<Danmaku>(128); // The actual list of danmakus
+    public List<Danmaku> batch = new List<Danmaku>(1024); // The actual list of danmakus
 
     public DanmakuBatch(bool isComplex, Material defaultMaterial)   // Simple constructer
     {
@@ -20,10 +20,8 @@ public class DanmakuBatch
 
     public void Update()
     {
-        foreach(Danmaku danmaku in batch)
-        {
-            danmaku.Update();
-        }
+        for(int i = 0; i < batch.Count; i++)
+            batch[i].Update();
     }
     public void Add(Danmaku danmaku)
     {
@@ -49,6 +47,7 @@ public class DanmakuBatch
         }
         if(true)
         {
+            danmaku.batch = this;
             batch.Add(danmaku);
             return;
         }
