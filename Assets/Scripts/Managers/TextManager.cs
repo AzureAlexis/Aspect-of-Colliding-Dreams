@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class TextManager : MonoBehaviour
 {
     static Story story;
-    static bool active = false;
+    public static bool active = false;
     public TextAsset masterText;
 
     static GameObject leftPortrait;
@@ -15,6 +15,7 @@ public class TextManager : MonoBehaviour
     void Start()
     {
         TextManager.story = new Story(masterText.text);
+        TextManager.CreateInkFunctions();
     }
     void Update()
     {
@@ -63,8 +64,8 @@ public class TextManager : MonoBehaviour
         Debug.Log("portraits/" + sceneTags[0] + ".prefab");
         leftPortrait = Instantiate(Resources.Load("portraits/" + sceneTags[0]) as GameObject, GameObject.Find("Canvas").transform);
         rightPortrait = Instantiate(Resources.Load("portraits/" + sceneTags[1]) as GameObject, GameObject.Find("Canvas").transform);
-        leftPortrait.GetComponent<Portrait>().FirstActivation(false);
-        rightPortrait.GetComponent<Portrait>().FirstActivation(true);
+        leftPortrait.GetComponent<Portrait>().FirstActivation(false, rightPortrait.GetComponent<Portrait>());
+        rightPortrait.GetComponent<Portrait>().FirstActivation(true, leftPortrait.GetComponent<Portrait>());
         leftPortrait.GetComponent<Portrait>().SetEmotion(sceneTags[2]);
         rightPortrait.GetComponent<Portrait>().SetEmotion(sceneTags[3]);
 
@@ -76,5 +77,10 @@ public class TextManager : MonoBehaviour
         leftPortrait.GetComponent<Portrait>().Done();
         rightPortrait.GetComponent<Portrait>().Done();
         active = false;
+    }
+
+    static void CreateInkFunctions()
+    {
+        
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,32 +9,43 @@ public class Portrait : MonoBehaviour
     // Public refrences
     public string charName;
     public Sprite[] emotions;
+    public Portrait partner;
 
     // Bools used to make descicions about how to render
     public bool flipped;
     public bool active;
-    public bool done = false;
+    public bool opening = true;
+    public bool closing = false;
 
     // Vector to determine how big the textbox should be
 
-    const float moveDistance = 282.842712475f;
+    const float moveDistance = 28.842712475f;
 
     void Update()
     {
         UpdatePosition();
         UpdateColor();
         UpdateTextbox();
+        UpdateStatus();
     }
 
     void UpdatePosition()
     {
-        float speed = moveDistance * Time.deltaTime * 0.1f;
+        float speed = moveDistance * Time.deltaTime;
         Vector2 position = GetComponent<RectTransform>().anchoredPosition;
         Vector2 newPosition = GetComponent<RectTransform>().anchoredPosition;
 
-        if(active && !flipped)
+        if(opening && !partner.Busy() && !flipped)
+            newPosition = Vector2.Lerp(position, new Vector2(100, -200), speed * 0.5f);
+        else if(opening && !partner.Busy() && flipped)
+            newPosition = Vector2.Lerp(position, new Vector2(-100, -200), speed * 0.5f);
+        else if(closing && !partner.Busy() && !Busy() && !flipped)
+            newPosition = Vector2.Lerp(position, new Vector2(-400, -200), speed * 0.5f);
+        else if(closing && !partner.Busy() && !Busy() && flipped)
+            newPosition = Vector2.Lerp(position, new Vector2(400, -200), speed * 0.5f);
+        else if(active && !partner.Busy() && !flipped)
             newPosition = Vector2.Lerp(position, new Vector2(300, 0), speed);
-        else if(active && flipped)
+        else if(active && !partner.Busy() && flipped)
             newPosition = Vector2.Lerp(position, new Vector2(-300, 0), speed);
         else if(!active && !flipped)
             newPosition = Vector2.Lerp(position, new Vector2(100, -200), speed);
@@ -61,28 +73,43 @@ public class Portrait : MonoBehaviour
         RectTransform textbox = transform.GetChild(0).GetComponent<RectTransform>();
 
         if(active)
-            textbox.localScale = Vector3.Min(textbox.localScale + new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime) * 4, Vector3.one);
+            textbox.localScale = Vector3.Min(textbox.localScale + new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime) * 10, Vector3.one);
         else if(!active)
-            textbox.localScale = Vector3.Max(textbox.localScale - new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime) * 4, Vector3.zero);
+            textbox.localScale = Vector3.Max(textbox.localScale - new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime) * 10, Vector3.zero);
     }
 
-    public void FirstActivation(bool isFlipped)
+    void UpdateStatus()
+    {
+        if(GetComponent<RectTransform>().anchoredPosition.x >= 99 && !flipped && opening)
+            opening = false;
+        else if(GetComponent<RectTransform>().anchoredPosition.x <= -99 && flipped && opening)
+            opening = false;
+        if(GetComponent<RectTransform>().anchoredPosition.x <= -399 && !flipped && closing)
+            Destroy(gameObject);
+        else if(GetComponent<RectTransform>().anchoredPosition.x >= 399 && flipped && closing)
+            Destroy(gameObject);
+    }
+
+    public void FirstActivation(bool isFlipped, Portrait isPartner)
     {
         flipped = isFlipped;
+        partner = isPartner;
 
         if(flipped)
         {
             GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
             GetComponent<RectTransform>().anchorMax = new Vector2(1, 0);
             GetComponent<RectTransform>().anchorMin = new Vector2(1, 0);
-            GetComponent<RectTransform>().anchoredPosition = new Vector2(-200, -200);
+            GetComponent<RectTransform>().anchoredPosition = new Vector2(400, -200);
+
+            transform.GetChild(0).transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(-1, 1, 1);
         }
         else
         {
             GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
             GetComponent<RectTransform>().anchorMax = new Vector2(0, 0);
             GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
-            GetComponent<RectTransform>().anchoredPosition = new Vector2(200, -200);
+            GetComponent<RectTransform>().anchoredPosition = new Vector2(-400, -200);
         }
 
     }
@@ -108,9 +135,13 @@ public class Portrait : MonoBehaviour
         tmp.ForceMeshUpdate();
 
         Vector2 textSize = tmp.GetRenderedValues(false);
-        Vector2 padding = new Vector2(96, 96);
+        Vector2 padding = new Vector2(96, 144);
 
         textbox.sizeDelta = textSize + padding;
+
+        
+        if(flipped)
+            tmp.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(textSize.x + 37, -37);
     }
 
     public void Activate()
@@ -133,5 +164,11 @@ public class Portrait : MonoBehaviour
     public void Done()
     {
         active = false;
+        closing = true;
+    }
+
+    public bool Busy()
+    {
+        return !(GetComponent<RectTransform>().anchoredPosition.y <= -199) && (opening || closing);
     }
 }

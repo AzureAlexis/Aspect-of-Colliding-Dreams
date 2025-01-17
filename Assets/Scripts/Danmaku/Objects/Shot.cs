@@ -9,5 +9,5 @@ using System.Collections.Generic;
 public class Shot // A list of danmakus that fire at the same time
 {
     public string name;
-    public List<DanmakuData> danmaku;
+    public List<DanmakuData> danmaku = new List<DanmakuData>();
 }
