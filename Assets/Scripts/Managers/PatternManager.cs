@@ -13,7 +13,8 @@ public class PatternManager : MonoBehaviour
     static List<PlayerPattern> playerPatterns = new List<PlayerPattern>();
     static List<EnemyShotData> enemyShots = new List<EnemyShotData>();
     static List<PlayerShotData> playerShots = new List<PlayerShotData>();
-    public static Material enemyBulletRed;
+    public static Material smallBulletRed;
+    public static Material bigBulletRed;
     public static GameObject playerBullet;
 
     void Start()
@@ -28,8 +29,11 @@ public class PatternManager : MonoBehaviour
 
     static void LoadMaterials()
     {
-        enemyBulletRed = Resources.Load("enemyBulletRed_0", typeof(Material)) as Material;
+        smallBulletRed = Resources.Load("bullets/smallBulletRed", typeof(Material)) as Material;
+        bigBulletRed = Resources.Load("bullets/bigBulletRed", typeof(Material)) as Material;
         playerBullet = Resources.Load("playerBullet", typeof(GameObject)) as GameObject;
+
+        Debug.Log(bigBulletRed);
     }
 
     static void CreateInitialEnemyShots()
@@ -41,7 +45,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[0].danmaku.Add(new DanmakuData());
             enemyShots[0].danmaku[i].speed = 4;
             enemyShots[0].danmaku[i].dir = 45 * i;
-            enemyShots[0].danmaku[i].material = enemyBulletRed;
+            enemyShots[0].danmaku[i].material = smallBulletRed;
         }
 
         enemyShots.Add(new EnemyShotData());
@@ -51,7 +55,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[1].danmaku.Add(new DanmakuData());
             enemyShots[1].danmaku[i].speed = 4;
             enemyShots[1].danmaku[i].dir = 45 * i + 22.5f;
-            enemyShots[1].danmaku[i].material = enemyBulletRed;
+            enemyShots[1].danmaku[i].material = smallBulletRed;
         }
 
         enemyShots.Add(new EnemyShotData());
@@ -61,7 +65,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[2].danmaku.Add(new DanmakuData());
             enemyShots[2].danmaku[i].speed = 1f;
             enemyShots[2].danmaku[i].dir = i * 10 + 180;
-            enemyShots[2].danmaku[i].material = enemyBulletRed;
+            enemyShots[2].danmaku[i].material = smallBulletRed;
         }
 
         enemyShots.Add(new EnemyShotData());
@@ -71,7 +75,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[3].danmaku.Add(new DanmakuData());
             enemyShots[3].danmaku[i].speed = 1f;
             enemyShots[3].danmaku[i].dir = i * 10 + 240;
-            enemyShots[3].danmaku[i].material = enemyBulletRed;
+            enemyShots[3].danmaku[i].material = smallBulletRed;
         }
 
         enemyShots.Add(new EnemyShotData());
@@ -81,7 +85,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[4].danmaku.Add(new DanmakuData());
             enemyShots[4].danmaku[i].speed = 6;
             enemyShots[4].danmaku[i].dir = i * 5 + - 87.5f;
-            enemyShots[4].danmaku[i].material = enemyBulletRed;
+            enemyShots[4].danmaku[i].material = smallBulletRed;
         }
 
         enemyShots.Add(new EnemyShotData());
@@ -91,7 +95,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[5].danmaku.Add(new DanmakuData());
             enemyShots[5].danmaku[i].speed = 6;
             enemyShots[5].danmaku[i].dir = i * 5 + - 90f;
-            enemyShots[5].danmaku[i].material = enemyBulletRed;
+            enemyShots[5].danmaku[i].material = smallBulletRed;
         }
 
         enemyShots.Add(new EnemyShotData());
@@ -101,7 +105,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[6].danmaku.Add(new DanmakuData());
             enemyShots[6].danmaku[i].speed = 1;
             enemyShots[6].danmaku[i].dir = i;
-            enemyShots[6].danmaku[i].material = enemyBulletRed;
+            enemyShots[6].danmaku[i].material = smallBulletRed;
         }
 
         enemyShots.Add(new EnemyShotData());
@@ -110,7 +114,34 @@ public class PatternManager : MonoBehaviour
         enemyShots[7].danmaku[0].speed = 4;
         enemyShots[7].danmaku[0].dir = 0;
         enemyShots[7].danmaku[0].dirBehavior = "random";
-        enemyShots[7].danmaku[0].material = enemyBulletRed;
+        enemyShots[7].danmaku[0].material = smallBulletRed;
+
+        enemyShots.Add(new EnemyShotData());
+        enemyShots[8].name = "Dormey nonspell pt1";
+        for(int i = 0; i < 32; i++)
+        {
+            enemyShots[8].danmaku.Add(new DanmakuData());
+            enemyShots[8].danmaku[i].speed = 4;
+            enemyShots[8].danmaku[i].dir = i * 11.25f;
+            enemyShots[8].danmaku[i].material = smallBulletRed;
+        }
+        for(int i = 0; i < 32; i++)
+        {
+            enemyShots[8].danmaku.Add(new DanmakuData());
+            enemyShots[8].danmaku[i].speed = 2;
+            enemyShots[8].danmaku[i].dir = i * 11.25f;
+            enemyShots[8].danmaku[i].material = smallBulletRed;
+        }
+
+        enemyShots.Add(new EnemyShotData());
+        enemyShots[9].name = "Dormey nonspell pt2";
+        for(int i = 0; i < 16; i++)
+        {
+            enemyShots[9].danmaku.Add(new DanmakuData());
+            enemyShots[9].danmaku[i].speed = 3;
+            enemyShots[9].danmaku[i].dir = i * 22.5f;
+            enemyShots[9].danmaku[i].material = bigBulletRed;
+        }
     }
 
     static void CreateInitialEnemyPatterns()
@@ -201,6 +232,25 @@ public class PatternManager : MonoBehaviour
             endTime = 8,
             loopDelay = 0.05f
         });
+
+        enemyPatterns.Add(new EnemyPattern());
+        enemyPatterns[5].name = "Dormey nonspell 1";
+        enemyPatterns[5].endCondition = "hp";
+        enemyPatterns[5].endValue = 800;
+
+        enemyPatterns[5].shots.Add(new EnemyShot{
+            data = GetEnemyShot(8),
+            startTime = 0.5f,
+            endTime = 99,
+            loopDelay = 1
+        });
+        enemyPatterns[5].shots.Add(new EnemyShot{
+            data = GetEnemyShot(9),
+            startTime = 0.5f,
+            endTime = 99,
+            loopDelay = 1
+        });
+
     }
 
     static void CreateInitialPlayerShots()
