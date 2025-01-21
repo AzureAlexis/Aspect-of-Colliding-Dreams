@@ -30,7 +30,6 @@ public class TextManager : MonoBehaviour
 
     public static void Continue()
     {
-        Debug.Log(story.canContinue);
         if(story.canContinue)
         {
             currentLine = story.Continue();
@@ -60,7 +59,6 @@ public class TextManager : MonoBehaviour
         active = true;
         story.ChoosePathString(id);
         List<string> sceneTags = story.TagsForContentAtPath("prefight");
-        Debug.Log("portraits/" + sceneTags[0] + ".prefab");
         leftPortrait = Instantiate(Resources.Load("portraits/" + sceneTags[0]) as GameObject, GameObject.Find("Canvas").transform);
         rightPortrait = Instantiate(Resources.Load("portraits/" + sceneTags[1]) as GameObject, GameObject.Find("Canvas").transform);
         leftPortrait.GetComponent<Portrait>().FirstActivation(false, rightPortrait.GetComponent<Portrait>());

@@ -22,6 +22,11 @@ When an attack is thrown at you, move to evade it #doremy #neurtal
 ->DONE
 
 ==tutorial2==
+#player
+#doremy
+#embarrassed
+#curious
+
 You really thought I didn't know how to dodge?! #player #boasting
 No. But there isn't in harm in practicing what you already know. #doremy #smug
 Anyways, when you move, be mindful of your speed. #doremy #normal
@@ -30,14 +35,24 @@ But too slow at the wrong times could make it hard to dodge #doremy #happy
 ->DONE
 
 ==tutorial3==
+#player
+#doremy
+#embarrassed
+#curious
+
 When will I do something besides just flying around? #player #curious
 Now, actually. #doremy #normal
 Really? #player #curious
-Most of the time, you'll need to fight back against your enemy #doremy
-Often, just a simple shot is enough to wear them down #doremy
+Most of the time, you'll need to fight back against your enemy #doremy #normal
+Often, just a simple shot is enough to wear them down #doremy #happy
 ->DONE
 
 ==tutorial4==
+#player
+#doremy
+#embarrassed
+#curious
+
 But if you find yourself in danger and can't escape
 ...or if you want to blast your opponent away...
 You might want to use a spell. 
@@ -47,6 +62,11 @@ However, casting a spell can be exausting. If you use them too freely, you could
 ->DONE
 
 ==tutorial5==
+#player
+#doremy
+#embarrassed
+#curious
+
 Before a fight, you'll want to prepare the shots and spells you want to use.
 That makes sense. But what about my gear?
 Those too. They can be prepared in the same way your techniques are.
@@ -54,12 +74,11 @@ Some items can heal you, some can recharge your anima, and more.
 ->DONE
 
 ==tutorial6==
-Your enemies have tricks up their sleeve too.
-Anything that they throw at you often isn't as simple as it seems.
-But don't worry. If you stay calm and analize your enemy's attacks, you'll always find a way to escape unscratch
-->DONE
+#player
+#doremy
+#embarrassed
+#curious
 
-==tutorial7==
 ...I believe that should be all the basics
 So does that mean I can go back?
 Not yet. Those are all the individual things you need to do to survive, but you still need to put them all together.
@@ -78,6 +97,11 @@ Alright. Though as they say...
 ->DONE
 
 ==turn8==
+#player
+#doremy
+#embarrassed
+#curious
+
 What happened to all that confidence earlier? I'm not even tired yet!
 Agh... You boasts weren't entirely false.
 I may have been too rash to underestimate you.
@@ -87,6 +111,11 @@ Ha, I knew it! I won't even break a sweat fighting through it!
 ->DONE
 
 ==postfight==
+#player
+#doremy
+#embarrassed
+#curious
+
 If you could beat that... then I think you're ready to go back.
 But don't get too excited. Most people out there won't be as kind as me. Many will strike to kill.
 ->DONE

@@ -18,10 +18,6 @@ public static class DanmakuRenderer
         {
             RenderBatch(DanmakuManager.simpleDanmaku[i]);
         }
-        for(int i = 0; i < DanmakuManager.complexDanmaku.Count; i++)
-        {
-            RenderBatch(DanmakuManager.complexDanmaku[i]);
-        }
     }
 
     public static void RenderBatch(DanmakuBatch batch)

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -19,13 +19,13 @@ public class Enemy : MonoBehaviour
     // Stuff for patterns
     private int currentPatternIndex = 0;
     private int currentPatternId;
-    private Pattern pattern;
+    private EnemyPattern pattern;
     float loopTime;
     float patternTime;
 
     // Misc vars
     float mhp;
-    bool active = true;
+    // bool active = true;
     public bool boss = false;
 
     void Start()
@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
     {
         if(pattern == null)
         {
-            pattern = PatternManager.GetPattern(currentPatternId);
+            pattern = PatternManager.GetEnemyPattern(currentPatternId);
         }
         
         switch (pattern.endCondition)
@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour
         currentPatternId = patternIDs[currentPatternIndex];
         loopTime = 0;
         patternTime = 0;
-        pattern = PatternManager.GetPattern(currentPatternId);
+        pattern = PatternManager.GetEnemyPattern(currentPatternId);
     }
 
     void UpdateShots()
@@ -170,10 +170,44 @@ public class Enemy : MonoBehaviour
     {
         for(int i = 0; i < pattern.shots.Count; i++)
         {
-            float shotTime = pattern.shotTimes[i];
-            if(loopTime - Time.deltaTime < shotTime && loopTime >= shotTime)
+            Debug.Log(InRange(pattern.shots[i]));
+            if(InRange(pattern.shots[i]))
             {
-                DanmakuManager.Fire(pattern.shots[i].danmaku, gameObject);
+                DanmakuManager.Fire(pattern.shots[i].data.danmaku, gameObject);
+            }
+        }
+    }
+
+    public bool InRange(EnemyShot shot)
+    {
+        float startTime = shot.startTime;
+        float endTime = shot.endTime;
+        float loopDelay = shot.loopDelay;
+
+        List<float> shotTimes = new List<float>();
+        for(float i = startTime; i <= endTime; i += loopDelay)
+        {
+            shotTimes.Add(i);
+        }
+
+        for(int i = 0; i < shotTimes.Count; i++)
+        {
+            if(shotTimes[i] - Time.deltaTime < patternTime && shotTimes[i] >= patternTime)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if(pattern != null)
+        {
+            if(pattern.endCondition != "hp")
+            {
+                hp -= damage;
             }
         }
     }

@@ -11,7 +11,6 @@ using UnityEngine;
 public class DanmakuManager : MonoBehaviour
 {
     public static List<DanmakuBatch> simpleDanmaku;
-    public static List<DanmakuBatch> complexDanmaku;
     public Mesh mesh;
 
     // Just called when the "DanmakuManager" starts so all the other danmaku scripts can start
@@ -49,25 +48,32 @@ public class DanmakuManager : MonoBehaviour
     static void CreateBatches()
     {
         simpleDanmaku = new List<DanmakuBatch>(10);
-        complexDanmaku = new List<DanmakuBatch>(10);
         for(int i = 0; i < 10; i++)
         {
-            simpleDanmaku.Add(new DanmakuBatch(false, Resources.Load("material", typeof(Material)) as Material));
-            complexDanmaku.Add(new DanmakuBatch(true, Resources.Load("material", typeof(Material)) as Material));
+            simpleDanmaku.Add(new DanmakuBatch(false, Resources.Load("enemyBulletRed_0", typeof(Material)) as Material));
         }
     }
     
-    public static void Fire(List<DanmakuData> danmakus, GameObject enemy)
+    public static void Fire(List<DanmakuData> danmakus, GameObject owner)
     {
         for(int i = 0; i < danmakus.Count; i++)
         {
             DanmakuData danmakuData = danmakus[i];
-            Danmaku danmaku = InitilizeDanmaku(danmakuData, enemy);
-            AssignToBatch(danmaku);
+            Danmaku danmaku = InitilizeDanmaku(danmakuData, owner);
+
+            if(danmaku.complex)
+            {
+                GameObject complexDanmaku = Instantiate(danmakuData.prefab, GameObject.Find("DanmakuManager").transform);
+                complexDanmaku.GetComponent<ComplexDanmaku>().AddData(danmaku);
+            }
+            else
+            {
+                AssignToBatch(danmaku);
+            }
         }
     }
 
-    static Danmaku InitilizeDanmaku(DanmakuData danmakuData, GameObject enemy)
+    static Danmaku InitilizeDanmaku(DanmakuData danmakuData, GameObject owner)
     {
         Danmaku danmaku = new Danmaku();
 
@@ -78,7 +84,21 @@ public class DanmakuManager : MonoBehaviour
         switch (danmakuData.posBehavior)
         {
             case "normal":
-                danmaku.position = enemy.transform.position;
+                danmaku.position = owner.transform.position;
+                break;
+
+            case "normalMod":
+                Vector3 mod = new Vector3(0,0,0);
+
+                switch(danmakuData.posMod)
+                {
+                    case "sinX":
+                        float x = Mathf.Sin(owner.GetComponent<PlayerShoot>().patternTime * 4);
+                        mod += new Vector3(x * danmakuData.position.x,0,0);
+                        break;
+                }
+
+                danmaku.position = owner.transform.position + mod;
                 break;
         }
 
@@ -86,6 +106,10 @@ public class DanmakuManager : MonoBehaviour
         {
             case "normal":
                 danmaku.dir = danmakuData.dir;
+                break;
+
+            case "random":
+                danmaku.dir = Random.Range(0, 360);
                 break;
         }
 
@@ -95,41 +119,20 @@ public class DanmakuManager : MonoBehaviour
     static void AssignToBatch(Danmaku danmaku)
     {
         int index = FindMatchingBatch(danmaku);
-        if(danmaku.complex)
-        {
-            complexDanmaku[index].Add(danmaku);
-            danmaku.batch = complexDanmaku[index];
-        }
-        else
-        {
-            simpleDanmaku[index].Add(danmaku);
-            danmaku.batch = simpleDanmaku[index];
-        }
+        simpleDanmaku[index].Add(danmaku);
+        danmaku.batch = simpleDanmaku[index];
     }
 
     static int FindMatchingBatch(Danmaku danmaku)
     {
-        if(danmaku.complex)
+        for(int i = 0; i < simpleDanmaku.Count; i++)
         {
-            for(int i = 0; i < complexDanmaku.Count; i++)
+            if(danmaku.material == simpleDanmaku[i].material || simpleDanmaku[i].Count == 0)
             {
-                if(danmaku.material == complexDanmaku[i].material || complexDanmaku[i].Count == 0)
-                {
-                    return i;
-                }
+                return i;
             }
-            return -1;
         }
-        else
-        {
-            for(int i = 0; i < simpleDanmaku.Count; i++)
-            {
-                if(danmaku.material == simpleDanmaku[i].material || simpleDanmaku[i].Count == 0)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
+        Debug.LogAssertion("Failed to find a matching batch. Danmaku will not render or update");
+        return -1;
     }
 }

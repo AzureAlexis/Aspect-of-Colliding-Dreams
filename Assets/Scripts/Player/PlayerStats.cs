@@ -9,8 +9,9 @@ public class PlayerStats : MonoBehaviour
     public float evasion = 0;       // Determines how big the player's hitbox is. Decreases hitbox size by 1% per point (past base)
     public float speed = 20;        // Determines how fast the player moves. Increases speed by 0.4 units/sec per point
     public float charge = 20;       // Determines how much temp HP/AP is gained by grazing. Increases gain by 1% per point
-
+    public float hp = 10;
     public GameObject danmaku1;
+    public int spell1 = 0;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,5 +23,10 @@ public class PlayerStats : MonoBehaviour
     void Update()
     {
         player = gameObject;
+    }
+
+    public void TakeDamage()
+    {
+        hp -= 1;
     }
 }

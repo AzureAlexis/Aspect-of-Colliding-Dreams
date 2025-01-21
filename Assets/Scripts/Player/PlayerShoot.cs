@@ -5,6 +5,10 @@ public class PlayerShoot : MonoBehaviour
 {
     List<float> cooldowns = new List<float>();
     PlayerStats playerStats;
+    bool spellActive = false;
+    public PlayerPattern activeSpell;
+    public float patternTime;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,6 +19,13 @@ public class PlayerShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateShots();
+        UpdateSpells();
+        UpdateCooldowns();
+    }
+
+    void UpdateShots()
+    {
         if(BattleManager.IsActive())
         {
             if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
@@ -22,8 +33,78 @@ public class PlayerShoot : MonoBehaviour
                 Fire(GetComponent<PlayerStats>().danmaku1, 0);
             }
         }
+    }
 
-        UpdateCooldowns();
+    void UpdateSpells()
+    {
+        if(BattleManager.IsActive())
+        {
+            if(Input.GetKeyDown(KeyCode.X) && !spellActive)
+            {
+                StartSpell(playerStats.spell1);
+            }
+            else if(spellActive)
+            {
+                UpdateActiveSpell();
+            }
+        }
+    }
+
+    void StartSpell(int id)
+    {
+        spellActive = true;
+        activeSpell = PatternManager.GetPlayerPattern(id);
+    }
+
+    void UpdateActiveSpell()
+    {
+        patternTime += Time.deltaTime;
+        FireShotsReady();
+
+        if(patternTime > activeSpell.endTime)
+        {
+            EndSpell();
+        }
+    }
+
+    void EndSpell()
+    {
+        spellActive = false;
+        activeSpell = null;
+    }
+
+    void FireShotsReady()
+    {
+        for(int i = 0; i < activeSpell.shots.Count; i++)
+        {
+            if(InRange(activeSpell.shots[i]))
+            {
+                DanmakuManager.Fire(activeSpell.shots[i].data.danmaku, gameObject);
+            }
+        }
+    }
+
+    public bool InRange(PlayerShot shot)
+    {
+        float startTime = shot.startTime;
+        float endTime = shot.endTime;
+        float loopDelay = shot.loopDelay;
+
+        List<float> shotTimes = new List<float>();
+        for(float i = startTime; i <= endTime; i += loopDelay)
+        {
+            shotTimes.Add(i);
+        }
+
+        for(int i = 0; i < shotTimes.Count; i++)
+        {
+            if(shotTimes[i] - Time.deltaTime < patternTime && shotTimes[i] >= patternTime)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     void UpdateCooldowns()
@@ -36,10 +117,10 @@ public class PlayerShoot : MonoBehaviour
 
     void Fire(GameObject prefab, int slot)
     {
-        PlayerDanmakuStats danmakuStats = prefab.GetComponent<PlayerDanmakuStats>();
         GameObject danmaku = Instantiate(prefab, transform.position, prefab.transform.rotation, GameObject.Find("DanmakuManager").transform);
+        danmaku.GetComponent<ComplexDanmaku>().active = true;
 
-        cooldowns[slot] = danmakuStats.cooldown;
+        cooldowns[slot] = danmaku.GetComponent<ComplexDanmaku>().cooldown;
     }
     
     bool IsActive()
