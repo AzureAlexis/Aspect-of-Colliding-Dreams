@@ -56,7 +56,7 @@ public class playerMove : MonoBehaviour
     void DoMapMovement()
     {
         transform.position += MakeMoveVector();
-        UpdateAnimation(MakeMoveVector());
+        // UpdateAnimation(MakeMoveVector());
     }
     void DoBattleMovement()
     {

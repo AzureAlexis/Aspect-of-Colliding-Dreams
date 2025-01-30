@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        UIManager.UpdateStatic();
+        // UIManager.UpdateStatic();
     }
 
     public static void UpdateStatic()
