@@ -6,6 +6,7 @@ public class ComplexDanmaku : MonoBehaviour
     public bool player;
     public float cooldown = 0.1f;
     public bool active = false;
+    public bool spell = false;
 
     void Start()
     {
@@ -52,7 +53,7 @@ public class ComplexDanmaku : MonoBehaviour
     {
         if(other.gameObject.GetComponent<Enemy>() != null)
         {
-            other.gameObject.GetComponent<Enemy>().TakeDamage(0.2f);
+            other.gameObject.GetComponent<Enemy>().TakeDamage(0.5f);
             Destroy(gameObject);
         }
     }

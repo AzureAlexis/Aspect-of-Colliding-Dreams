@@ -23,6 +23,7 @@ public class Danmaku
 
     // Direction stuff
     public float dir = 0;                  // What direction the danmaku moves in (degrees)
+    public float dirAcc = 0;
     public string dirMod;                  // If not null, used in conjunction with dir for more complex movements
     public string dirBehavior = "normal";  // The way the danmaku figures out where to move
     /* Possible dirBehaviors:
@@ -30,12 +31,14 @@ public class Danmaku
     */
 
     public float speed = 1;                     // How fast the danmaku will move when this movement is triggered (unity units/sec)
+    public float speedAcc = 0;
     public float time = 0;                      // How long has the danmaku existed (seconds)
     public DanmakuBatch batch;
 
     public void Update()
     {
         UpdatePosition();
+        UpdateDir();
         UpdateTime();
         UpdateCollision();
         UpdateDestroy();
@@ -49,6 +52,11 @@ public class Danmaku
         moveVector *= speed;
 
         position += moveVector;
+    }
+
+    void UpdateDir()
+    {
+        dir += dirAcc * Time.deltaTime;
     }
 
     void UpdateTime()
@@ -71,6 +79,11 @@ public class Danmaku
             {
                 hits.collider.gameObject.GetComponent<PlayerStats>().TakeDamage();
                 batch.batch.Remove(this);
+            }
+            else if(hits.collider.gameObject.GetComponent<ComplexDanmaku>() != null)
+            {
+                if(hits.collider.gameObject.GetComponent<ComplexDanmaku>().spell)
+                    batch.batch.Remove(this);
             }
         }
     }

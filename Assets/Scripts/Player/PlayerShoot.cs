@@ -5,7 +5,7 @@ public class PlayerShoot : MonoBehaviour
 {
     List<float> cooldowns = new List<float>();
     PlayerStats playerStats;
-    bool spellActive = false;
+    public bool spellActive = false;
     public PlayerPattern activeSpell;
     public float patternTime;
 
@@ -28,7 +28,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if(BattleManager.IsActive())
         {
-            if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
+            if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0 && GetComponent<PlayerStats>())
             {
                 Fire(GetComponent<PlayerStats>().danmaku1, 0);
             }
@@ -54,6 +54,7 @@ public class PlayerShoot : MonoBehaviour
     {
         spellActive = true;
         activeSpell = PatternManager.GetPlayerPattern(id);
+        GetComponent<PlayerStats>().invState = 1;
     }
 
     void UpdateActiveSpell()

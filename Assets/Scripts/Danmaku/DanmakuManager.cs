@@ -17,6 +17,7 @@ public class DanmakuManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
+        Application.targetFrameRate = 60;
         DanmakuManager.StartStatic(mesh);
     }
 
@@ -65,6 +66,8 @@ public class DanmakuManager : MonoBehaviour
             {
                 GameObject complexDanmaku = Instantiate(danmakuData.prefab, GameObject.Find("DanmakuManager").transform);
                 complexDanmaku.GetComponent<ComplexDanmaku>().AddData(danmaku);
+                if(owner.GetComponent<PlayerShoot>().spellActive)
+                    complexDanmaku.GetComponent<ComplexDanmaku>().spell = true;
             }
             else
             {
@@ -80,6 +83,8 @@ public class DanmakuManager : MonoBehaviour
         danmaku.speed = danmakuData.speed;
         danmaku.complex = danmakuData.complex;
         danmaku.material = danmakuData.material;
+        danmaku.dirAcc = danmakuData.dirAcc;
+        danmaku.speedAcc = danmakuData.speedAcc;
 
         switch (danmakuData.posBehavior)
         {
@@ -111,6 +116,12 @@ public class DanmakuManager : MonoBehaviour
             case "random":
                 danmaku.dir = Random.Range(0, 360);
                 break;
+
+            case "player":
+                Vector2 playerPos = PlayerStats.player.transform.position;
+                Vector2 dif = danmaku.position - playerPos;
+                danmaku.dir = (Mathf.Atan2(dif.x, dif.y) * 180 / Mathf.PI) + danmakuData.dir;
+                break;
         }
 
         return danmaku;
@@ -134,5 +145,13 @@ public class DanmakuManager : MonoBehaviour
         }
         Debug.LogAssertion("Failed to find a matching batch. Danmaku will not render or update");
         return -1;
+    }
+
+    public static void ClearAllBullets()
+    {
+        for(int i = 0; i < simpleDanmaku.Count; i++)
+        {
+            simpleDanmaku[i].batch.Clear();
+        }
     }
 }

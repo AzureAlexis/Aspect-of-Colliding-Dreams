@@ -12,8 +12,20 @@ public class TextManager : MonoBehaviour
     static GameObject rightPortrait;
     static string currentLine;
 
+    public AudioSource tutorialMusic;
+    public AudioSource fightMusic;
+    public AudioSource confirmSound;
+
+    static AudioSource fight;
+    static AudioSource tutorial;
+    static AudioSource confirm;
+
     void Start()
     {
+        TextManager.fight = fightMusic;
+        TextManager.tutorial = tutorialMusic;
+        TextManager.confirm = confirmSound;
+
         TextManager.story = new Story(masterText.text);
         TextManager.CreateInkFunctions();
     }
@@ -25,13 +37,16 @@ public class TextManager : MonoBehaviour
     static void UpdateStatic()
     {
         if(active && Input.GetKeyDown("z"))
+        {
             Continue();
+        }
     }
 
     public static void Continue()
     {
         if(story.canContinue)
         {
+            confirm.Play();
             currentLine = story.Continue();
             if(leftPortrait.GetComponent<Portrait>().charName == story.currentTags[0])
             {
@@ -78,6 +93,26 @@ public class TextManager : MonoBehaviour
 
     static void CreateInkFunctions()
     {
-        
+        story.BindExternalFunction ("PlayMusic", (int id) => {
+            if(id == 0)
+            {
+                fight.Stop();
+                tutorial.Play(0);
+            }
+            else if(id == 1)
+            {
+                tutorial.Stop();
+            }
+            else if(id == 2)
+            {
+                tutorial.Stop();
+                fight.Play(0);
+            }
+            else if(id == 3)
+            {
+                tutorial.Stop();
+                fight.Stop();
+            }
+        });
     }
 }

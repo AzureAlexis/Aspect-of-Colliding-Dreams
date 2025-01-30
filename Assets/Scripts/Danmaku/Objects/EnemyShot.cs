@@ -6,4 +6,6 @@ public class EnemyShot
     public float startTime;
     public float endTime;
     public float loopDelay;
+    public string movement;
+    public AudioSource sound;
 }

@@ -10,4 +10,6 @@ public class EnemyPattern // Stores patterns that enemies fire
     public string endCondition = "hp";  // What needs to happen for this pattern to end?
     public float endValue;              // After how much damage/time will this pattern end
     public string endEvent = "none";
+    public int background = -1;
+    public AudioSource sound;
 }

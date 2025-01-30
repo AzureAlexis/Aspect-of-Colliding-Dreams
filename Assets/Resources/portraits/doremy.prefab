@@ -38,11 +38,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2829506048210417493, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 318
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2829506048210417493, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 784
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 2829506048210417493, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -96,6 +96,30 @@ PrefabInstance:
       propertyPath: charName
       value: doremy
       objectReference: {fileID: 0}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: emotions.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 59b7f5bffaf937843a753ee7a3947a6f, type: 3}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 559a0f829c137bd4996dbf8ebd5cbeb6, type: 3}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 72c1ecbbc7b02df48ba7bc2e4c28ae98, type: 3}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[3]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 37cf006a6b5f6f841b69877bca10481a, type: 3}
+    - target: {fileID: 6205872452532922772, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 59b7f5bffaf937843a753ee7a3947a6f, type: 3}
     - target: {fileID: 8997168186051278776, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
       propertyPath: m_Pivot.x
       value: 0

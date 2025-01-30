@@ -28,6 +28,7 @@ public class DanmakuData // The raw data of a danmaku, before it's applied to a 
 
     // Direction stuff
     public float dir = 0;                  // What direction the danmaku moves in (degrees)
+    public float dirAcc = 0;
     public string dirMod;                  // If not null, used in conjunction with dir for more complex movements
     public string dirBehavior = "normal";  // The way the danmaku figures out where to move
     /* Possible dirBehaviors:
@@ -35,4 +36,5 @@ public class DanmakuData // The raw data of a danmaku, before it's applied to a 
     */
 
     public float speed = 1;                     // How fast the danmaku will move when this movement is triggered (unity units/sec)
+    public float speedAcc = 0;
 }

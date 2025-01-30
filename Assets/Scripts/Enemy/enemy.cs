@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     // Public variables
     public int[] patternIDs;
-    public float hp;
+    public float hp = 1000;
 
     // Refrences
     GameObject player;
@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     // Stuff for waypoints
     Vector3 waypointOld = new Vector3(0, 0, 0);
     Vector3 waypointPosition = new Vector3(0, 0, 0);
+    Vector3 home;
     float waypointDuration = 0;
     float waypointTime = 0;
 
@@ -24,27 +25,50 @@ public class Enemy : MonoBehaviour
     float patternTime;
 
     // Misc vars
-    float mhp;
+    float mhp = 1000;
     // bool active = true;
     public bool boss = false;
+    bool dying;
+    float deathTick = 0;
+    public AudioSource death;
 
     void Start()
     {
         currentPatternId = patternIDs[0];
         player = PlayerStats.player;
-        mhp = hp;
+        mhp = 1000;
+        home = transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         player = PlayerStats.player;
-        if(IsActive())
+        if(IsActive() && !dying)
         {
             // UpdatePosition();
+            UpdateHP();
+            UpdatePosition();
             UpdatePattern();
             UpdateShots();
-            UpdateHP();
+        }
+        else if(dying)
+        {
+            UpdateDeath();
+        }
+    }
+
+    void UpdateDeath()
+    {
+        if(deathTick <= 2.5f)
+        {
+            deathTick += Time.deltaTime;
+
+            if(deathTick >= 2.5f)
+            {
+                DanmakuManager.ClearAllBullets();
+                TextManager.StartConversation("postFight");
+            }
         }
     }
 
@@ -67,7 +91,6 @@ public class Enemy : MonoBehaviour
             case "time":
                 if(patternTime > pattern.endValue)
                 {
-                    hp = pattern.endValue;
                     NextPattern();
                 }
                 break;
@@ -80,10 +103,16 @@ public class Enemy : MonoBehaviour
             TextManager.StartConversation(pattern.endEvent);
 
         currentPatternIndex += 1;
+
         currentPatternId = patternIDs[currentPatternIndex];
         loopTime = 0;
         patternTime = 0;
         pattern = PatternManager.GetEnemyPattern(currentPatternId);
+        DanmakuManager.ClearAllBullets();
+        MakeWaypoint("home");
+        
+        if(pattern.background >= 0)
+            UIManager.ChangeBackgroundStatus(pattern.background);
     }
 
     void UpdateShots()
@@ -102,11 +131,12 @@ public class Enemy : MonoBehaviour
 
     void UpdatePosition()
     {
-        if(waypointPosition != transform.position)
+        if(waypointPosition != transform.position && waypointPosition != new Vector3(0, 0, 0))
         {
             float factor;
             factor = waypointTime / waypointDuration;
-            factor = Mathf.SmoothStep(0, 1, factor);
+            if(factor < 0.5)
+                factor = Mathf.SmoothStep(0, 1, factor);
 
             transform.position = Vector3.Lerp(waypointOld, waypointPosition, factor);
             waypointTime += Time.deltaTime;
@@ -116,10 +146,16 @@ public class Enemy : MonoBehaviour
     void UpdateHP()
     {
         if(hp <= 0)
-            Destroy(gameObject);
+            StartDeath();
 
         if(boss)
             UIManager.UpdateBossHp(hp, mhp);
+    }
+
+    void StartDeath()
+    {
+        dying = true;
+        death.Play();
     }
 
     void MakeWaypoint(string template)
@@ -134,23 +170,30 @@ public class Enemy : MonoBehaviour
                 wayX = player.transform.position.x;
                 if(wayX < 0)
                 {
-                    wayX = Mathf.Max(wayX, transform.position.x - 2);
+                    wayX = Mathf.Max(wayX, transform.position.x - 1);
                 }
                 else
                 {
-                    wayX = Mathf.Min(wayX, transform.position.x + 2);
+                    wayX = Mathf.Min(wayX, transform.position.x + 1);
                 }
 
-                wayY = player.transform.position.y;
-                if(wayY < 0)
-                {
-                    wayY = Mathf.Max(wayY, transform.position.y - 2);
-                }
-                else
-                {
-                    wayY = Mathf.Min(wayY, transform.position.y + 2);
-                }
+                wayD = 1;
+                break;
 
+            case "geyser" :
+                wayY -= 6.5f;
+                wayD = 1.5f;
+                break;
+
+            case "return" :
+                wayX = waypointOld.x;
+                wayY = waypointOld.y;
+                wayD = 1;
+                break;
+
+            case "home" :
+                wayX = home.x;
+                wayY = home.y;
                 wayD = 1;
                 break;
         }
@@ -170,10 +213,19 @@ public class Enemy : MonoBehaviour
     {
         for(int i = 0; i < pattern.shots.Count; i++)
         {
-            Debug.Log(InRange(pattern.shots[i]));
             if(InRange(pattern.shots[i]))
             {
-                DanmakuManager.Fire(pattern.shots[i].data.danmaku, gameObject);
+                if(pattern.shots[i].data != null)
+                    DanmakuManager.Fire(pattern.shots[i].data.danmaku, gameObject);
+
+                if(pattern.shots[i].movement != null)
+                    MakeWaypoint(pattern.shots[i].movement);
+
+                if(pattern.shots[i].sound != null)
+                {
+                    pattern.shots[i].sound.Play(0);
+                    Debug.Log(pattern.shots[i].sound);
+                }
             }
         }
     }
@@ -192,7 +244,8 @@ public class Enemy : MonoBehaviour
 
         for(int i = 0; i < shotTimes.Count; i++)
         {
-            if(shotTimes[i] - Time.deltaTime < patternTime && shotTimes[i] >= patternTime)
+            float time = shotTimes[i];
+            if(time <= patternTime && time + Time.smoothDeltaTime >= patternTime)
             {
                 return true;
             }
@@ -205,7 +258,7 @@ public class Enemy : MonoBehaviour
     {
         if(pattern != null)
         {
-            if(pattern.endCondition != "hp")
+            if(pattern.endCondition == "hp")
             {
                 hp -= damage;
             }

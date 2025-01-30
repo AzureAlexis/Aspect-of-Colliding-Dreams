@@ -38,11 +38,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2829506048210417493, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 318
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 2829506048210417493, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 784
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 2829506048210417493, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -96,6 +96,22 @@ PrefabInstance:
       propertyPath: charName
       value: player
       objectReference: {fileID: 0}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 3478bd4b044edc04995237b0308cbad8, type: 3}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 21300000, guid: a134322fc58633c4d88e53ca7feea94b, type: 3}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[2]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 37cf006a6b5f6f841b69877bca10481a, type: 3}
+    - target: {fileID: 5358388040217660203, guid: 0fd1d526b1d9e644c96a4351f4d28ef4, type: 3}
+      propertyPath: 'emotions.Array.data[3]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 307425a34d947a542998e78bbd1a0259, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
