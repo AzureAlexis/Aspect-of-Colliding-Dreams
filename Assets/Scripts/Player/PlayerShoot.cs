@@ -7,13 +7,14 @@ public class PlayerShoot
     public static GameObject player;
     
     static List<float> cooldowns = new List<float>();
+    static float globalCooldown = 0;
     public static bool spellActive = false;
     public static PlayerPattern activeSpell;
     public static float patternTime;
 
     public static void Update()
     {
-        UpdateShots();
+        UpdateInputs();
         UpdateSpells();
         UpdateCooldowns();
     }
@@ -27,6 +28,32 @@ public class PlayerShoot
                 Fire(PlayerStats.danmaku1, 0);
             }
         }
+    }
+
+    public static void UpdateInputs()
+    {
+        /*
+        if(BattleManager.IsActive() && globalCooldown <= 0)
+        {
+            for(int i = 0; i < PlayerStats.battleSlots.Capacity; i++)
+            {
+                BattleSlotBase slot = PlayerStats.battleSlots[i];
+
+                switch(slot.GetType().ToString())
+                {
+                    case "Consumable":
+                        UseItem(slot);
+                        break;
+
+                    case "PlayerShot"
+                        Fire(slot);
+
+                    case "PlayerSpell"
+                        StartSpell(slot);
+                }
+            }
+        }
+        */
     }
 
     static void UpdateSpells()
@@ -118,6 +145,26 @@ public class PlayerShoot
         cooldowns[slot] = danmaku.GetComponent<ComplexDanmaku>().cooldown;
     }
     
+    static void UseItem(Consumable item)
+    {
+        switch (item.effect) 
+        {
+            case "hp":
+                PlayerStats.hp += item.value * PlayerStats.mhp;
+                break;
+
+            case "ap":
+                PlayerStats.ap += item.value * PlayerStats.map;
+                break;
+        }
+
+        PlayerStats.consumables[PlayerStats.GetItemIndex(item.name)].count -= 1;
+        if(PlayerStats.consumables[PlayerStats.GetItemIndex(item.name)].count <= 0)
+        {
+            PlayerStats.consumables.RemoveAt(PlayerStats.GetItemIndex(item.name));
+        }
+    }
+
     bool IsActive()
     {
         return true;

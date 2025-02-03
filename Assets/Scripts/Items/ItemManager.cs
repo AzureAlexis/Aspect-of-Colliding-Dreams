@@ -141,6 +141,25 @@ public class ItemManager
         });
     }
 
+    public static ItemBase GetItemByName(string name)
+    {
+        for(int i = 0; i < consumableData.Count; i++)
+        {
+            if(consumableData[i].name == name)
+                return consumableData[i];
+        }
+        for(int i = 0; i < equipmentData.Count; i++)
+        {
+            if(equipmentData[i].name == name)
+                return equipmentData[i];
+        }
+        for(int i = 0; i < resourceData.Count; i++)
+        {
+            if(resourceData[i].name == name)
+                return resourceData[i];
+        }
+        return null;
+    }
     public static string GetAbilityDesc(string ability)
     {
         switch(ability)

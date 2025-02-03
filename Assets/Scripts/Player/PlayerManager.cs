@@ -44,4 +44,9 @@ public class PlayerManager : MonoBehaviour
         PlayerMove.ExitBattle();
         player.GetComponent<Animator>().SetBool("Battle", false);
     }
+
+    public static void TakeDamage(float damage)
+    {
+        PlayerStats.TakeDamage(damage);
+    }
 }

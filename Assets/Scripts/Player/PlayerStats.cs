@@ -27,10 +27,21 @@ public class PlayerStats
     public static float totalEvasion;
     public static float totalSpeed;
     public static float totalCharge;
-    
-    public static float hp = 5;
 
-    // Items
+    // Volitile stats (things that change a lot based on other vars)
+    public static float hp;                 // Self explanatory
+    public static float mhp;                // Maximum HP
+    public static float thp;                // Temp HP. Aquired by items/grazing
+    public static float ap;                 // AP. Used for shots/spells
+    public static float map;                // Maximum AP
+    public static float tap;                // Temp AP. Aquired by items/grazing
+    public static float inv = 0;            // How much invincibility is left, in sec. If >0, the player can't take damage
+    public static int invState = 0;         // Used to determine how inv should change. 0 = nothing, 1 = increase, 2 = decrease
+    
+    // Battle slots
+    public static List<BattleSlotBase> battleSlots = new List<BattleSlotBase>(6);
+
+    // Current items
     public static List<Consumable> consumables = new List<Consumable>();   // What consumables the player currently has
     public static List<Equipment> equipments = new List<Equipment>();      // What equipment the player currently has
     public static List<Resource> resources = new List<Resource>();         // What resources the player currently has
@@ -38,8 +49,7 @@ public class PlayerStats
     public static Equipment armor;                                         // The equipped armor
     public static List<Equipment> charms;                                  // The equipped charms
 
-    public static float inv = 0;
-    public static int invState = 0;
+
     public static GameObject danmaku1;
     public static GameObject circle;
     public static int spell1 = 0;
@@ -51,7 +61,9 @@ public class PlayerStats
     public static void Update()
     {
         CalculateStats();
-        UpdateInv();
+        CalculateHP();
+        CalculateAP();
+        CalculateInv();
         UIManager.UpdatePlayerHp(hp);
     }
 
@@ -63,6 +75,34 @@ public class PlayerStats
         totalSpeed = GetStatTotal("speed");
         totalEvasion = GetStatTotal("evasion");
         totalCharge = GetStatTotal("charge");
+    }
+
+    static void CalculateHP()
+    {
+        mhp = totalStamina;
+
+        if(mhp < hp)                            // Reduce HP to MHP if greater
+            hp = mhp;
+
+        if(thp > 0)                             // If you have Temp HP, reduce it over time
+            thp -= mhp * 0.1f * Time.deltaTime;
+
+        if(thp < 0)                             // If Temp HP is less than 0, set to 0
+            thp = 0;
+    }
+
+    static void CalculateAP()
+    {
+        map = totalMagic * 10;
+
+        if(map < ap)                            // Reduce AP to MAP if greater
+            ap = map;
+
+        if(tap > 0)                             // If you have Temp AP, reduce it over time
+            tap -= map * 0.1f * Time.deltaTime;
+
+        if(thp < 0)                             // If Temp AP is less than 0, set to 0
+            tap = 0;
     }
 
     static float GetStatTotal(string stat)
@@ -144,7 +184,58 @@ public class PlayerStats
         return resources;
     }
 
-    static void UpdateInv()
+    public static int GetItemIndex(string name)
+    {
+        for(int i = 0; i < consumables.Count; i++)
+        {
+            if(consumables[i].name == name)
+                return i;
+        }
+        for(int i = 0; i < resources.Count; i++)
+        {
+            if(resources[i].name == name)
+                return i;
+        }
+        for(int i = 0; i < equipments.Count; i++)
+        {
+            if(equipments[i].name == name)
+                return i;
+        }
+        return -1;
+    }
+
+    public static void GainItem(string name, int count = 1)
+    {
+        int index;
+        ItemBase item = ItemManager.GetItemByName(name);
+        item.count = count;
+
+        switch(item.GetType().ToString())
+        {
+            case "Consumable":
+                index = GetItemIndex(name);
+                if(index >= 0)
+                    consumables[index].count += count;
+                else
+                    consumables.Add(item as Consumable);
+                return;
+
+            case "Resource":
+                index = GetItemIndex(name);
+                if(index >= 0)
+                    resources[index].count += count;
+                else
+                    resources.Add(item as Resource);
+                return;
+
+            case "Equipment":
+                for(int i = 0; i < count; i++)
+                    equipments.Add(item as Equipment);
+                return;
+        }
+    }
+
+    static void CalculateInv()
     {
         if(invState == 1)
         {
@@ -169,14 +260,12 @@ public class PlayerStats
         circle.transform.localEulerAngles = new Vector3(0, 0, inv * 180);
     }
 
-    public void TakeDamage()
+    public static void TakeDamage(float damage)
     {
-        if(inv == 0 && !hit)
+        if(inv == 0)
         {
-            hit = true;
-            hp -= 1;
+            hp -= damage;
             invState = 1;
-            dead.Play();
         }
     }
 }

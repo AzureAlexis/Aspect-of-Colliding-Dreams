@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemBase
+public class ItemBase : BattleSlotBase
 {
     public int count;       // How many of these the player owns
     public Sprite sprite;   // What sprite to use to render this in the UI
