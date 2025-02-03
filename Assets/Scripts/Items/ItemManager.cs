@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager
 {
     private static List<Equipment> equipmentData = new List<Equipment>();
     private static List<Consumable> consumableData = new List<Consumable>();
@@ -14,9 +14,9 @@ public class ItemManager : MonoBehaviour
 
     private static void BuildDatabase()
     {
+        BuildResource();
         BuildEquipment();
         BuildConsumable();
-        BuildResource();
     }
 
     private static void BuildEquipment()
@@ -75,7 +75,37 @@ public class ItemManager : MonoBehaviour
 
     private static void BuildConsumable()
     {
-        
+        consumableData.Add(new Consumable(){
+            name = "Life Stone",
+            effect = "hp",
+            value = 0.3f,
+            limit = 2,
+            flavor = "Restores a lot of health. These are pretty rare, so I shouldn't waste them. That makes me think, where did this life come from? Maybe I shouldn't think about it too much."
+        });
+
+        consumableData.Add(new Consumable(){
+            name = "Anima Dust",
+            effect = "ap",
+            value = 0.2f,
+            limit = 8,
+            flavor = "Restores a little anima. Almost everyone stores a little bit of anima, but it's really hard to manifest it physically."
+        });
+
+        consumableData.Add(new Consumable(){
+            name = "Anima Shard",
+            effect = "ap",
+            value = 0.4f,
+            limit = 6,
+            flavor = "Restores some anima. Even when I crush this, I can't identify where this anima came from. How is there a type of amina I don't know?"
+        });
+
+        consumableData.Add(new Consumable(){
+            name = "Anima Crystal",
+            effect = "ap",
+            value = 0.8f,
+            limit = 4,
+            flavor = "Restores a lot of anima. I know that amina is formed from the borders of concepts, so this much condensed amina has to come from a huge, base idea."
+        });
     }
 
     private static void BuildResource()
@@ -84,6 +114,31 @@ public class ItemManager : MonoBehaviour
             name = "Spark",
             flavor = "An almost universal currency that nearly everyone accepts. I can never have too much!"
         });
+
+        resourceData.Add(new Resource(){
+            name = "Smoldering Cinders",
+            flavor = "A weak material aquired by disenchanting fire-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Silky Sand",
+            flavor = "A weak material aquired by disenchanting water-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Shaved Bark",
+            flavor = "A weak material aquired by disenchanting wood-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Iron Dust",
+            flavor = "A weak material aquired by disenchanting metal-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Crumbled Stone",
+            flavor = "A weak material aquired by disenchanting earth-attunned items. Can be used to upgrade a lot of things"
+        });
     }
 
     public static string GetAbilityDesc(string ability)
@@ -91,10 +146,10 @@ public class ItemManager : MonoBehaviour
         switch(ability)
         {
             case "Faithguard":
-                return "If you would take lethal damage, survive with 1 HP instead.";
+                return "Once per battle, if you would take lethal damage, survive with 1 HP instead. Multiequip to increase uses per battle";
 
             case "Resolute":
-                return "Increases your power signifigantly while fighting bosses";
+                return "Increases your power signifigantly while fighting bosses. Multiequip to further increase power gain";
 
             case "Phantasm":
                 return "Reduce all stats to what they were at level 1. Also grants Faithguard and Resolute. WARNING: This makes combat extremely diffcult, and is only reccomended for very experienced players";

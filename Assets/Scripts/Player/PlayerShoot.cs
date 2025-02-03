@@ -1,47 +1,41 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot
 {
-    List<float> cooldowns = new List<float>();
-    PlayerStats playerStats;
-    public bool spellActive = false;
-    public PlayerPattern activeSpell;
-    public float patternTime;
+    // Refrences
+    public static GameObject player;
+    
+    static List<float> cooldowns = new List<float>();
+    public static bool spellActive = false;
+    public static PlayerPattern activeSpell;
+    public static float patternTime;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        cooldowns.Add(0);
-        playerStats = GetComponent<PlayerStats>();
-    }
-
-    // Update is called once per frame
-    void Update()
+    public static void Update()
     {
         UpdateShots();
         UpdateSpells();
         UpdateCooldowns();
     }
 
-    void UpdateShots()
+    static void UpdateShots()
     {
         if(BattleManager.IsActive())
         {
-            if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0 && GetComponent<PlayerStats>())
+            if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
             {
-                Fire(GetComponent<PlayerStats>().danmaku1, 0);
+                Fire(PlayerStats.danmaku1, 0);
             }
         }
     }
 
-    void UpdateSpells()
+    static void UpdateSpells()
     {
         if(BattleManager.IsActive())
         {
             if(Input.GetKeyDown(KeyCode.X) && !spellActive)
             {
-                StartSpell(playerStats.spell1);
+                StartSpell(PlayerStats.spell1);
             }
             else if(spellActive)
             {
@@ -50,14 +44,14 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    void StartSpell(int id)
+    static void StartSpell(int id)
     {
         spellActive = true;
         activeSpell = PatternManager.GetPlayerPattern(id);
-        GetComponent<PlayerStats>().invState = 1;
+        PlayerStats.invState = 1;
     }
 
-    void UpdateActiveSpell()
+    static void UpdateActiveSpell()
     {
         patternTime += Time.deltaTime;
         FireShotsReady();
@@ -68,24 +62,24 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    void EndSpell()
+    static void EndSpell()
     {
         spellActive = false;
         activeSpell = null;
     }
 
-    void FireShotsReady()
+    static void FireShotsReady()
     {
         for(int i = 0; i < activeSpell.shots.Count; i++)
         {
             if(InRange(activeSpell.shots[i]))
             {
-                DanmakuManager.Fire(activeSpell.shots[i].data.danmaku, gameObject);
+                DanmakuManager.Fire(activeSpell.shots[i].data.danmaku, player);
             }
         }
     }
 
-    public bool InRange(PlayerShot shot)
+    static public bool InRange(PlayerShot shot)
     {
         float startTime = shot.startTime;
         float endTime = shot.endTime;
@@ -108,7 +102,7 @@ public class PlayerShoot : MonoBehaviour
         return false;
     }
 
-    void UpdateCooldowns()
+    static void UpdateCooldowns()
     {
         for(int i = 0; i < cooldowns.Count; i++)
         {
@@ -116,9 +110,9 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    void Fire(GameObject prefab, int slot)
+    static void Fire(GameObject prefab, int slot)
     {
-        GameObject danmaku = Instantiate(prefab, transform.position, prefab.transform.rotation, GameObject.Find("DanmakuManager").transform);
+        GameObject danmaku = MonoBehaviour.Instantiate(prefab, player.transform.position, prefab.transform.rotation, GameObject.Find("DanmakuManager").transform);
         danmaku.GetComponent<ComplexDanmaku>().active = true;
 
         cooldowns[slot] = danmaku.GetComponent<ComplexDanmaku>().cooldown;

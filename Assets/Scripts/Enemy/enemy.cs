@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     // Public variables
     public int[] patternIDs;
-    public float hp = 1000;
+    public float hp;
 
     // Refrences
     GameObject player;
@@ -25,8 +25,8 @@ public class Enemy : MonoBehaviour
     float patternTime;
 
     // Misc vars
-    float mhp = 1000;
-    // bool active = true;
+    float mhp;
+
     public bool boss = false;
     bool dying;
     float deathTick = 0;
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
     {
         currentPatternId = patternIDs[0];
         player = PlayerStats.player;
-        mhp = 1000;
+        mhp = hp;
         home = transform.position;
     }
 

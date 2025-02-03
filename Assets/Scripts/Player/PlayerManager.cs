@@ -6,29 +6,42 @@ public class PlayerManager : MonoBehaviour
     public static GameObject player;
     public static bool inBattle = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         PlayerManager.player = gameObject;
     }
-
-    // Update is called once per frame
     void Update()
     {
+        PlayerManager.UpdateStatic(gameObject);
+    }
 
+    static void UpdateStatic(GameObject playerObj)
+    {
+        AssignPlayerReferences(playerObj);
+        PlayerShoot.Update();
+        PlayerMove.Update();
+        PlayerStats.Update();
+    }
+
+    static public void AssignPlayerReferences(GameObject playerObj)
+    {
+        PlayerManager.player = playerObj;
+        PlayerShoot.player = playerObj;
+        PlayerMove.player = playerObj;
+        PlayerStats.player = playerObj;
     }
 
     public static void EnterBattle()
     {
         inBattle = true;
-        player.GetComponent<playerMove>().EnterBattle();
+        PlayerMove.EnterBattle();
         player.GetComponent<Animator>().SetBool("Battle", true);
     }
 
     public static void ExitBattle()
     {
         inBattle = false;
-        player.GetComponent<playerMove>().ExitBattle();
+        PlayerMove.ExitBattle();
         player.GetComponent<Animator>().SetBool("Battle", false);
     }
 }

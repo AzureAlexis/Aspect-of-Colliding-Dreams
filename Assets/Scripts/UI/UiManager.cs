@@ -100,7 +100,7 @@ public class UIManager : MonoBehaviour
                 outerAlpha = 1;
                 gridAlpha = 1;
                 effectColor = Color.magenta;
-                GameObject.Find("Player").GetComponent<PlayerStats>().hit = false;
+                PlayerStats.hit = false;
                 break;
         }
     }

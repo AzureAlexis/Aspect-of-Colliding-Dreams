@@ -1,43 +1,40 @@
 using UnityEngine;
 using UnityEngine.Diagnostics;
 
-public class playerMove : MonoBehaviour
+public class PlayerMove
 {
-    PlayerStats playerStats;
-    Animator animator;
+    // Refrences
+    public static GameObject player;
+    static PlayerStats playerStats;
+    static Animator animator;
 
     // Vars related to determining player control
-    bool canControl = true;     // Can the player control themselves? Used for cutscenes
+    static bool canControl = true;     // Can the player control themselves? Used for cutscenes
 
     // Vars related to forced movement
-    public Vector3 forcedMoveTarget;   // Where the player is being forced to move to
-    float forcedMoveSpeed;      // How fast the player force-moves
-    float forcedMoveTime;       // How long until forced movement ends
-    Vector3 oldPosition;
+    static public Vector3 forcedMoveTarget;   // Where the player is being forced to move to
+    static float forcedMoveSpeed;      // How fast the player force-moves
+    static float forcedMoveTime;       // How long until forced movement ends
+    static Vector3 oldPosition;
 
-    public void ForceMovement(Vector3 target, float time)
+    static public void ForceMovement(Vector3 target, float time)
     {
         canControl = false;
-        oldPosition = transform.position;
+        oldPosition = player.transform.position;
         forcedMoveTarget = target;
         forcedMoveTime = time;
-        forcedMoveSpeed = Vector3.Distance(target, transform.position);
+        forcedMoveSpeed = Vector3.Distance(target, player.transform.position);
     }
-    public void EnterBattle()
+    public static void EnterBattle()
     {
         ForceMovement(UIManager.cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3((float)(Screen.width * 0.5), (float)(Screen.height * 0.1))) + new Vector3(0, 0, 10), 1);
     }
-    public void ExitBattle()
+    public static void ExitBattle()
     {
         ForceMovement(oldPosition, 1);
     }
 
-    void Start()
-    {
-        playerStats = GetComponent<PlayerStats>();
-        animator = GetComponent<Animator>();
-    }
-    void Update()
+    public static void Update()
     {
         if(canControl && PlayerManager.inBattle)
         {
@@ -53,38 +50,38 @@ public class playerMove : MonoBehaviour
             UpdateForcedMovement();
         }
     }
-    void DoMapMovement()
+    static void DoMapMovement()
     {
-        transform.position += MakeMoveVector();
+        player.transform.position += MakeMoveVector();
         // UpdateAnimation(MakeMoveVector());
     }
-    void DoBattleMovement()
+    static void DoBattleMovement()
     {
         DoMapMovement();
 
         Vector3 bounds = UIManager.cam.GetComponent<Camera>().ScreenToWorldPoint(new Vector3((float)(Screen.width * 0.5), (float)(Screen.height * 0.5)));
-        if(transform.position.x > bounds.x + 3.3)
+        if(player.transform.position.x > bounds.x + 3.3)
         {
-            transform.position = new Vector3(bounds.x + 3.3f, transform.position.y, 0);
+            player.transform.position = new Vector3(bounds.x + 3.3f, player.transform.position.y, 0);
         }
-        if(transform.position.x < bounds.x - 3.3)
+        if(player.transform.position.x < bounds.x - 3.3)
         {
-            transform.position = new Vector3(bounds.x - 3.3f, transform.position.y, 0);
+            player.transform.position = new Vector3(bounds.x - 3.3f, player.transform.position.y, 0);
         }
-        if(transform.position.y > bounds.y + 2.8)
+        if(player.transform.position.y > bounds.y + 2.8)
         {
-            transform.position = new Vector3(transform.position.x, bounds.y + 2.8f, 0);
+            player.transform.position = new Vector3(player.transform.position.x, bounds.y + 2.8f, 0);
         }
-        if(transform.position.y < bounds.y - 3.7)
+        if(player.transform.position.y < bounds.y - 3.7)
         {
-            transform.position = new Vector3(transform.position.x, bounds.y - 3.7f, 0);
+            player.transform.position = new Vector3(player.transform.position.x, bounds.y - 3.7f, 0);
         }
     }
-    void DoForcedMovement()
+    static void DoForcedMovement()
     {
-        transform.position = Vector3.Lerp(transform.position, forcedMoveTarget, forcedMoveSpeed * Time.deltaTime);
+        player.transform.position = Vector3.Lerp(player.transform.position, forcedMoveTarget, forcedMoveSpeed * Time.deltaTime);
     }
-    void UpdateForcedMovement()
+    static void UpdateForcedMovement()
     {
         forcedMoveTime -= Time.deltaTime;
         if(forcedMoveTime <= 0)
@@ -92,7 +89,7 @@ public class playerMove : MonoBehaviour
             canControl = true;
         }
     }
-    void UpdateAnimation(Vector3 moveVector)
+    static void UpdateAnimation(Vector3 moveVector)
     {
         Vector2 animVector = new(0, 0);
 
@@ -117,25 +114,25 @@ public class playerMove : MonoBehaviour
         animator.SetFloat("X", animVector.x);
         animator.SetFloat("Y", animVector.y);
     }
-    Vector3 MakeMoveVector()
+    static Vector3 MakeMoveVector()
     {
         Vector3 moveVector = new Vector3(0, 0, 0);
 
         if(Input.GetKey(KeyCode.RightArrow))
         {
-            moveVector.x += Time.deltaTime * playerStats.speed * 0.4f;
+            moveVector.x += Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.LeftArrow))
         {
-            moveVector.x -= Time.deltaTime * playerStats.speed * 0.4f;
+            moveVector.x -= Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.UpArrow))
         {
-            moveVector.y += Time.deltaTime * playerStats.speed * 0.4f;
+            moveVector.y += Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.DownArrow))
         {
-            moveVector.y -= Time.deltaTime * playerStats.speed * 0.4f;
+            moveVector.y -= Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.LeftShift))
         {

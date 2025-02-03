@@ -66,7 +66,7 @@ public class DanmakuManager : MonoBehaviour
             {
                 GameObject complexDanmaku = Instantiate(danmakuData.prefab, GameObject.Find("DanmakuManager").transform);
                 complexDanmaku.GetComponent<ComplexDanmaku>().AddData(danmaku);
-                if(owner.GetComponent<PlayerShoot>().spellActive)
+                if(PlayerShoot.spellActive)
                     complexDanmaku.GetComponent<ComplexDanmaku>().spell = true;
             }
             else
@@ -98,7 +98,7 @@ public class DanmakuManager : MonoBehaviour
                 switch(danmakuData.posMod)
                 {
                     case "sinX":
-                        float x = Mathf.Sin(owner.GetComponent<PlayerShoot>().patternTime * 4);
+                        float x = Mathf.Sin(PlayerShoot.patternTime * 4);
                         mod += new Vector3(x * danmakuData.position.x,0,0);
                         break;
                 }
