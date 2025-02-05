@@ -1,8 +1,14 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
 public class UIManager : MonoBehaviour
 {
+    public static string state = "map";
+
+    // Battle vars
     public static GameObject battlebox;
     public static GameObject cam;
     public static GameObject inner;
@@ -10,6 +16,12 @@ public class UIManager : MonoBehaviour
     public static GameObject grid;
     public static float tick = 0;
 
+    // Menu vars
+    static Transform menuParent;
+    static List<Transform> menuTabs = new List<Transform>();
+    static string currentTab = "arsenal";
+    static int scrollDirection = 0;
+    static float scrollTime = 0.5f;
 
     static float innerAlpha = 0;
     static float outerAlpha = 0;
@@ -23,15 +35,112 @@ public class UIManager : MonoBehaviour
         UIManager.inner = GameObject.Find("InnerCircle");
         UIManager.outer = GameObject.Find("OuterCircle");
         UIManager.grid = GameObject.Find("Grid");
+
+        StartStatic(transform);
+    }
+
+    static void StartStatic(Transform parent)
+    {
+        menuParent = parent.GetChild(2);
+        foreach(Transform child in menuParent)
+        {
+            Debug.Log(child);
+            menuTabs.Add(child);
+        }
+
     }
 
     void Update()
     {
-        // UIManager.UpdateStatic();
+        UIManager.UpdateStatic();
     }
 
     public static void UpdateStatic()
     {
+        UpdateState();
+        UpdateBattle();
+        UpdateMenu();
+    }
+
+    static void UpdateMenu()
+    {
+        if(state == "menu")
+        {
+            menuParent.gameObject.SetActive(true);
+
+            UpdateCurrentTab();
+            ScrollTabs();
+        }
+        else
+        {
+            menuParent.gameObject.SetActive(false);
+        }
+    }
+
+    static void ScrollTabs()
+    {
+        if(scrollTime < 0.5)
+        {
+            float tick = Mathf.Min(Time.deltaTime, 0.5f - scrollTime);
+
+            for(int i = 0; i < 3; i++)
+            {
+                RectTransform rect = menuTabs[i].gameObject.GetComponent<RectTransform>();
+
+                rect.anchoredPosition += new Vector2(0, tick * 1500 * scrollDirection);
+
+                if(rect.anchoredPosition.y > 900 && scrollDirection == 1)
+                    rect.anchoredPosition -= new Vector2(0, 2250);
+                else if(rect.anchoredPosition.y < -900 && scrollDirection == -1)
+                    rect.anchoredPosition += new Vector2(0, 2250);
+            }
+
+            scrollTime += tick;
+        }
+    }
+
+    static void UpdateCurrentTab()
+    {
+        if(Input.GetKeyDown(KeyCode.Q) && scrollTime >= 0.5)
+        {
+            scrollDirection = 1;
+            scrollTime = 0;
+            switch(currentTab)
+            {
+                case "arsenal":
+                    currentTab = "equipment";
+                    break;
+                case "system":
+                    currentTab = "arsenal";
+                    break;
+                case "equipment":
+                    currentTab = "system";
+                    break;
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.A) && scrollTime >= 0.5)
+        {
+            scrollDirection = -1;
+            scrollTime = 0;
+            switch(currentTab)
+            {
+                case "arsenal":
+                    currentTab = "system";
+                    break;
+                case "system":
+                    currentTab = "equipment";
+                    break;
+                case "equipment":
+                    currentTab = "arsenal";
+                    break;
+            }
+        }
+
+    }
+
+    public static void UpdateBattle()
+    {
+        /*
         tick += Time.deltaTime;
 
         grid.transform.localEulerAngles = new Vector3(-75, 0, tick * 45);
@@ -49,8 +158,19 @@ public class UIManager : MonoBehaviour
         grid.GetComponent<SpriteRenderer>().color = Color.Lerp(grid.GetComponent<SpriteRenderer>().color, gridColor, Time.deltaTime);
         inner.GetComponent<SpriteRenderer>().color = Color.Lerp(inner.GetComponent<SpriteRenderer>().color, innerColor, Time.deltaTime);
         outer.GetComponent<SpriteRenderer>().color = Color.Lerp(outer.GetComponent<SpriteRenderer>().color, outerColor, Time.deltaTime);
+        */
     }
 
+    static void UpdateState()
+    {
+        Debug.Log(state);
+        if(BattleManager.IsActive())
+            state = "battle";
+        else if(Input.GetKeyDown(KeyCode.C) && state == "map")
+            state = "menu";
+        else if(Input.GetKeyDown(KeyCode.C) && state == "menu")
+            state = "map";
+    }
     public static void UpdateBossHp(float hp, float mhp)
     {
         RectTransform bossHp = battlebox.transform.GetChild(0).GetComponent<RectTransform>();

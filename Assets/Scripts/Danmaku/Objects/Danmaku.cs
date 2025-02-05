@@ -75,9 +75,9 @@ public class Danmaku
 
         if(hits.collider != null)
         {
-            if(hits.collider.gameObject.GetComponent<PlayerStats>() != null && hits.collider.isTrigger)
+            if(hits.collider.gameObject.GetComponent<PlayerManager>() != null && hits.collider.isTrigger)
             {
-                hits.collider.gameObject.GetComponent<PlayerStats>().TakeDamage();
+                PlayerStats.TakeDamage(1);
                 batch.batch.Remove(this);
             }
             else if(hits.collider.gameObject.GetComponent<ComplexDanmaku>() != null)

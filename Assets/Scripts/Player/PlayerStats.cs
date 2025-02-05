@@ -60,11 +60,13 @@ public class PlayerStats
     // Update is called once per frame
     public static void Update()
     {
+        /*
         CalculateStats();
         CalculateHP();
         CalculateAP();
         CalculateInv();
         UIManager.UpdatePlayerHp(hp);
+        */
     }
 
     static void CalculateStats()
