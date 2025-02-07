@@ -22,11 +22,12 @@ public class UIManager : MonoBehaviour
     static string currentTab = "arsenal";
     static int scrollDirection = 0;
     static float scrollTime = 0.5f;
+    const float scrollSpeed = 3000;
 
-    static float innerAlpha = 0;
-    static float outerAlpha = 0;
-    static float gridAlpha = 0.5f;
-    static Color effectColor = Color.white;
+    // static float innerAlpha = 0;
+    // static float outerAlpha = 0;
+    // static float gridAlpha = 0.5f;
+    // static Color effectColor = Color.white;
 
     void Start()
     {
@@ -79,15 +80,15 @@ public class UIManager : MonoBehaviour
 
     static void ScrollTabs()
     {
-        if(scrollTime < 0.5)
+        if(scrollTime < 0.25)
         {
-            float tick = Mathf.Min(Time.deltaTime, 0.5f - scrollTime);
+            float tick = Mathf.Min(Time.deltaTime, 0.25f - scrollTime);
 
             for(int i = 0; i < 3; i++)
             {
                 RectTransform rect = menuTabs[i].gameObject.GetComponent<RectTransform>();
 
-                rect.anchoredPosition += new Vector2(0, tick * 1500 * scrollDirection);
+                rect.anchoredPosition += new Vector2(0, tick * scrollSpeed * scrollDirection);
 
                 if(rect.anchoredPosition.y > 900 && scrollDirection == 1)
                     rect.anchoredPosition -= new Vector2(0, 2250);
@@ -101,7 +102,7 @@ public class UIManager : MonoBehaviour
 
     static void UpdateCurrentTab()
     {
-        if(Input.GetKeyDown(KeyCode.Q) && scrollTime >= 0.5)
+        if(Input.GetKeyDown(KeyCode.A) && scrollTime >= 0.25)
         {
             scrollDirection = 1;
             scrollTime = 0;
@@ -118,7 +119,7 @@ public class UIManager : MonoBehaviour
                     break;
             }
         }
-        else if(Input.GetKeyDown(KeyCode.A) && scrollTime >= 0.5)
+        else if(Input.GetKeyDown(KeyCode.Q) && scrollTime >= 0.25)
         {
             scrollDirection = -1;
             scrollTime = 0;
@@ -163,7 +164,6 @@ public class UIManager : MonoBehaviour
 
     static void UpdateState()
     {
-        Debug.Log(state);
         if(BattleManager.IsActive())
             state = "battle";
         else if(Input.GetKeyDown(KeyCode.C) && state == "map")
@@ -183,6 +183,7 @@ public class UIManager : MonoBehaviour
         playerHp.sizeDelta = new Vector2((hp / 5) * 1000, 10);
     }
 
+    /*
     public static void ChangeBackgroundStatus(int id)
     {
         switch(id)
@@ -224,4 +225,5 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
+    */
 }

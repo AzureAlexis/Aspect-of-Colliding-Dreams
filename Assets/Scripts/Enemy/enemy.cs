@@ -111,8 +111,8 @@ public class Enemy : MonoBehaviour
         DanmakuManager.ClearAllBullets();
         MakeWaypoint("home");
         
-        if(pattern.background >= 0)
-            UIManager.ChangeBackgroundStatus(pattern.background);
+        // if(pattern.background >= 0)
+            // UIManager.ChangeBackgroundStatus(pattern.background);
     }
 
     void UpdateShots()
