@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     // Menu vars
     static Transform menuParent;
     static List<Transform> menuTabs = new List<Transform>();
-    static string currentTab = "arsenal";
+    public static string currentTab = "arsenal";
     static int scrollDirection = 0;
     static float scrollTime = 0.5f;
     const float scrollSpeed = 3000;
@@ -71,6 +71,10 @@ public class UIManager : MonoBehaviour
 
             UpdateCurrentTab();
             ScrollTabs();
+            menuTabs[0].GetComponent<EquipmentTab>().Update();
+            menuTabs[1].GetComponent<ArsenalTab>().Update();
+            menuTabs[2].GetComponent<SystemTab>().Update();
+                
         }
         else
         {
