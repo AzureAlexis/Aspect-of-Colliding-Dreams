@@ -45,7 +45,6 @@ public class UIManager : MonoBehaviour
         menuParent = parent.GetChild(2);
         foreach(Transform child in menuParent)
         {
-            Debug.Log(child);
             menuTabs.Add(child);
         }
 
@@ -74,6 +73,7 @@ public class UIManager : MonoBehaviour
             menuTabs[0].GetComponent<EquipmentTab>().Update();
             menuTabs[1].GetComponent<ArsenalTab>().Update();
             menuTabs[2].GetComponent<SystemTab>().Update();
+            Debug.Log(currentTab);
                 
         }
         else
@@ -113,13 +113,13 @@ public class UIManager : MonoBehaviour
             switch(currentTab)
             {
                 case "arsenal":
-                    currentTab = "equipment";
+                    currentTab = "system";
                     break;
                 case "system":
-                    currentTab = "arsenal";
+                    currentTab = "equipment";
                     break;
                 case "equipment":
-                    currentTab = "system";
+                    currentTab = "arsenal";
                     break;
             }
         }
@@ -130,13 +130,13 @@ public class UIManager : MonoBehaviour
             switch(currentTab)
             {
                 case "arsenal":
-                    currentTab = "system";
-                    break;
-                case "system":
                     currentTab = "equipment";
                     break;
-                case "equipment":
+                case "system":
                     currentTab = "arsenal";
+                    break;
+                case "equipment":
+                    currentTab = "system";
                     break;
             }
         }

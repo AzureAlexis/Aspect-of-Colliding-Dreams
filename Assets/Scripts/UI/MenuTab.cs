@@ -22,7 +22,7 @@ public class MenuTab : MonoBehaviour
     {
         Transform tabGuide = transform.GetChild(transform.childCount - 1);
         Color color = tabGuide.GetComponent<Image>().color;
-        color.a += Time.deltaTime * 4 * target;
+        color.a += Time.deltaTime * 2 * target;
         color.a = Mathf.Min(1, color.a);
         color.a = Mathf.Max(0, color.a);
 
