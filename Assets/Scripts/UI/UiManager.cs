@@ -70,11 +70,6 @@ public class UIManager : MonoBehaviour
 
             UpdateCurrentTab();
             ScrollTabs();
-            menuTabs[0].GetComponent<EquipmentTab>().Update();
-            menuTabs[1].GetComponent<ArsenalTab>().Update();
-            menuTabs[2].GetComponent<SystemTab>().Update();
-            Debug.Log(currentTab);
-                
         }
         else
         {
@@ -86,21 +81,7 @@ public class UIManager : MonoBehaviour
     {
         if(scrollTime < 0.25)
         {
-            float tick = Mathf.Min(Time.deltaTime, 0.25f - scrollTime);
-
-            for(int i = 0; i < 3; i++)
-            {
-                RectTransform rect = menuTabs[i].gameObject.GetComponent<RectTransform>();
-
-                rect.anchoredPosition += new Vector2(0, tick * scrollSpeed * scrollDirection);
-
-                if(rect.anchoredPosition.y > 900 && scrollDirection == 1)
-                    rect.anchoredPosition -= new Vector2(0, 2250);
-                else if(rect.anchoredPosition.y < -900 && scrollDirection == -1)
-                    rect.anchoredPosition += new Vector2(0, 2250);
-            }
-
-            scrollTime += tick;
+            scrollTime += Time.smoothDeltaTime;
         }
     }
 
@@ -108,7 +89,6 @@ public class UIManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A) && scrollTime >= 0.25)
         {
-            scrollDirection = 1;
             scrollTime = 0;
             switch(currentTab)
             {
@@ -122,10 +102,13 @@ public class UIManager : MonoBehaviour
                     currentTab = "arsenal";
                     break;
             }
+            menuTabs[0].GetComponent<EquipmentTab>().StartScroll(-750);
+            menuTabs[1].GetComponent<ArsenalTab>().StartScroll(-750);
+            menuTabs[2].GetComponent<SystemTab>().StartScroll(-750);
+
         }
         else if(Input.GetKeyDown(KeyCode.Q) && scrollTime >= 0.25)
         {
-            scrollDirection = -1;
             scrollTime = 0;
             switch(currentTab)
             {
@@ -139,6 +122,9 @@ public class UIManager : MonoBehaviour
                     currentTab = "system";
                     break;
             }
+            menuTabs[0].GetComponent<EquipmentTab>().StartScroll(750);
+            menuTabs[1].GetComponent<ArsenalTab>().StartScroll(750);
+            menuTabs[2].GetComponent<SystemTab>().StartScroll(750);
         }
 
     }
