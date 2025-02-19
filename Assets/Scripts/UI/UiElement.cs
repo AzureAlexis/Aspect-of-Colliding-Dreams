@@ -14,7 +14,7 @@ public class UiElement : MonoBehaviour
         {
             moveTime += Time.smoothDeltaTime;
 
-            float factor = 1 - (maxTime / moveTime);
+            float factor = moveTime * (1 / maxTime);
             Vector2 position = AzalUtil.QuadOut(oldWaypoint, newWaypoint, factor);
 
             GetComponent<RectTransform>().anchoredPosition = position;

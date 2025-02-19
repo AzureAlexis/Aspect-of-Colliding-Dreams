@@ -79,7 +79,7 @@ public class UIManager : MonoBehaviour
 
     static void ScrollTabs()
     {
-        if(scrollTime < 0.25)
+        if(scrollTime < 0.5)
         {
             scrollTime += Time.smoothDeltaTime;
         }
@@ -87,7 +87,7 @@ public class UIManager : MonoBehaviour
 
     static void UpdateCurrentTab()
     {
-        if(Input.GetKeyDown(KeyCode.A) && scrollTime >= 0.25)
+        if(Input.GetKeyDown(KeyCode.A) && scrollTime >= 0.5)
         {
             scrollTime = 0;
             switch(currentTab)
@@ -100,31 +100,31 @@ public class UIManager : MonoBehaviour
                     break;
                 case "equipment":
                     currentTab = "arsenal";
-                    break;
-            }
-            menuTabs[0].GetComponent<EquipmentTab>().StartScroll(-750);
-            menuTabs[1].GetComponent<ArsenalTab>().StartScroll(-750);
-            menuTabs[2].GetComponent<SystemTab>().StartScroll(-750);
-
-        }
-        else if(Input.GetKeyDown(KeyCode.Q) && scrollTime >= 0.25)
-        {
-            scrollTime = 0;
-            switch(currentTab)
-            {
-                case "arsenal":
-                    currentTab = "equipment";
-                    break;
-                case "system":
-                    currentTab = "arsenal";
-                    break;
-                case "equipment":
-                    currentTab = "system";
                     break;
             }
             menuTabs[0].GetComponent<EquipmentTab>().StartScroll(750);
             menuTabs[1].GetComponent<ArsenalTab>().StartScroll(750);
             menuTabs[2].GetComponent<SystemTab>().StartScroll(750);
+
+        }
+        else if(Input.GetKeyDown(KeyCode.Q) && scrollTime >= 0.5)
+        {
+            scrollTime = 0;
+            switch(currentTab)
+            {
+                case "arsenal":
+                    currentTab = "equipment";
+                    break;
+                case "system":
+                    currentTab = "arsenal";
+                    break;
+                case "equipment":
+                    currentTab = "system";
+                    break;
+            }
+            menuTabs[0].GetComponent<EquipmentTab>().StartScroll(-750);
+            menuTabs[1].GetComponent<ArsenalTab>().StartScroll(-750);
+            menuTabs[2].GetComponent<SystemTab>().StartScroll(-750);
         }
 
     }

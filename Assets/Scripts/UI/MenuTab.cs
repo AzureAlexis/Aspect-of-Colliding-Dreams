@@ -25,7 +25,7 @@ public class MenuTab : UiElement
     {
         Transform tabGuide = transform.GetChild(transform.childCount - 1);
         Color color = tabGuide.GetComponent<Image>().color;
-        color.a += Time.deltaTime * 2 * target;
+        color.a += Time.deltaTime * 4 * target;
         color.a = Mathf.Min(1, color.a);
         color.a = Mathf.Max(0, color.a);
 
@@ -66,6 +66,6 @@ public class MenuTab : UiElement
     public void StartScroll(float distance)
     {
         Vector2 position = GetComponent<RectTransform>().anchoredPosition + new Vector2(0, distance);
-        StartMove(position, 1f);
+        StartMove(position, 0.5f);
     }
 }
