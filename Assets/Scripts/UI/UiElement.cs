@@ -8,6 +8,11 @@ public class UiElement : MonoBehaviour
     public float moveTime;
     public float maxTime;
 
+    public void Update()
+    {
+        UpdatePosition();
+    }
+    
     public void UpdatePosition()
     {
         if(moving)

@@ -6,11 +6,6 @@ using UnityEngine.UI;
 
 public class MenuTab : UiElement
 {
-    public void Update()
-    {
-        UpdatePosition();
-    }
-
     public void UpdateActive()
     {
         UpdateReminders(-1);
