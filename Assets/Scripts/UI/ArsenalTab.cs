@@ -34,6 +34,7 @@ public class ArsenalTab : MenuTab
 
     new public void UpdateActive()
     {
+        base.UpdateActive();
         UpdateCursor();
     }
 
@@ -70,27 +71,22 @@ public class ArsenalTab : MenuTab
 
         foreach(Transform spot in activeMoveSpots)
         {
-            Vector3[] cursorWorldCorners = new Vector3[4];
-            cursor.GetComponent<RectTransform>().GetWorldCorners(cursorWorldCorners);
-            Vector3 cursorWorldPos = (cursorWorldCorners[0] + cursorWorldCorners[1] + cursorWorldCorners[2] + cursorWorldCorners[3]) / 4;
+            Vector3 spotLocalPosition = cursor.parent.InverseTransformPoint(spot.position);
+            float distance = Vector3.Distance(spotLocalPosition, cursor.localPosition);
 
-            Vector3[] spotWorldCorners = new Vector3[4];
-            spot.GetComponent<RectTransform>().GetWorldCorners(spotWorldCorners);
-            Vector3 spotWorldPos = (spotWorldCorners[0] + spotWorldCorners[1] + spotWorldCorners[2] + spotWorldCorners[3]) / 4;
-
-            float distance = Vector3.Distance(spotWorldPos, cursorWorldPos);
-            Debug.Log(cursor.InverseTransformPoint(spotWorldPos));
-
-            if(spotWorldPos.x - cursorWorldPos.x > 0 == x > 0)
+            Debug.Log(Vector3.Distance(closest, cursor.localPosition));
+            if(spotLocalPosition.x - cursor.localPosition.x > 0 == x < 0 && x != 0)
                 continue;
-            if(spotWorldPos.y - cursorWorldPos.y > 0 == y > 0)
+            if(spotLocalPosition.y - cursor.localPosition.y > 0 == y < 0 && y != 0)
                 continue;
-            if(distance == 0)
+            if(distance <= 1)
                 continue;
-            if(distance >= Vector3.Distance(closest, cursorWorldPos))
+            if(distance >= Vector3.Distance(closest, cursor.localPosition))
                 continue;
             
-            closest = spot.position;
+            closest = spotLocalPosition;
         }
+        if(closest != new Vector3(999999, 999999, 999999))
+            cursor.GetComponent<UiElement>().StartMove(closest, 0.1f);
     }
 }

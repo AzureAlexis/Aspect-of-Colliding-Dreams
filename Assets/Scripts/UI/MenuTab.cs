@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class MenuTab : UiElement
 {
+    public void Update()
+    {
+        base.Update();
+        ScrollTab();
+    }
+    
     public void UpdateActive()
     {
         UpdateReminders(-1);
@@ -30,13 +36,6 @@ public class MenuTab : UiElement
         tabGuide.transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = color;
         tabGuide.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = color;
 
-    }
-
-    public new void UpdatePosition()
-    {
-        base.UpdatePosition();
-        ScrollTab();
-        
     }
 
     public void ScrollTab()
