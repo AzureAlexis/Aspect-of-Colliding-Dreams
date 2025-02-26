@@ -1,19 +1,26 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ArsenalTab : MenuTab
 {
     string state = "display";
+    int selectedSlotIndex = 0;
     Transform cursor;
     List<Transform> slots = new List<Transform>();
+    List<Transform> stats = new List<Transform>();
 
     void Start()
     {
         cursor = transform.GetChild(0);
         foreach(Transform child in GameObject.Find("ArsenalSlotDisplay").transform)
             slots.Add(child);
+
+        foreach(Transform child in GameObject.Find("Stat List").transform)
+            stats.Add(child);
     }
 
     new public void Update()
@@ -36,6 +43,41 @@ public class ArsenalTab : MenuTab
     {
         base.UpdateActive();
         UpdateCursor();
+        UpdateDisplay();
+    }
+
+    void UpdateDisplay()
+    {
+        BattleSlotBase activeSlot = PlayerStats.battleSlots[selectedSlotIndex];
+        
+        if(activeSlot.GetType().ToString() == "Item")
+        {
+            stats[0].GetComponent<TextMeshProUGUI>().text = activeSlot.count.ToString();
+            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.limit.ToString();
+            stats[2].GetComponent<TextMeshProUGUI>().text = "";
+            stats[3].GetComponent<TextMeshProUGUI>().text = "";
+            stats[4].GetComponent<TextMeshProUGUI>().text = "";
+
+            stats[0].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Count";
+            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Owned";
+            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = activeSlot.flavor;
+            stats[3].GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+        }
+        else
+        {
+            stats[0].GetComponent<TextMeshProUGUI>().text = activeSlot.publicPower;
+            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.publicSpeed;
+            stats[2].GetComponent<TextMeshProUGUI>().text = activeSlot.publicRange;
+            stats[3].GetComponent<TextMeshProUGUI>().text = activeSlot.publicAccu;
+            stats[4].GetComponent<TextMeshProUGUI>().text = activeSlot.publicCost;
+
+            stats[0].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Power -";
+            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Speed -";
+            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Range -";
+            stats[3].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Accu. -";
+            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost -";
+        }
     }
 
     void UpdateCursor()
@@ -67,26 +109,61 @@ public class ArsenalTab : MenuTab
                 break;
         }
 
-        Vector3 closest = new Vector3(999999, 999999, 999999);
+        Vector3 bestPos = new Vector3(999999, 999999, 999999);
+        float bestPri = 999999;
+        int index = -1;
 
         foreach(Transform spot in activeMoveSpots)
         {
-            Vector3 spotLocalPosition = cursor.parent.InverseTransformPoint(spot.position);
-            float distance = Vector3.Distance(spotLocalPosition, cursor.localPosition);
+            index++;
 
-            Debug.Log(Vector3.Distance(closest, cursor.localPosition));
-            if(spotLocalPosition.x - cursor.localPosition.x > 0 == x < 0 && x != 0)
+            Vector3 spotPosition = cursor.parent.InverseTransformPoint(spot.position);
+            Vector3 cursorPosition = cursor.transform.localPosition;
+            float distance = Vector3.Distance(spotPosition, cursor.localPosition);
+            float priority = 999999;
+
+            // Check if spot is valid, givin the direction
+            if(spotPosition.x - cursor.localPosition.x > 0 == x < 0 && x != 0)
                 continue;
-            if(spotLocalPosition.y - cursor.localPosition.y > 0 == y < 0 && y != 0)
+            if(spotPosition.y - cursor.localPosition.y > 0 == y < 0 && y != 0)
                 continue;
             if(distance <= 1)
                 continue;
-            if(distance >= Vector3.Distance(closest, cursor.localPosition))
-                continue;
             
-            closest = spotLocalPosition;
+            // Make priority based on distance and angle
+            if(x != 0)
+                priority = MakePriority(cursorPosition, spotPosition, distance, "y");
+            if(y != 0)
+                priority = MakePriority(cursorPosition, spotPosition, distance, "x");
+            
+            // Assign if priority is best
+            if(priority < bestPri)
+            {
+                bestPri = priority;
+                bestPos = spotPosition;
+                selectedSlotIndex = index;
+            }
         }
-        if(closest != new Vector3(999999, 999999, 999999))
-            cursor.GetComponent<UiElement>().StartMove(closest, 0.1f);
+
+        if(bestPos != new Vector3(999999, 999999, 999999))
+            cursor.GetComponent<UiElement>().StartMove(bestPos, 0.1f);
+    }
+
+    float MakePriority(Vector3 cursorPosition, Vector3 spotPosition, float distance, string cord)
+    {
+        float pri;
+        float component = 0;
+
+        if(cord == "x")
+            component = Mathf.Abs(spotPosition.x - cursorPosition.x);
+        else if(cord == "y")
+            component = Mathf.Abs(spotPosition.y - cursorPosition.y);
+        else
+            Debug.LogError("Invalid direction");
+
+        pri = 1 - (Mathf.Acos(component / distance) / Mathf.PI);
+
+        Debug.Log(cursorPosition);
+        return pri * distance;
     }
 }

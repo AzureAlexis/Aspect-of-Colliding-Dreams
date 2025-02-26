@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ItemManager
 {
+    private static List<PlayerAttack> attackData = new List<PlayerAttack>();
+    private static List<PlayerSpell> spellData = new List<PlayerSpell>();
     private static List<Equipment> equipmentData = new List<Equipment>();
     private static List<Consumable> consumableData = new List<Consumable>();
     private static List<Resource> resourceData = new List<Resource>();
@@ -14,9 +16,61 @@ public class ItemManager
 
     private static void BuildDatabase()
     {
+        BuildAttack();
+        BuildSpell();
         BuildResource();
         BuildEquipment();
         BuildConsumable();
+    }
+
+    private static void BuildAttack()
+    {
+        attackData.Add(new PlayerAttack(){
+            name = "Sonic Wave",
+            publicPower = "D+",
+            publicSpeed = "C+",
+            publicRange = "D+",
+            publicAccu = "B-",
+            publicCost = "B",
+
+            flavor = "I started off with this shot when I was just learning. It isn't anything too amazing, but it's very well rounded and efficent to use"
+        });
+
+        attackData.Add(new PlayerAttack(){
+            name = "Magic Missile",
+            publicPower = "B",
+            publicSpeed = "D+",
+            publicRange = "D",
+            publicAccu = "D-",
+            publicCost = "C-",
+
+            flavor = "This one's my favorite! These missiles are hard to land and pretty costly to use. But when they do, my target goes BOOM!"
+        });
+
+        attackData.Add(new PlayerAttack(){
+            name = "Riftbinder",
+            publicPower = "D",
+            publicSpeed = "C",
+            publicRange = "A-",
+            publicAccu = "A-",
+            publicCost = "C+",
+
+            flavor = "When I fire these, they home in on their target after a short delay. This shot isn't very powerful, but makes up for it with it's great accuracy and range. Great if I'm up against something dangerous and need to prioritizing survival."
+        });
+    }
+
+    private static void BuildSpell()
+    {
+        spellData.Add(new PlayerSpell(){
+            name = "Rising Inferno",
+            publicPower = "B+",
+            publicSpeed = "B",
+            publicRange = "A",
+            publicAccu = "A-",
+            publicCost = "C-",
+
+            flavor = "A huge flame that covers the whole field. Hits everything and anything"
+        });
     }
 
     private static void BuildEquipment()
@@ -141,7 +195,7 @@ public class ItemManager
         });
     }
 
-    public static ItemBase GetItemByName(string name)
+    public static BattleSlotBase GetItemByName(string name)
     {
         for(int i = 0; i < consumableData.Count; i++)
         {
@@ -157,6 +211,16 @@ public class ItemManager
         {
             if(resourceData[i].name == name)
                 return resourceData[i];
+        }
+        for(int i = 0; i < attackData.Count; i++)
+        {
+            if(attackData[i].name == name)
+                return attackData[i];
+        }
+        for(int i = 0; i < spellData.Count; i++)
+        {
+            if(spellData[i].name == name)
+                return spellData[i];
         }
         return null;
     }

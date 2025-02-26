@@ -209,7 +209,7 @@ public class PlayerStats
     public static void GainItem(string name, int count = 1)
     {
         int index;
-        ItemBase item = ItemManager.GetItemByName(name);
+        BattleSlotBase item = ItemManager.GetItemByName(name);
         item.count = count;
 
         switch(item.GetType().ToString())
