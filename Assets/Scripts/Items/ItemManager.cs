@@ -9,9 +9,12 @@ public class ItemManager
     private static List<Consumable> consumableData = new List<Consumable>();
     private static List<Resource> resourceData = new List<Resource>();
 
+    static bool built = false;
+
     void Start()
     {
-        ItemManager.BuildDatabase();
+        if(!built)
+            ItemManager.BuildDatabase();
     }
 
     private static void BuildDatabase()
@@ -21,6 +24,7 @@ public class ItemManager
         BuildResource();
         BuildEquipment();
         BuildConsumable();
+        built = true;
     }
 
     private static void BuildAttack()
@@ -134,6 +138,7 @@ public class ItemManager
             effect = "hp",
             value = 0.3f,
             limit = 2,
+            flavorShort = "Restores a lot of HP",
             flavor = "Restores a lot of health. These are pretty rare, so I shouldn't waste them. That makes me think, where did this life come from? Maybe I shouldn't think about it too much."
         });
 
@@ -142,6 +147,7 @@ public class ItemManager
             effect = "ap",
             value = 0.2f,
             limit = 8,
+            flavorShort = "Restores a little AP",
             flavor = "Restores a little anima. Almost everyone stores a little bit of anima, but it's really hard to manifest it physically."
         });
 
@@ -150,6 +156,7 @@ public class ItemManager
             effect = "ap",
             value = 0.4f,
             limit = 6,
+            flavorShort = "Restores some AP",
             flavor = "Restores some anima. Even when I crush this, I can't identify where this anima came from. How is there a type of amina I don't know?"
         });
 
@@ -158,6 +165,7 @@ public class ItemManager
             effect = "ap",
             value = 0.8f,
             limit = 4,
+            flavorShort = "Restores a lot of AP",
             flavor = "Restores a lot of anima. I know that amina is formed from the borders of concepts, so this much condensed amina has to come from a huge, base idea."
         });
     }
@@ -197,6 +205,9 @@ public class ItemManager
 
     public static BattleSlotBase GetItemByName(string name)
     {
+        if(!built)
+            BuildDatabase();
+
         for(int i = 0; i < consumableData.Count; i++)
         {
             if(consumableData[i].name == name)

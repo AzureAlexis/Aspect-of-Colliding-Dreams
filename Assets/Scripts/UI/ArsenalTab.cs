@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ public class ArsenalTab : MenuTab
 {
     string state = "display";
     int selectedSlotIndex = 0;
+    BattleSlotBase selectedItem;
     Transform cursor;
     List<Transform> slots = new List<Transform>();
     List<Transform> stats = new List<Transform>();
@@ -16,6 +18,7 @@ public class ArsenalTab : MenuTab
     void Start()
     {
         cursor = transform.GetChild(0);
+
         foreach(Transform child in GameObject.Find("ArsenalSlotDisplay").transform)
             slots.Add(child);
 
@@ -43,40 +46,129 @@ public class ArsenalTab : MenuTab
     {
         base.UpdateActive();
         UpdateCursor();
+        UpdateAction();
         UpdateDisplay();
+    }
+
+    void UpdateAction()
+    {
+        string newState = null;
+        string action = null;
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            switch(state)
+            {
+                case "display":
+                    newState = "topList";
+                    break;
+
+                case "topList":
+                    switch(selectedSlotIndex)
+                    {
+                        case 0:
+                            newState = "change";
+                            break;
+                        case 1:
+                            newState = "upgrade";
+                            break;
+                        case 2:
+                            newState = "disenchant";
+                            break;
+                    }
+                    break;
+
+                case "change":
+                    action = "equip";
+                    break;
+
+                case "upgrade":
+                    switch(selectedSlotIndex)
+                    {
+                        case 0:
+                            newState = "topList";
+                            break;
+                        case 1:
+                            newState = "topList";
+                            action = "upgrade";
+                            break;
+                    }
+                    break;
+
+                case "disenchant":
+                    switch(selectedSlotIndex)
+                    {
+                        case 0:
+                            newState = "topList";
+                            break;
+                        case 1:
+                            newState = "display";
+                            action = "disenchant";
+                            break;
+                    }
+                    break;
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.X))
+        {
+            switch(state)
+            {
+                case "topList":
+                    newState = "display";
+                    break;
+                case "disenchant":
+                    newState = "topList";
+                    break;
+                case "change":
+                    newState = "topList";
+                    break;
+                case "upgrade":
+                    newState = "topList";
+                    break;
+            }
+        }
+
+        /*
+        if(newState != null)
+            ChangeDisplayState(newState);
+
+        if(newAction != null)
+            DoArsenalAction(action, selectedItem);
+        */
     }
 
     void UpdateDisplay()
     {
         BattleSlotBase activeSlot = PlayerStats.battleSlots[selectedSlotIndex];
-        
-        if(activeSlot.GetType().ToString() == "Item")
+        stats[0].GetComponent<TextMeshProUGUI>().text = activeSlot.name;
+
+        if(activeSlot.GetType().ToString() == "Consumable")
         {
-            stats[0].GetComponent<TextMeshProUGUI>().text = activeSlot.count.ToString();
-            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.limit.ToString();
-            stats[2].GetComponent<TextMeshProUGUI>().text = "";
+            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.count.ToString();
+            stats[2].GetComponent<TextMeshProUGUI>().text = activeSlot.limit.ToString();
             stats[3].GetComponent<TextMeshProUGUI>().text = "";
             stats[4].GetComponent<TextMeshProUGUI>().text = "";
+            stats[5].GetComponent<TextMeshProUGUI>().text = "";
 
-            stats[0].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Count";
-            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Owned";
-            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = activeSlot.flavor;
+            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Count";
+            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Owned";
             stats[3].GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
-            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = activeSlot.flavorShort;
+            stats[5].GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
         }
         else
         {
-            stats[0].GetComponent<TextMeshProUGUI>().text = activeSlot.publicPower;
-            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.publicSpeed;
-            stats[2].GetComponent<TextMeshProUGUI>().text = activeSlot.publicRange;
-            stats[3].GetComponent<TextMeshProUGUI>().text = activeSlot.publicAccu;
-            stats[4].GetComponent<TextMeshProUGUI>().text = activeSlot.publicCost;
+            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.publicPower;
+            stats[2].GetComponent<TextMeshProUGUI>().text = activeSlot.publicSpeed;
+            stats[3].GetComponent<TextMeshProUGUI>().text = activeSlot.publicRange;
+            stats[4].GetComponent<TextMeshProUGUI>().text = activeSlot.publicAccu;
+            stats[5].GetComponent<TextMeshProUGUI>().text = activeSlot.publicCost;
 
-            stats[0].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Power -";
-            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Speed -";
-            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Range -";
-            stats[3].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Accu. -";
-            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost -";
+            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Power -";
+            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Speed -";
+            stats[3].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Range -";
+            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Accu. -";
+            stats[5].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost -";
         }
     }
 
@@ -146,7 +238,7 @@ public class ArsenalTab : MenuTab
         }
 
         if(bestPos != new Vector3(999999, 999999, 999999))
-            cursor.GetComponent<UiElement>().StartMove(bestPos, 0.1f);
+            cursor.GetComponent<UiElement>().SetNewWaypoint(bestPos, 0.1f);
     }
 
     float MakePriority(Vector3 cursorPosition, Vector3 spotPosition, float distance, string cord)

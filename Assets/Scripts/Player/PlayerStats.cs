@@ -3,7 +3,6 @@
 */
 
 using System.Collections.Generic;
-using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -39,7 +38,7 @@ public class PlayerStats
     public static int invState = 0;         // Used to determine how inv should change. 0 = nothing, 1 = increase, 2 = decrease
     
     // Battle slots
-    public static List<BattleSlotBase> battleSlots = new List<BattleSlotBase>(6);
+    public static List<BattleSlotBase> battleSlots = new List<BattleSlotBase>(7);
 
     // Current items
     public static List<Consumable> consumables = new List<Consumable>();   // What consumables the player currently has
@@ -235,6 +234,14 @@ public class PlayerStats
                     equipments.Add(item as Equipment);
                 return;
         }
+    }
+
+    public static void EquipItem(BattleSlotBase item, int index)
+    {
+        if(index >= battleSlots.Count)
+            battleSlots.Add(item);
+        else
+            battleSlots[index] = item;
     }
 
     static void CalculateInv()

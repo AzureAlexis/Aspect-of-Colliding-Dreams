@@ -9,6 +9,14 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         PlayerManager.player = gameObject;
+
+        PlayerStats.EquipItem(ItemManager.GetItemByName("Sonic Wave"), 0);
+        PlayerStats.EquipItem(ItemManager.GetItemByName("Magic Missile"), 1);
+        PlayerStats.EquipItem(ItemManager.GetItemByName("Riftbinder"), 2);
+        PlayerStats.EquipItem(ItemManager.GetItemByName("Life Stone"), 3);
+        PlayerStats.EquipItem(ItemManager.GetItemByName("Anima Dust"), 4);
+        PlayerStats.EquipItem(ItemManager.GetItemByName("Anima Shard"), 5);
+        PlayerStats.EquipItem(ItemManager.GetItemByName("Rising Inferno"), 6);
     }
     void Update()
     {

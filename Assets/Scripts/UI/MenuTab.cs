@@ -14,28 +14,22 @@ public class MenuTab : UiElement
     
     public void UpdateActive()
     {
-        UpdateReminders(-1);
+        UpdateReminders(false);
     }
 
     public void UpdateInactive()
     {
-        UpdateReminders(1);
+        UpdateReminders(true);
     }
 
-    void UpdateReminders(int target)
+    void UpdateReminders(bool active)
     {
         Transform tabGuide = transform.GetChild(transform.childCount - 1);
-        Color color = tabGuide.GetComponent<Image>().color;
-        color.a += Time.deltaTime * 4 * target;
-        color.a = Mathf.Min(1, color.a);
-        color.a = Mathf.Max(0, color.a);
-
-        tabGuide.GetComponent<Image>().color = color;
-        tabGuide.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = color;
-        tabGuide.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = color;
-        tabGuide.transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = color;
-        tabGuide.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = color;
-
+        tabGuide.GetComponent<UiElement>().visible = active;
+        tabGuide.GetChild(0).GetComponent<UiElement>().visible = active;
+        tabGuide.GetChild(0).GetChild(0).GetComponent<UiElement>().visible = active;
+        tabGuide.GetChild(1).GetComponent<UiElement>().visible = active;
+        tabGuide.GetChild(1).GetChild(0).GetComponent<UiElement>().visible = active;
     }
 
     public void ScrollTab()
@@ -60,6 +54,6 @@ public class MenuTab : UiElement
     public void StartScroll(float distance)
     {
         Vector2 position = GetComponent<RectTransform>().anchoredPosition + new Vector2(0, distance);
-        StartMove(position, 0.5f);
+        SetNewWaypoint(position, 0.5f);
     }
 }
