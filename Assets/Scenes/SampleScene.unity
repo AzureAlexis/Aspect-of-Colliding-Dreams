@@ -810,8 +810,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 30, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1715,6 +1715,7 @@ GameObject:
   - component: {fileID: 247592657}
   - component: {fileID: 247592659}
   - component: {fileID: 247592658}
+  - component: {fileID: 247592660}
   m_Layer: 5
   m_Name: ArsenalSlotDisplay
   m_TagString: Untagged
@@ -1786,6 +1787,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247592656}
   m_CullTransparentMesh: 1
+--- !u!114 &247592660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247592656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c4553c7649a42a189e1695f1b8bd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moving: 0
+  visible: 1
+  oldWaypoint: {x: 0, y: 0}
+  newWaypoint: {x: 0, y: 0}
+  moveTime: 0
+  maxTime: 0
+  storedWaypoints: []
 --- !u!1 &251796604
 GameObject:
   m_ObjectHideFlags: 0
@@ -1818,6 +1838,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1290949608}
+  - {fileID: 1508644444}
   - {fileID: 1125084765}
   - {fileID: 1290159138}
   - {fileID: 1624578572}
@@ -1886,6 +1907,7 @@ MonoBehaviour:
   moveTime: 0
   maxTime: 0
   storedWaypoints: []
+  state: display
 --- !u!1 &266269648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,7 +2004,7 @@ MonoBehaviour:
   maxTime: 0
   storedWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 220, y: 335, z: 0}
+  - {x: 200, y: 320, z: 0}
 --- !u!1 &282847258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,7 +2334,7 @@ MonoBehaviour:
   maxTime: 0
   storedWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 220, y: 335, z: 0}
+  - {x: 200, y: 320, z: 0}
 --- !u!1 &320871210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,8 +2732,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2766,7 +2788,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 30, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3031,7 +3053,7 @@ MonoBehaviour:
   maxTime: 0
   storedWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 220, y: 335, z: 0}
+  - {x: 200, y: 320, z: 0}
 --- !u!1 &466924849
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,8 +3339,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3373,7 +3395,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 30, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5395,7 +5417,7 @@ MonoBehaviour:
   maxTime: 0
   storedWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 220, y: 335, z: 0}
+  - {x: 200, y: 320, z: 0}
 --- !u!1 &886259503
 GameObject:
   m_ObjectHideFlags: 0
@@ -5979,7 +6001,7 @@ MonoBehaviour:
   maxTime: 0
   storedWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 220, y: 335, z: 0}
+  - {x: 200, y: 320, z: 0}
 --- !u!1 &1021502770
 GameObject:
   m_ObjectHideFlags: 0
@@ -6820,8 +6842,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6876,7 +6898,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 30, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7005,7 +7027,7 @@ MonoBehaviour:
   maxTime: 0
   storedWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 220, y: 335, z: 0}
+  - {x: 200, y: 320, z: 0}
 --- !u!1 &1194806562
 GameObject:
   m_ObjectHideFlags: 0
@@ -7698,7 +7720,7 @@ MonoBehaviour:
   maxTime: 0
   storedWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: 220, y: 335, z: 0}
+  - {x: 200, y: 320, z: 0}
 --- !u!1 &1290159137
 GameObject:
   m_ObjectHideFlags: 0
@@ -7708,6 +7730,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1290159138}
+  - component: {fileID: 1290159139}
   m_Layer: 5
   m_Name: Top List
   m_TagString: Untagged
@@ -7734,9 +7757,28 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1290159139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290159137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c4553c7649a42a189e1695f1b8bd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moving: 0
+  visible: 1
+  oldWaypoint: {x: 0, y: 0}
+  newWaypoint: {x: 0, y: 0}
+  moveTime: 0
+  maxTime: 0
+  storedWaypoints: []
 --- !u!1 &1290949607
 GameObject:
   m_ObjectHideFlags: 0
@@ -7773,7 +7815,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -460, y: -160}
-  m_SizeDelta: {x: 130, y: 130}
+  m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1290949609
 MonoBehaviour:
@@ -7795,8 +7837,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2142848711363384297, guid: 5e3db4d53c55846aab3037412bd6a4d7, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 6554736390298987251, guid: 5f3dbb7a760b3465983a4954f0776cc4, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8192,8 +8234,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8248,7 +8290,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 30, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -9025,11 +9067,11 @@ RectTransform:
   m_Children:
   - {fileID: 1834104337}
   - {fileID: 1878647407}
-  m_Father: {fileID: 2082404661}
+  m_Father: {fileID: 251796605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 360}
+  m_AnchoredPosition: {x: 160, y: 280}
   m_SizeDelta: {x: 400, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1508644445
@@ -9311,6 +9353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1624578572}
+  - component: {fileID: 1624578573}
   m_Layer: 5
   m_Name: Item Catagories
   m_TagString: Untagged
@@ -9337,9 +9380,28 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1624578573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624578571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c4553c7649a42a189e1695f1b8bd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moving: 0
+  visible: 0
+  oldWaypoint: {x: 0, y: 0}
+  newWaypoint: {x: 0, y: 0}
+  moveTime: 0
+  maxTime: 0
+  storedWaypoints: []
 --- !u!1 &1640474101
 GameObject:
   m_ObjectHideFlags: 0
@@ -10334,8 +10396,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 16777215
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -10390,7 +10452,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 30, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11830,6 +11892,7 @@ GameObject:
   - component: {fileID: 2082404661}
   - component: {fileID: 2082404663}
   - component: {fileID: 2082404662}
+  - component: {fileID: 2082404664}
   m_Layer: 5
   m_Name: Stat List
   m_TagString: Untagged
@@ -11849,7 +11912,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1508644444}
   - {fileID: 932602935}
   - {fileID: 1934577664}
   - {fileID: 2139523257}
@@ -11900,6 +11962,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2082404660}
   m_CullTransparentMesh: 1
+--- !u!114 &2082404664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082404660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c4553c7649a42a189e1695f1b8bd2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moving: 0
+  visible: 1
+  oldWaypoint: {x: 0, y: 0}
+  newWaypoint: {x: 0, y: 0}
+  moveTime: 0
+  maxTime: 0
+  storedWaypoints: []
 --- !u!1 &2092023905
 GameObject:
   m_ObjectHideFlags: 0

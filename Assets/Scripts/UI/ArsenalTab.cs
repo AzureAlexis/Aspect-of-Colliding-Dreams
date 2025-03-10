@@ -8,26 +8,40 @@ using UnityEngine.InputSystem;
 
 public class ArsenalTab : MenuTab
 {
-    string state = "display";
+    public string state = "display";
     int selectedSlotIndex = 0;
     BattleSlotBase selectedItem;
-    Transform cursor;
-    List<Transform> slots = new List<Transform>();
-    List<Transform> stats = new List<Transform>();
-    List<Transform> topList = new List<Transform>();
+    UiElement cursor;
+    UiElement itemName;
+    UiElement arsenalSlotDisplay;
+    UiElement statList;
+    UiElement topList;
+    UiElement catagoryList;
+    List<UiElement> slots = new List<UiElement>();
+    List<UiElement> stats = new List<UiElement>();
+    List<UiElement> topListItems = new List<UiElement>();
+    List<UiElement> catagories = new List<UiElement>();
 
     void Start()
     {
-        cursor = transform.GetChild(0);
+        itemName = GameObject.Find("ShotName").GetComponent<UiElement>();
+        cursor = transform.GetChild(0).GetComponent<UiElement>();
+        arsenalSlotDisplay = GameObject.Find("ArsenalSlotDisplay").GetComponent<UiElement>();
+        statList = GameObject.Find("Stat List").GetComponent<UiElement>();
+        topList = GameObject.Find("Top List").GetComponent<UiElement>();
+        catagoryList = GameObject.Find("Item Catagories").GetComponent<UiElement>();
 
         foreach(Transform child in GameObject.Find("ArsenalSlotDisplay").transform)
-            slots.Add(child);
+            slots.Add(child.GetComponent<UiElement>());
 
         foreach(Transform child in GameObject.Find("Stat List").transform)
-            stats.Add(child);
+            stats.Add(child.GetComponent<UiElement>());
 
         foreach(Transform child in GameObject.Find("Top List").transform)
-            topList.Add(child);
+            topListItems.Add(child.GetComponent<UiElement>());
+
+        foreach(Transform child in GameObject.Find("Item Catagories").transform)
+            catagories.Add(child.GetComponent<UiElement>());
     }
 
     new public void Update()
@@ -51,7 +65,8 @@ public class ArsenalTab : MenuTab
         base.UpdateActive();
         UpdateCursor();
         UpdateAction();
-        UpdateDisplay();
+        if(state == "display")
+            UpdateDisplay();
     }
 
     void UpdateAction()
@@ -71,7 +86,7 @@ public class ArsenalTab : MenuTab
                     switch(selectedSlotIndex)
                     {
                         case 0:
-                            newState = "change";
+                            newState = "catagoryList";
                             break;
                         case 1:
                             newState = "upgrade";
@@ -82,7 +97,7 @@ public class ArsenalTab : MenuTab
                     }
                     break;
 
-                case "change":
+                case "catagoryList":
                     action = "equip";
                     break;
 
@@ -123,7 +138,7 @@ public class ArsenalTab : MenuTab
                 case "disenchant":
                     newState = "topList";
                     break;
-                case "change":
+                case "catagoryList":
                     newState = "topList";
                     break;
                 case "upgrade":
@@ -146,55 +161,71 @@ public class ArsenalTab : MenuTab
         switch(newState)
         {
             case "display":
-                foreach(Transform item in slots)
-                    item.GetComponent<UiElement>().Activate(0.25f);
-                foreach(Transform item in stats)
-                    item.GetComponent<UiElement>().Activate(0.25f);
+                ForceCursorMove(slots[0]);
+
+                topList.DeactivateAll();
+                arsenalSlotDisplay.ActivateAll();
+                statList.ActivateAll();
+
+                foreach(UiElement slot in slots)
+                    slot.Activate(0.25f, 0);
+
                 break;
 
             case "topList":
-                foreach(Transform item in topList)
-                    item.GetComponent<UiElement>().visible = true;
-                foreach(Transform item in slots)
-                    item.GetComponent<UiElement>().visible = false;
-                foreach(Transform item in stats)
-                    item.GetComponent<UiElement>().visible = false;
-                slots[selectedSlotIndex].GetComponent<UiElement>().Activate(0.25f);
+                ForceCursorMove(topListItems[0]);
+
+                topList.ActivateAll();
+                catagoryList.DeactivateAll();
+                arsenalSlotDisplay.DeactivateAll();
+                statList.DeactivateAll();
+                
+                slots[selectedSlotIndex].Activate(0.25f, 1);
+
+                break;
+
+            case "catagoryList":
+                ForceCursorMove(catagories[0]);
+
+                catagoryList.ActivateAll();
+
                 break;
         }
+        state = newState;
+        selectedSlotIndex = 0;
     }
     void UpdateDisplay()
     {
-        BattleSlotBase activeSlot = PlayerStats.battleSlots[selectedSlotIndex];
-        stats[0].GetComponent<TextMeshProUGUI>().text = activeSlot.name;
-
-        if(activeSlot.GetType().ToString() == "Consumable")
+        selectedItem = PlayerStats.battleSlots[selectedSlotIndex];
+        itemName.SetText(selectedItem.name);
+        
+        if(selectedItem.GetType().ToString() == "Consumable")
         {
-            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.count.ToString();
-            stats[2].GetComponent<TextMeshProUGUI>().text = activeSlot.limit.ToString();
-            stats[3].GetComponent<TextMeshProUGUI>().text = "";
-            stats[4].GetComponent<TextMeshProUGUI>().text = "";
-            stats[5].GetComponent<TextMeshProUGUI>().text = "";
+            stats[0].SetText(selectedItem.count.ToString());
+            stats[1].SetText(selectedItem.limit.ToString());
+            stats[2].SetText();
+            stats[3].SetText();
+            stats[4].SetText();
 
-            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Count";
-            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Owned";
-            stats[3].GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
-            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = activeSlot.flavorShort;
-            stats[5].GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
+            stats[0].GetChild().SetText("Count");
+            stats[1].GetChild().SetText("Owned");
+            stats[2].GetChild().SetText();
+            stats[3].GetChild().SetText(selectedItem.flavorShort);
+            stats[4].GetChild().SetText();
         }
         else
         {
-            stats[1].GetComponent<TextMeshProUGUI>().text = activeSlot.publicPower;
-            stats[2].GetComponent<TextMeshProUGUI>().text = activeSlot.publicSpeed;
-            stats[3].GetComponent<TextMeshProUGUI>().text = activeSlot.publicRange;
-            stats[4].GetComponent<TextMeshProUGUI>().text = activeSlot.publicAccu;
-            stats[5].GetComponent<TextMeshProUGUI>().text = activeSlot.publicCost;
+            stats[0].SetText(selectedItem.publicPower);
+            stats[1].SetText(selectedItem.publicSpeed);
+            stats[2].SetText(selectedItem.publicRange);
+            stats[3].SetText(selectedItem.publicAccu);
+            stats[4].SetText(selectedItem.publicCost);
 
-            stats[1].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Power -";
-            stats[2].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Speed -";
-            stats[3].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Range -";
-            stats[4].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Accu. -";
-            stats[5].GetChild(0).GetComponent<TextMeshProUGUI>().text = "Cost -";
+            stats[0].GetChild().SetText("Power -");
+            stats[1].GetChild().SetText("Speed -");
+            stats[2].GetChild().SetText("Range -");
+            stats[3].GetChild().SetText("Accu. -");
+            stats[4].GetChild().SetText("Cost -");
         }
     }
 
@@ -218,32 +249,39 @@ public class ArsenalTab : MenuTab
 
     void MoveCursor(float x, float y)
     {
-        List<Transform> activeMoveSpots = new List<Transform>(); 
+        List<UiElement> activeMoveSpots = new List<UiElement>(); 
 
         switch(state)
         {
             case "display":
                 activeMoveSpots = slots;
                 break;
+            case "topList":
+                activeMoveSpots = topListItems;
+                break;
+            case "catagoryList":
+                activeMoveSpots = catagories;
+                break;
         }
 
         Vector3 bestPos = new Vector3(999999, 999999, 999999);
+        UiElement bestSpot = null;
         float bestPri = 999999;
         int index = -1;
 
-        foreach(Transform spot in activeMoveSpots)
+        foreach(UiElement spot in activeMoveSpots)
         {
             index++;
 
-            Vector3 spotPosition = cursor.parent.InverseTransformPoint(spot.position);
+            Vector3 spotPosition = cursor.transform.parent.InverseTransformPoint(spot.transform.position);
             Vector3 cursorPosition = cursor.transform.localPosition;
-            float distance = Vector3.Distance(spotPosition, cursor.localPosition);
+            float distance = Vector3.Distance(spotPosition, cursorPosition);
             float priority = 999999;
 
             // Check if spot is valid, givin the direction
-            if(spotPosition.x - cursor.localPosition.x > 0 == x < 0 && x != 0)
+            if(spotPosition.x - cursorPosition.x > 0 == x < 0 && x != 0)
                 continue;
-            if(spotPosition.y - cursor.localPosition.y > 0 == y < 0 && y != 0)
+            if(spotPosition.y - cursorPosition.y > 0 == y < 0 && y != 0)
                 continue;
             if(distance <= 1)
                 continue;
@@ -260,11 +298,23 @@ public class ArsenalTab : MenuTab
                 bestPri = priority;
                 bestPos = spotPosition;
                 selectedSlotIndex = index;
+                bestSpot = spot;
             }
         }
 
-        if(bestPos != new Vector3(999999, 999999, 999999))
-            cursor.GetComponent<UiElement>().SetNewWaypoint(bestPos, 0.1f);
+        if(bestSpot != null)
+        {
+            cursor.SetNewWaypoint(bestPos, 0.1f);
+            cursor.transform.GetComponent<RectTransform>().sizeDelta = bestSpot.transform.GetComponent<RectTransform>().sizeDelta + new Vector2(20, 20);
+        }
+    }
+    
+    public void ForceCursorMove(UiElement spot)
+    {
+        Vector3 waypoint = cursor.transform.parent.InverseTransformPoint(spot.transform.position);
+        Vector2 size = spot.transform.GetComponent<RectTransform>().sizeDelta + new Vector2(20, 20);
+        cursor.SetNewWaypoint(waypoint, 0.05f);
+        cursor.transform.GetComponent<RectTransform>().sizeDelta = size;
     }
 
     float MakePriority(Vector3 cursorPosition, Vector3 spotPosition, float distance, string cord)

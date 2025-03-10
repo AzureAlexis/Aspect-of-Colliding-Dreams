@@ -15,6 +15,11 @@ public class UiElement : MonoBehaviour
 
     public Vector3[] storedWaypoints;
 
+    public void Start()
+    {
+        if(storedWaypoints.Length > 0)
+            storedWaypoints[0] = transform.localPosition;
+    }
     public void Update()
     {
         UpdatePosition();
@@ -79,16 +84,44 @@ public class UiElement : MonoBehaviour
         moving = true;
     }
 
-    public void Deactivate(float time)
+    public void Deactivate()
     {
-        SetStoredWaypoint(0, time);
         visible = false;
     }
 
-    public void Activate(float time)
+    public void Deactivate(float time, int waypoint)
     {
-        SetStoredWaypoint(1, time);
+        SetStoredWaypoint(waypoint, time);
+        visible = false;
+    }
+
+    public void DeactivateAll()
+    {
+        Deactivate();
+        if(transform.childCount > 0)
+            foreach(Transform child in transform)
+                if(child.GetComponent<UiElement>() != null)
+                    child.GetComponent<UiElement>().DeactivateAll();
+    }
+
+    public void Activate()
+    {
         visible = true;
+    }
+
+    public void Activate(float time, int waypoint)
+    {
+        SetStoredWaypoint(waypoint, time);
+        visible = true;
+    }
+
+    public void ActivateAll()
+    {
+        Activate();
+        if(transform.childCount > 0)
+            foreach(Transform child in transform)
+                if(child.GetComponent<UiElement>() != null)
+                    child.GetComponent<UiElement>().ActivateAll();
     }
 
     public void Home(float time)
@@ -100,5 +133,20 @@ public class UiElement : MonoBehaviour
     {
         moving = false;
         GetComponent<RectTransform>().anchoredPosition = newWaypoint;
+    }
+
+    public UiElement GetChild(int id = 0)
+    {
+        return transform.GetChild(id).GetComponent<UiElement>();
+    }
+
+    public TextMeshProUGUI GetChildTMP(int id = 0)
+    {
+        return transform.GetChild(id).GetComponent<TextMeshProUGUI>();
+    }
+
+    public void SetText(string text = "")
+    {
+        transform.GetComponent<TextMeshProUGUI>().text = text;
     }
 }
