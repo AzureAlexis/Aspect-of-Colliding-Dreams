@@ -14,6 +14,7 @@ public class ArsenalTab : MenuTab
     Transform cursor;
     List<Transform> slots = new List<Transform>();
     List<Transform> stats = new List<Transform>();
+    List<Transform> topList = new List<Transform>();
 
     void Start()
     {
@@ -24,6 +25,9 @@ public class ArsenalTab : MenuTab
 
         foreach(Transform child in GameObject.Find("Stat List").transform)
             stats.Add(child);
+
+        foreach(Transform child in GameObject.Find("Top List").transform)
+            topList.Add(child);
     }
 
     new public void Update()
@@ -128,15 +132,37 @@ public class ArsenalTab : MenuTab
             }
         }
 
-        /*
         if(newState != null)
             ChangeDisplayState(newState);
 
+        /*
         if(newAction != null)
             DoArsenalAction(action, selectedItem);
         */
     }
 
+    void ChangeDisplayState(string newState)
+    {
+        switch(newState)
+        {
+            case "display":
+                foreach(Transform item in slots)
+                    item.GetComponent<UiElement>().Activate(0.25f);
+                foreach(Transform item in stats)
+                    item.GetComponent<UiElement>().Activate(0.25f);
+                break;
+
+            case "topList":
+                foreach(Transform item in topList)
+                    item.GetComponent<UiElement>().visible = true;
+                foreach(Transform item in slots)
+                    item.GetComponent<UiElement>().visible = false;
+                foreach(Transform item in stats)
+                    item.GetComponent<UiElement>().visible = false;
+                slots[selectedSlotIndex].GetComponent<UiElement>().Activate(0.25f);
+                break;
+        }
+    }
     void UpdateDisplay()
     {
         BattleSlotBase activeSlot = PlayerStats.battleSlots[selectedSlotIndex];
@@ -255,7 +281,6 @@ public class ArsenalTab : MenuTab
 
         pri = 1 - (Mathf.Acos(component / distance) / Mathf.PI);
 
-        Debug.Log(cursorPosition);
         return pri * distance;
     }
 }
