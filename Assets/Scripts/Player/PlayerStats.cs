@@ -44,10 +44,11 @@ public class PlayerStats
     public static List<Consumable> consumables = new List<Consumable>();   // What consumables the player currently has
     public static List<Equipment> equipments = new List<Equipment>();      // What equipment the player currently has
     public static List<Resource> resources = new List<Resource>();         // What resources the player currently has
+    public static List<PlayerAttack> shots = new List<PlayerAttack>();
+    public static List<PlayerSpell> spells = new List<PlayerSpell>();
     public static Equipment weapon;                                        // The equipped weapon
     public static Equipment armor;                                         // The equipped armor
     public static List<Equipment> charms;                                  // The equipped charms
-
 
     public static GameObject danmaku1;
     public static GameObject circle;
@@ -59,6 +60,20 @@ public class PlayerStats
     // Update is called once per frame
     public static void Update()
     {
+        if(consumables.Count <= 1)
+        {
+            GainItem("Life Stone", 3);
+            GainItem("Anima Dust", 3);
+            GainItem("Anima Shard", 3);
+        }
+        if(shots.Count < 1)
+        {
+            GainItem("Sonic Wave", 1);
+        }
+        if(spells.Count < 1)
+        {
+            GainItem("Rising Inferno", 1);
+        }
         /*
         CalculateStats();
         CalculateHP();
@@ -232,6 +247,16 @@ public class PlayerStats
             case "Equipment":
                 for(int i = 0; i < count; i++)
                     equipments.Add(item as Equipment);
+                return;
+            
+            case "PlayerAttack":
+                for(int i = 0; i < count; i++)
+                    shots.Add(item as PlayerAttack);
+                return;
+            
+            case "PlayerSpell":
+                for(int i = 0; i < count; i++)
+                    spells.Add(item as PlayerSpell);
                 return;
         }
     }

@@ -6,6 +6,11 @@ public class PlayerShoot
     // Refrences
     public static GameObject player;
     
+    // Inputs
+    static bool[] keysDown = new bool[6];
+    static bool[] keys = new bool[6];
+
+    static BattleSlotBase currentAction;
     static List<float> cooldowns = new List<float>();
     static float globalCooldown = 0;
     public static bool spellActive = false;
@@ -15,45 +20,84 @@ public class PlayerShoot
     public static void Update()
     {
         UpdateInputs();
+        UpdateAction();
         UpdateSpells();
         UpdateCooldowns();
     }
 
-    static void UpdateShots()
+    static void UpdateAction()
     {
-        if(BattleManager.IsActive())
-        {
-            if(Input.GetKey(KeyCode.Z) && cooldowns[0] <= 0)
-            {
-                Fire(PlayerStats.danmaku1, 0);
-            }
-        }
+        MakeAction();
+        DoAction();
+    }
+
+    static void MakeAction()
+    {
+        for(int i = 0; i < 7; i++)
+            if(keysDown[i])
+                currentAction = PlayerStats.battleSlots[i];
+    }
+
+    static void DoAction()
+    {
+
     }
 
     public static void UpdateInputs()
     {
-        /*
-        if(BattleManager.IsActive() && globalCooldown <= 0)
-        {
-            for(int i = 0; i < PlayerStats.battleSlots.Capacity; i++)
-            {
-                BattleSlotBase slot = PlayerStats.battleSlots[i];
+        if(Input.GetKeyDown(KeyCode.Z))
+            keysDown[0] = true;
+        else
+            keysDown[0] = false;
+        if(Input.GetKey(KeyCode.Z))
+            keys[0] = true;
+        else
+            keys[0] = false;
 
-                switch(slot.GetType().ToString())
-                {
-                    case "Consumable":
-                        UseItem(slot);
-                        break;
+        if(Input.GetKeyDown(KeyCode.X))
+            keysDown[1] = true;
+        else
+            keysDown[1] = false;
+        if(Input.GetKey(KeyCode.X))
+            keys[1] = true;
+        else
+            keys[1] = false;
 
-                    case "PlayerShot"
-                        Fire(slot);
+        if(Input.GetKeyDown(KeyCode.C))
+            keysDown[2] = true;
+        else
+            keysDown[2] = false;
+        if(Input.GetKey(KeyCode.C))
+            keys[2] = true;
+        else
+            keys[2] = false;
 
-                    case "PlayerSpell"
-                        StartSpell(slot);
-                }
-            }
-        }
-        */
+        if(Input.GetKeyDown(KeyCode.A))
+            keysDown[3] = true;
+        else
+            keysDown[3] = false;
+        if(Input.GetKey(KeyCode.A))
+            keys[3] = true;
+        else
+            keys[3] = false;
+
+        if(Input.GetKeyDown(KeyCode.S))
+            keysDown[4] = true;
+        else
+            keysDown[4] = false;
+        if(Input.GetKey(KeyCode.S))
+            keys[4] = true;
+        else
+            keys[4] = false;
+
+        if(Input.GetKeyDown(KeyCode.D))
+            keysDown[5] = true;
+        else
+            keysDown[5] = false;
+        if(Input.GetKey(KeyCode.D))
+            keys[5] = true;
+        else
+            keys[5] = false;
     }
 
     static void UpdateSpells()

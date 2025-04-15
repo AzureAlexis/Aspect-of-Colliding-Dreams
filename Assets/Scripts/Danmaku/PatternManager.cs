@@ -642,23 +642,59 @@ public class PatternManager : MonoBehaviour
 
     static void CreateInitialPlayerShots()
     {
-        playerShots.Add(new PlayerShotData());
+        /*
+            Shots for Sonic Wave (lv1)
+        */ 
+        playerShots.Add(new PlayerShotData()); // Sonic wave pt1
         for(int i = 0; i < 2; i++)
         {
             playerShots[0].danmaku.Add(new DanmakuData());
             playerShots[0].danmaku[i].speed = 20;
             playerShots[0].danmaku[i].player = true;
-            playerShots[0].danmaku[i].complex = true;
-
-            playerShots[0].danmaku[i].posMod = "sinX";
-            playerShots[0].danmaku[i].posBehavior = "normalMod";
 
             playerShots[0].danmaku[i].dir = 90;
+            playerShots[0].danmaku[i].position = new Vector2(-0.5f + i, 0);
+            playerShots[0].danmaku[i].posBehavior = "normalMod";
 
             playerShots[0].danmaku[i].prefab = playerBullet;
         }
-        playerShots[0].danmaku[0].position = new Vector2(2, 0);
-        playerShots[0].danmaku[1].position = new Vector2(-2, 0);
+        playerShots.Add(new PlayerShotData()); // Sonic wave pt2
+        for(int i = 0; i < 2; i++)
+        {
+            playerShots[1].danmaku.Add(new DanmakuData());
+            playerShots[1].danmaku[i].speed = 20;
+            playerShots[1].danmaku[i].player = true;
+
+            playerShots[1].danmaku[i].dir = 60 * (i + 1);
+
+            playerShots[1].danmaku[i].prefab = playerBullet;
+        }
+        playerShots.Add(new PlayerShotData()); // Sonic wave pt3
+        for(int i = 0; i < 2; i++)
+        {
+            playerShots[2].danmaku.Add(new DanmakuData());
+            playerShots[2].danmaku[i].speed = 20;
+            playerShots[2].danmaku[i].player = true;
+
+            playerShots[2].danmaku[i].dir = 85 + (i * 10);
+            playerShots[2].danmaku[i].position = new Vector2(-0.5f + i, 0);
+            playerShots[2].danmaku[i].posBehavior = "normalMod";
+
+            playerShots[2].danmaku[i].prefab = playerBullet;
+        }
+        playerShots.Add(new PlayerShotData()); // Sonic wave pt4
+        for(int i = 0; i < 2; i++)
+        {
+            playerShots[3].danmaku.Add(new DanmakuData());
+            playerShots[3].danmaku[i].speed = 20;
+            playerShots[3].danmaku[i].player = true;
+
+            playerShots[3].danmaku[i].dir = 75 + (i * 30);
+            playerShots[3].danmaku[i].posBehavior = "normal";
+
+            playerShots[3].danmaku[i].prefab = playerBullet;
+        }
+
     }
 
     static void CreateInitialPlayerPatterns()

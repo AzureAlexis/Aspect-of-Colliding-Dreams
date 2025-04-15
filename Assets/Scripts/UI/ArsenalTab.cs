@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class ArsenalTab : MenuTab
@@ -11,12 +12,12 @@ public class ArsenalTab : MenuTab
     public string state = "display";
     int selectedSlotIndex = 0;
     BattleSlotBase selectedItem;
-    UiElement cursor;
     UiElement itemName;
-    UiElement arsenalSlotDisplay;
+    UiList arsenalSlotDisplay;
     UiElement statList;
-    UiElement topList;
-    UiElement catagoryList;
+    UiList topList;
+    UiList catagoryList;
+    UiList itemsList;
     List<UiElement> slots = new List<UiElement>();
     List<UiElement> stats = new List<UiElement>();
     List<UiElement> topListItems = new List<UiElement>();
@@ -25,11 +26,11 @@ public class ArsenalTab : MenuTab
     void Start()
     {
         itemName = GameObject.Find("ShotName").GetComponent<UiElement>();
-        cursor = transform.GetChild(0).GetComponent<UiElement>();
-        arsenalSlotDisplay = GameObject.Find("ArsenalSlotDisplay").GetComponent<UiElement>();
+        arsenalSlotDisplay = GameObject.Find("ArsenalSlotDisplay").GetComponent<UiList>();
         statList = GameObject.Find("Stat List").GetComponent<UiElement>();
-        topList = GameObject.Find("Top List").GetComponent<UiElement>();
-        catagoryList = GameObject.Find("Item Catagories").GetComponent<UiElement>();
+        topList = GameObject.Find("Top List").GetComponent<UiList>();
+        catagoryList = GameObject.Find("Item Catagories").GetComponent<UiList>();
+        itemsList = GameObject.Find("Item List").GetComponent<UiList>();
 
         foreach(Transform child in GameObject.Find("ArsenalSlotDisplay").transform)
             slots.Add(child.GetComponent<UiElement>());
@@ -42,6 +43,8 @@ public class ArsenalTab : MenuTab
 
         foreach(Transform child in GameObject.Find("Item Catagories").transform)
             catagories.Add(child.GetComponent<UiElement>());
+
+        arsenalSlotDisplay.ActivateList();
     }
 
     new public void Update()
@@ -50,23 +53,20 @@ public class ArsenalTab : MenuTab
         if(UIManager.state == "menu")
         {
             if(UIManager.currentTab == "arsenal")
-            {
                 UpdateActive();
-            }
             else
-            {
                 UpdateInactive();
-            }
         }
     }
 
     new public void UpdateActive()
     {
         base.UpdateActive();
-        UpdateCursor();
         UpdateAction();
         if(state == "display")
             UpdateDisplay();
+        if(state == "itemList" || state == "catagoryList")
+            UpdateItems();
     }
 
     void UpdateAction()
@@ -83,10 +83,11 @@ public class ArsenalTab : MenuTab
                     break;
 
                 case "topList":
-                    switch(selectedSlotIndex)
+                    switch(topList.index)
                     {
                         case 0:
                             newState = "catagoryList";
+                            action = "refresh";
                             break;
                         case 1:
                             newState = "upgrade";
@@ -98,7 +99,7 @@ public class ArsenalTab : MenuTab
                     break;
 
                 case "catagoryList":
-                    action = "equip";
+                    newState = "itemList";
                     break;
 
                 case "upgrade":
@@ -126,6 +127,11 @@ public class ArsenalTab : MenuTab
                             break;
                     }
                     break;
+                
+                case "itemList":
+                    newState = "display";
+                    action = "equip";
+                    break;
             }
         }
         else if(Input.GetKeyDown(KeyCode.X))
@@ -144,16 +150,17 @@ public class ArsenalTab : MenuTab
                 case "upgrade":
                     newState = "topList";
                     break;
+                case "itemList":
+                    newState = "catagoryList";
+                    break;
             }
         }
 
+        if(action != null)
+            DoArsenalAction(action);
+
         if(newState != null)
             ChangeDisplayState(newState);
-
-        /*
-        if(newAction != null)
-            DoArsenalAction(action, selectedItem);
-        */
     }
 
     void ChangeDisplayState(string newState)
@@ -161,42 +168,148 @@ public class ArsenalTab : MenuTab
         switch(newState)
         {
             case "display":
-                ForceCursorMove(slots[0]);
-
-                topList.DeactivateAll();
+                topList.DeactivateAll(0.25f, 2);
                 arsenalSlotDisplay.ActivateAll();
                 statList.ActivateAll();
+                itemsList.DeactivateAll();
 
-                foreach(UiElement slot in slots)
-                    slot.Activate(0.25f, 0);
+                arsenalSlotDisplay.ActivateList();
+                topList.DeactivateList();
+                itemsList.DeactivateList();
+
+                arsenalSlotDisplay.SelectedElement().Activate(0.25f, 0);
 
                 break;
 
             case "topList":
-                ForceCursorMove(topListItems[0]);
+                topList.ActivateAll(0.25f, 1);
+                catagoryList.DeactivateAll(0.25f, 2);
 
-                topList.ActivateAll();
                 catagoryList.DeactivateAll();
                 arsenalSlotDisplay.DeactivateAll();
                 statList.DeactivateAll();
+
+                topList.ActivateList();
+                arsenalSlotDisplay.DeactivateList();
+                catagoryList.DeactivateList();
                 
-                slots[selectedSlotIndex].Activate(0.25f, 1);
+                
+                arsenalSlotDisplay.SelectedElement().ActivateAll(0.25f, 1);
 
                 break;
 
             case "catagoryList":
-                ForceCursorMove(catagories[0]);
+                catagoryList.ActivateAll(0.25f, 1);
+                topList.DeactivateAll(0.25f, 0);
+                itemsList.DeactivateAll();
 
-                catagoryList.ActivateAll();
+                catagoryList.ActivateList();
+                topList.DeactivateList();
+                itemsList.DeactivateList();
+
+                break;
+
+            case "itemList":
+                itemsList.ActivateAll();
+                catagoryList.DeactivateAll(0.25f, 0);
+
+                itemsList.ActivateList();
+                catagoryList.DeactivateList();
 
                 break;
         }
         state = newState;
-        selectedSlotIndex = 0;
     }
+
+    void DoArsenalAction(string action)
+    {
+        switch(action)
+        {
+            case "equip":
+                switch(catagoryList.SelectedIndex())
+                {
+                    case 0:
+                        EquipItem(PlayerStats.shots[itemsList.SelectedIndex()]);
+                        break;
+                    case 1:
+                        EquipItem(PlayerStats.spells[itemsList.SelectedIndex()]);
+                        break;
+                    case 2:
+                        EquipItem(PlayerStats.consumables[itemsList.SelectedIndex()]);
+                        break;
+                }
+                break;
+
+            case "refresh":
+                RefreshItemList();
+                break;
+        }
+    }
+
+    void RefreshItemList()
+    {
+        itemsList.Clear();
+    }
+
+    void EquipItem(BattleSlotBase item)
+    {
+        int index = arsenalSlotDisplay.SelectedIndex();
+        BattleSlotBase oldItem = PlayerStats.battleSlots[index];
+        BattleSlotBase newItem = item;
+        Transform oldItemTransform = slots[index].transform;
+        Transform newItemTransform = itemsList.SelectedElement().GetChild(3).transform;
+        Vector2 oldItemPos = oldItemTransform.position;
+        Vector2 newItemPos = newItemTransform.position;
+        Vector2 slotPos = slots[index].storedWaypoints[0];
+        
+        PlayerStats.battleSlots.Insert(index, newItem);
+        switch(oldItem.GetType().ToString())
+        {
+            case "PlayerAttack":
+                PlayerStats.shots.Insert(0, (PlayerAttack)oldItem);
+                break;
+            case "PlayerSpell":
+                PlayerStats.spells.Insert(0, (PlayerSpell)oldItem);
+                break;
+            case "Consumable":
+                PlayerStats.consumables.Insert(0, (Consumable)oldItem);
+                break;
+        }
+
+        PlayerStats.battleSlots.RemoveAt(index + 1);
+        switch(newItem.GetType().ToString())
+        {
+            case "PlayerAttack":
+                PlayerStats.shots.Remove((PlayerAttack)newItem);
+                break;
+            case "PlayerSpell":
+                PlayerStats.spells.Remove((PlayerSpell)newItem);
+                break;
+            case "Consumable":
+                PlayerStats.consumables.Remove((Consumable)newItem);
+                break;
+        }
+
+        newItemTransform.position = oldItemPos;
+        oldItemTransform.position = newItemPos;
+
+        oldItemTransform.GetComponent<RectTransform>().sizeDelta = new Vector2(92, 92);
+        newItemTransform.GetComponent<RectTransform>().sizeDelta = new Vector2(120, 120);
+
+        slots[index].SetNewWaypointAndSize(slotPos, new Vector2(120, 120), 0.25f, 0);
+        itemsList.SelectedElement().GetComponent<UiElement>().Deactivate();
+    }
+    
     void UpdateDisplay()
     {
-        selectedItem = PlayerStats.battleSlots[selectedSlotIndex];
+        selectedItem = PlayerStats.battleSlots[arsenalSlotDisplay.index];
+        for(int i = 0; i < 7; i++)
+        {
+            Debug.Log(slots[i].transform.childCount);
+            slots[i].transform.GetChild(0).GetComponent<Image>().sprite = PlayerStats.battleSlots[i].sprite;
+
+        }
+        
         itemName.SetText(selectedItem.name);
         
         if(selectedItem.GetType().ToString() == "Consumable")
@@ -225,112 +338,79 @@ public class ArsenalTab : MenuTab
             stats[1].GetChild().SetText("Speed -");
             stats[2].GetChild().SetText("Range -");
             stats[3].GetChild().SetText("Accu. -");
-            stats[4].GetChild().SetText("Cost -");
+            stats[4].GetChild().SetText("Cost  -");
         }
     }
 
-    void UpdateCursor()
+    void UpdateItemList()
     {
-        float x = 0;
-        float y = 0;
-
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
-            x += -1;
-        if(Input.GetKeyDown(KeyCode.RightArrow))
-            x += 1;
-        if(Input.GetKeyDown(KeyCode.DownArrow))
-            y += -1;
-        if(Input.GetKeyDown(KeyCode.UpArrow))
-            y += 1;
-
-        if(x != 0 || y != 0)
-            MoveCursor(x, y);
+        switch(catagoryList.SelectedIndex())
+        {
+            case 0:
+                for(int i = 0; i < PlayerStats.shots.Count; i++)
+                {
+                    itemsList[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = PlayerStats.shots[i].name;
+                    itemsList[i].GetChild(3).GetChild(0).GetComponent<Image>().sprite = PlayerStats.shots[i].sprite;
+                }
+                break;
+            case 1:
+                for(int i = 0; i < PlayerStats.spells.Count; i++)
+                {
+                    itemsList[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = PlayerStats.spells[i].name;
+                    itemsList[i].GetChild(3).GetChild(0).GetComponent<Image>().sprite = PlayerStats.spells[i].sprite;
+                }
+                break;
+            case 2:
+                for(int i = 0; i < PlayerStats.consumables.Count; i++)
+                {
+                    itemsList[i].GetChild(0).GetComponent<TextMeshProUGUI>().text = PlayerStats.consumables[i].name;
+                    itemsList[i].GetChild(3).GetChild(0).GetComponent<Image>().sprite = PlayerStats.consumables[i].sprite;
+                }
+                break;
+        }
     }
 
-    void MoveCursor(float x, float y)
+    void UpdateItems()
     {
-        List<UiElement> activeMoveSpots = new List<UiElement>(); 
+        MakeItemList();
+        UpdateItemList();
+    }
 
-        switch(state)
+    void MakeItemList()
+    {
+        int diff = 0;
+        switch(catagoryList.SelectedIndex())
         {
-            case "display":
-                activeMoveSpots = slots;
+            case 0:
+                diff = PlayerStats.shots.Count - itemsList.Count;
                 break;
-            case "topList":
-                activeMoveSpots = topListItems;
+            case 1:
+                diff = PlayerStats.spells.Count - itemsList.Count;
                 break;
-            case "catagoryList":
-                activeMoveSpots = catagories;
+            case 2:
+                diff = PlayerStats.consumables.Count - itemsList.Count;
                 break;
         }
 
-        Vector3 bestPos = new Vector3(999999, 999999, 999999);
-        UiElement bestSpot = null;
-        float bestPri = 999999;
-        int index = -1;
-
-        foreach(UiElement spot in activeMoveSpots)
+        if(diff > 0)
         {
-            index++;
-
-            Vector3 spotPosition = cursor.transform.parent.InverseTransformPoint(spot.transform.position);
-            Vector3 cursorPosition = cursor.transform.localPosition;
-            float distance = Vector3.Distance(spotPosition, cursorPosition);
-            float priority = 999999;
-
-            // Check if spot is valid, givin the direction
-            if(spotPosition.x - cursorPosition.x > 0 == x < 0 && x != 0)
-                continue;
-            if(spotPosition.y - cursorPosition.y > 0 == y < 0 && y != 0)
-                continue;
-            if(distance <= 1)
-                continue;
-            
-            // Make priority based on distance and angle
-            if(x != 0)
-                priority = MakePriority(cursorPosition, spotPosition, distance, "y");
-            if(y != 0)
-                priority = MakePriority(cursorPosition, spotPosition, distance, "x");
-            
-            // Assign if priority is best
-            if(priority < bestPri)
+            for(int i = 0; i < diff; i++)
             {
-                bestPri = priority;
-                bestPos = spotPosition;
-                selectedSlotIndex = index;
-                bestSpot = spot;
+                Transform newElement = Instantiate(Resources.Load("ui/uiItem") as GameObject, itemsList.transform, false).transform;
+                newElement.GetComponent<RectTransform>().anchoredPosition = new Vector2(300, -100 * itemsList.Count - 46);
+                Debug.Log(newElement.localPosition);
+                itemsList.AddElement(newElement);
             }
         }
-
-        if(bestSpot != null)
+        else if(diff < 0)
         {
-            cursor.SetNewWaypoint(bestPos, 0.1f);
-            cursor.transform.GetComponent<RectTransform>().sizeDelta = bestSpot.transform.GetComponent<RectTransform>().sizeDelta + new Vector2(20, 20);
+            for(int i = 0; i > diff; i--)
+            {
+                Transform targetElement = itemsList[itemsList.Count - 1];
+                itemsList.RemoveElement();
+                Destroy(targetElement.gameObject);
+            }
         }
     }
-    
-    public void ForceCursorMove(UiElement spot)
-    {
-        Vector3 waypoint = cursor.transform.parent.InverseTransformPoint(spot.transform.position);
-        Vector2 size = spot.transform.GetComponent<RectTransform>().sizeDelta + new Vector2(20, 20);
-        cursor.SetNewWaypoint(waypoint, 0.05f);
-        cursor.transform.GetComponent<RectTransform>().sizeDelta = size;
-    }
 
-    float MakePriority(Vector3 cursorPosition, Vector3 spotPosition, float distance, string cord)
-    {
-        float pri;
-        float component = 0;
-
-        if(cord == "x")
-            component = Mathf.Abs(spotPosition.x - cursorPosition.x);
-        else if(cord == "y")
-            component = Mathf.Abs(spotPosition.y - cursorPosition.y);
-        else
-            Debug.LogError("Invalid direction");
-
-        pri = 1 - (Mathf.Acos(component / distance) / Mathf.PI);
-
-        return pri * distance;
-    }
 }

@@ -26,8 +26,8 @@ public class PlayerManager : MonoBehaviour
     static void UpdateStatic(GameObject playerObj)
     {
         AssignPlayerReferences(playerObj);
-        PlayerShoot.Update();
-        PlayerMove.Update();
+        //PlayerShoot.Update();
+        //PlayerMove.Update();
         PlayerStats.Update();
     }
 

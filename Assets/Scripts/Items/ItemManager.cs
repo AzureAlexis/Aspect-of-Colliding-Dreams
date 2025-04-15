@@ -31,6 +31,7 @@ public class ItemManager
     {
         attackData.Add(new PlayerAttack(){
             name = "Sonic Wave",
+            sprite = Resources.Load<Sprite>("sprites/icons/sonicWaveIcon"),
             publicPower = "D+",
             publicSpeed = "C+",
             publicRange = "D+",
@@ -42,6 +43,7 @@ public class ItemManager
 
         attackData.Add(new PlayerAttack(){
             name = "Magic Missile",
+            sprite = Resources.Load<Sprite>("sprites/icons/magicMissileIcon"),
             publicPower = "B",
             publicSpeed = "D+",
             publicRange = "D",
@@ -53,6 +55,7 @@ public class ItemManager
 
         attackData.Add(new PlayerAttack(){
             name = "Riftbinder",
+            sprite = Resources.Load<Sprite>("sprites/icons/riftbinderIcon"),
             publicPower = "D",
             publicSpeed = "C",
             publicRange = "A-",
@@ -67,6 +70,7 @@ public class ItemManager
     {
         spellData.Add(new PlayerSpell(){
             name = "Rising Inferno",
+            sprite = Resources.Load<Sprite>("sprites/icons/risingInfernoIcon"),
             publicPower = "B+",
             publicSpeed = "B",
             publicRange = "A",
@@ -135,6 +139,7 @@ public class ItemManager
     {
         consumableData.Add(new Consumable(){
             name = "Life Stone",
+            sprite = Resources.Load<Sprite>("sprites/icons/lifeStoneIcon"),
             effect = "hp",
             value = 0.3f,
             limit = 2,
@@ -144,6 +149,7 @@ public class ItemManager
 
         consumableData.Add(new Consumable(){
             name = "Anima Dust",
+            sprite = Resources.Load<Sprite>("sprites/icons/animaDustIcon"),
             effect = "ap",
             value = 0.2f,
             limit = 8,
@@ -153,6 +159,7 @@ public class ItemManager
 
         consumableData.Add(new Consumable(){
             name = "Anima Shard",
+            sprite = Resources.Load<Sprite>("sprites/icons/animaShardIcon"),
             effect = "ap",
             value = 0.4f,
             limit = 6,
@@ -162,6 +169,7 @@ public class ItemManager
 
         consumableData.Add(new Consumable(){
             name = "Anima Crystal",
+            sprite = Resources.Load<Sprite>("sprites/icons/animaCrystalIcon"),
             effect = "ap",
             value = 0.8f,
             limit = 4,
