@@ -10,11 +10,15 @@ public class PlayerShoot
     static bool[] keysDown = new bool[6];
     static bool[] keys = new bool[6];
 
+    // Actions
     static BattleSlotBase currentAction;
+    static int currentIndex;
+
+    // Ongoing Actions (spells)
+    public static PlayerSpell currentSpell;
     static List<float> cooldowns = new List<float>();
     static float globalCooldown = 0;
     public static bool spellActive = false;
-    public static PlayerPattern activeSpell;
     public static float patternTime;
 
     public static void Update()
@@ -34,13 +38,43 @@ public class PlayerShoot
     static void MakeAction()
     {
         for(int i = 0; i < 7; i++)
+        {
             if(keysDown[i])
+            {
                 currentAction = PlayerStats.battleSlots[i];
+                currentIndex = i;
+                return;
+            }
+        }
+        for(int i = 0; i < 7; i++)
+        {
+            if(keys[i] && PlayerStats.battleSlots[i].GetType().ToString() == "PlayerAttack")
+            {
+                currentAction = PlayerStats.battleSlots[i];
+                currentIndex = i;
+                return;
+            }
+        }
+        currentAction = null;
     }
 
     static void DoAction()
     {
-
+        if(currentAction != null)
+        {
+            switch (currentAction.GetType().ToString())
+            {
+                case "PlayerAttack":
+                    UpdateShot((PlayerAttack)currentAction);
+                    break;
+                case "PlayerSpell":
+                    StartSpell((PlayerSpell)currentAction);
+                    break;
+                case "PlayerItem":
+                    UseItem(currentAction);
+                    break;
+            }
+        }
     }
 
     public static void UpdateInputs()
@@ -102,35 +136,31 @@ public class PlayerShoot
 
     static void UpdateSpells()
     {
-        if(BattleManager.IsActive())
+        if(spellActive)
         {
-            if(Input.GetKeyDown(KeyCode.X) && !spellActive)
+            patternTime += Time.deltaTime;
+            FireShotsReady(currentSpell);
+
+            if(patternTime > currentSpell.length)
             {
-                StartSpell(PlayerStats.spell1);
-            }
-            else if(spellActive)
-            {
-                UpdateActiveSpell();
+                EndSpell();
             }
         }
     }
 
-    static void StartSpell(int id)
+    static void UpdateShot(PlayerAttack shot)
+    {
+        shot.time += Time.smoothDeltaTime;
+        FireShotsReady(shot);
+        if(shot.time >= shot.length)
+            shot.time -= shot.length;
+    }
+
+    static void StartSpell(PlayerSpell spell)
     {
         spellActive = true;
-        activeSpell = PatternManager.GetPlayerPattern(id);
+        activeSpell = spell.pattern;;
         PlayerStats.invState = 1;
-    }
-
-    static void UpdateActiveSpell()
-    {
-        patternTime += Time.deltaTime;
-        FireShotsReady();
-
-        if(patternTime > activeSpell.endTime)
-        {
-            EndSpell();
-        }
     }
 
     static void EndSpell()
@@ -139,19 +169,20 @@ public class PlayerShoot
         activeSpell = null;
     }
 
-    static void FireShotsReady()
+    static void FireShotsReady(BattleSlotBase shot)
     {
-        for(int i = 0; i < activeSpell.shots.Count; i++)
+        for(int i = 0; i < shot.pattern.shots.Count; i++)
         {
-            if(InRange(activeSpell.shots[i]))
+            if(InRange(shot, i))
             {
                 DanmakuManager.Fire(activeSpell.shots[i].data.danmaku, player);
             }
         }
     }
 
-    static public bool InRange(PlayerShot shot)
+    static public bool InRange(BattleSlotBase slot, int shotIndex)
     {
+        PlayerShot shot = slot.pattern.shots[shotIndex];
         float startTime = shot.startTime;
         float endTime = shot.endTime;
         float loopDelay = shot.loopDelay;
