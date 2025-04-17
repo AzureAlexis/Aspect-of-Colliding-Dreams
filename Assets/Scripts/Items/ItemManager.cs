@@ -14,7 +14,9 @@ public class ItemManager
     void Start()
     {
         if(!built)
+        {
             ItemManager.BuildDatabase();
+        }
     }
 
     private static void BuildDatabase()
@@ -32,6 +34,7 @@ public class ItemManager
         attackData.Add(new PlayerAttack(){
             name = "Sonic Wave",
             sprite = Resources.Load<Sprite>("sprites/icons/sonicWaveIcon"),
+            pattern = PatternManager.GetPlayerPattern(0),
             publicPower = "D+",
             publicSpeed = "C+",
             publicRange = "D+",
@@ -241,6 +244,7 @@ public class ItemManager
             if(spellData[i].name == name)
                 return spellData[i];
         }
+        Debug.LogError("Couldn't find a matching item for: " + name);
         return null;
     }
     public static string GetAbilityDesc(string ability)

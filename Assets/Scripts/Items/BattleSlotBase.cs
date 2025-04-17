@@ -17,7 +17,7 @@ public class BattleSlotBase
     public string flavorShort;
     public int limit;                       // How many of these can be equipped in one slot
 
-    public PlayerPattern pattern;
+    public PlayerPattern pattern = new PlayerPattern();
     public float time = 0;
     public float length;
 }

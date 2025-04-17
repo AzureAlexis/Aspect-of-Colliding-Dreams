@@ -12,7 +12,6 @@ public class BattleManager : MonoBehaviour
         {
             if(activate)
             {
-                TextManager.StartConversation("prefight");
                 BattleManager.EnterBattle();
             }
             else

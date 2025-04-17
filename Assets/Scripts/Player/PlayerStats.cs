@@ -48,7 +48,7 @@ public class PlayerStats
     public static List<PlayerSpell> spells = new List<PlayerSpell>();
     public static Equipment weapon;                                        // The equipped weapon
     public static Equipment armor;                                         // The equipped armor
-    public static List<Equipment> charms;                                  // The equipped charms
+    public static List<Equipment> charms = new List<Equipment>();                                  // The equipped charms
 
     public static GameObject danmaku1;
     public static GameObject circle;
@@ -74,13 +74,19 @@ public class PlayerStats
         {
             GainItem("Rising Inferno", 1);
         }
-        /*
+        if(weapon == null)
+        {
+            EquipEquipment((Equipment)ItemManager.GetItemByName("Star Furnace"));
+        }
+        if(armor == null)
+        {
+            EquipEquipment((Equipment)ItemManager.GetItemByName("Dusty Broom"));
+        }
         CalculateStats();
         CalculateHP();
         CalculateAP();
-        CalculateInv();
-        UIManager.UpdatePlayerHp(hp);
-        */
+        //CalculateInv();
+        //UIManager.UpdatePlayerHp(hp);
     }
 
     static void CalculateStats()
@@ -267,6 +273,27 @@ public class PlayerStats
             battleSlots.Add(item);
         else
             battleSlots[index] = item;
+    }
+
+    public static void EquipEquipment(Equipment item)
+    {
+        switch(item.slot)
+        {
+            case 1:
+                if(weapon != null)
+                    GainItem(weapon.name);
+                weapon = item;
+                break;
+            case 2:
+                if(armor != null)
+                    GainItem(armor.name);
+                armor = item;
+                break;
+            case 0:
+                charms.Add(item);
+                break;
+            
+        }
     }
 
     static void CalculateInv()

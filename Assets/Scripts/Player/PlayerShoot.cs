@@ -15,7 +15,7 @@ public class PlayerShoot
     static int currentIndex;
 
     // Ongoing Actions (spells)
-    public static PlayerSpell currentSpell;
+    public static PlayerSpell activeSpell;
     static List<float> cooldowns = new List<float>();
     static float globalCooldown = 0;
     public static bool spellActive = false;
@@ -37,7 +37,7 @@ public class PlayerShoot
 
     static void MakeAction()
     {
-        for(int i = 0; i < 7; i++)
+        for(int i = 0; i < 6; i++)
         {
             if(keysDown[i])
             {
@@ -46,7 +46,7 @@ public class PlayerShoot
                 return;
             }
         }
-        for(int i = 0; i < 7; i++)
+        for(int i = 0; i < 6; i++)
         {
             if(keys[i] && PlayerStats.battleSlots[i].GetType().ToString() == "PlayerAttack")
             {
@@ -71,7 +71,7 @@ public class PlayerShoot
                     StartSpell((PlayerSpell)currentAction);
                     break;
                 case "PlayerItem":
-                    UseItem(currentAction);
+                    UseItem((Consumable)currentAction);
                     break;
             }
         }
@@ -139,9 +139,9 @@ public class PlayerShoot
         if(spellActive)
         {
             patternTime += Time.deltaTime;
-            FireShotsReady(currentSpell);
+            FireShotsReady(activeSpell);
 
-            if(patternTime > currentSpell.length)
+            if(patternTime > activeSpell.length)
             {
                 EndSpell();
             }
@@ -159,7 +159,6 @@ public class PlayerShoot
     static void StartSpell(PlayerSpell spell)
     {
         spellActive = true;
-        activeSpell = spell.pattern;;
         PlayerStats.invState = 1;
     }
 
@@ -169,13 +168,13 @@ public class PlayerShoot
         activeSpell = null;
     }
 
-    static void FireShotsReady(BattleSlotBase shot)
+    static void FireShotsReady(BattleSlotBase slot)
     {
-        for(int i = 0; i < shot.pattern.shots.Count; i++)
+        for(int i = 0; i < slot.pattern.shots.Count; i++)
         {
-            if(InRange(shot, i))
+            if(InRange(slot, i))
             {
-                DanmakuManager.Fire(activeSpell.shots[i].data.danmaku, player);
+                DanmakuManager.Fire(slot.pattern.shots[i].data.danmaku, player);
             }
         }
     }
@@ -195,7 +194,7 @@ public class PlayerShoot
 
         for(int i = 0; i < shotTimes.Count; i++)
         {
-            if(shotTimes[i] - Time.deltaTime < patternTime && shotTimes[i] >= patternTime)
+            if(shotTimes[i] - Time.deltaTime < slot.time && shotTimes[i] >= slot.time)
             {
                 return true;
             }

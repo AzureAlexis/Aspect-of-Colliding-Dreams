@@ -43,14 +43,14 @@ public class PlayerManager : MonoBehaviour
     {
         inBattle = true;
         PlayerMove.EnterBattle();
-        player.GetComponent<Animator>().SetBool("Battle", true);
+        //player.GetComponent<Animator>().SetBool("Battle", true);
     }
 
     public static void ExitBattle()
     {
         inBattle = false;
         PlayerMove.ExitBattle();
-        player.GetComponent<Animator>().SetBool("Battle", false);
+        //player.GetComponent<Animator>().SetBool("Battle", false);
     }
 
     public static void TakeDamage(float damage)

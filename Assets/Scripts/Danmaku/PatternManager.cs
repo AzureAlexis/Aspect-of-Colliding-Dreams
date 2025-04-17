@@ -25,14 +25,16 @@ public class PatternManager : MonoBehaviour
     public static AudioSource big;
     public static AudioSource strange;
 
+    static bool built = false;
+
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
-
-        PatternManager.small = smallAttack;
-        PatternManager.big = bigAttack;
-        PatternManager.strange = strangeAttack;
-
+        if(!PatternManager.built)
+            BuildDatabase();
+    }
+    private static void BuildDatabase()
+    {
+        built = true;
         PatternManager.LoadMaterials();
         PatternManager.CreateInitialEnemyShots();
         PatternManager.CreateInitialEnemyPatterns();
@@ -714,21 +716,29 @@ public class PatternManager : MonoBehaviour
 
     public static EnemyPattern GetEnemyPattern(int id)
     {
+        if(!built)
+            BuildDatabase();
         return enemyPatterns[id];
     }
 
     public static EnemyShotData GetEnemyShot(int id)
     {
+        if(!built)
+            BuildDatabase();
         return enemyShots[id];
     }
 
     public static PlayerShotData GetPlayerShot(int id)
     {
+        if(!built)
+            BuildDatabase();
         return playerShots[id];
     }
 
     public static PlayerPattern GetPlayerPattern(int id)
     {
+        if(!built)
+            BuildDatabase();
         return playerPatterns[id];
     }
 
