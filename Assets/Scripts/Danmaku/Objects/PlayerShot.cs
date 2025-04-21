@@ -4,6 +4,6 @@ public class PlayerShot
 {
     public PlayerShotData data;
     public float startTime;
-    public float endTime;
-    public float loopDelay;
+    public float endTime = 99;
+    public float loopDelay = 99;
 }

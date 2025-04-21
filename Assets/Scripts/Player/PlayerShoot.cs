@@ -150,10 +150,11 @@ public class PlayerShoot
 
     static void UpdateShot(PlayerAttack shot)
     {
-        shot.time += Time.smoothDeltaTime;
+        Debug.Log(shot.time);
         FireShotsReady(shot);
+        shot.time += Time.smoothDeltaTime;
         if(shot.time >= shot.length)
-            shot.time -= shot.length;
+            shot.time = 0;
     }
 
     static void StartSpell(PlayerSpell spell)
@@ -194,7 +195,7 @@ public class PlayerShoot
 
         for(int i = 0; i < shotTimes.Count; i++)
         {
-            if(shotTimes[i] - Time.deltaTime < slot.time && shotTimes[i] >= slot.time)
+            if(shotTimes[i] - Time.smoothDeltaTime < slot.time && shotTimes[i] >= slot.time)
             {
                 return true;
             }

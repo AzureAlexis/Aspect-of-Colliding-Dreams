@@ -46,7 +46,7 @@ public class PatternManager : MonoBehaviour
     {
         smallBulletRed = Resources.Load("bullets/smallBulletRed", typeof(Material)) as Material;
         bigBulletRed = Resources.Load("bullets/bigBulletRed", typeof(Material)) as Material;
-        playerBullet = Resources.Load("playerBullet", typeof(GameObject)) as GameObject;
+        playerBullet = Resources.Load("bullets/playerBullet", typeof(GameObject)) as GameObject;
 
     }
 
@@ -651,7 +651,7 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[0].danmaku.Add(new DanmakuData());
-            playerShots[0].danmaku[i].speed = 20;
+            playerShots[0].danmaku[i].speed = 30;
             playerShots[0].danmaku[i].player = true;
 
             playerShots[0].danmaku[i].dir = 90;
@@ -664,10 +664,10 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[1].danmaku.Add(new DanmakuData());
-            playerShots[1].danmaku[i].speed = 20;
+            playerShots[1].danmaku[i].speed = 30;
             playerShots[1].danmaku[i].player = true;
 
-            playerShots[1].danmaku[i].dir = 60 * (i + 1);
+            playerShots[1].danmaku[i].dir = 87.5f + (i * 5);
 
             playerShots[1].danmaku[i].prefab = playerBullet;
         }
@@ -675,7 +675,7 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[2].danmaku.Add(new DanmakuData());
-            playerShots[2].danmaku[i].speed = 20;
+            playerShots[2].danmaku[i].speed = 30;
             playerShots[2].danmaku[i].player = true;
 
             playerShots[2].danmaku[i].dir = 85 + (i * 10);
@@ -688,7 +688,7 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[3].danmaku.Add(new DanmakuData());
-            playerShots[3].danmaku[i].speed = 20;
+            playerShots[3].danmaku[i].speed = 30;
             playerShots[3].danmaku[i].player = true;
 
             playerShots[3].danmaku[i].dir = 75 + (i * 30);
@@ -697,20 +697,82 @@ public class PatternManager : MonoBehaviour
             playerShots[3].danmaku[i].prefab = playerBullet;
         }
 
+        /*
+            Magic Missile (lv1)
+        */
+        playerShots.Add(new PlayerShotData());
+        for(int i = 0; i < 2; i++)
+        {
+            playerShots[4].danmaku.Add(new DanmakuData());
+            playerShots[4].danmaku[i].speed = 0;
+            playerShots[4].danmaku[i].speedAcc = 60;
+            playerShots[4].danmaku[i].player = true;
+
+            playerShots[4].danmaku[i].dir = 90;
+            playerShots[4].danmaku[i].position = new Vector2(-0.25f + i * 0.5f, 0);
+            playerShots[4].danmaku[i].posBehavior = "normalMod";
+
+            playerShots[4].danmaku[i].prefab = playerBullet;
+        }
+        playerShots.Add(new PlayerShotData());
+        for(int i = 0; i < 2; i++)
+        {
+            playerShots[5].danmaku.Add(new DanmakuData());
+            playerShots[5].danmaku[i].speed = 0;
+            playerShots[5].danmaku[i].speedAcc = 60;
+            playerShots[5].danmaku[i].player = true;
+
+            playerShots[5].danmaku[i].dir = 90;
+            playerShots[5].danmaku[i].position = new Vector2(-0.5f + i, 0);
+            playerShots[5].danmaku[i].posBehavior = "normalMod";
+
+            playerShots[5].danmaku[i].prefab = playerBullet;
+        }
+
     }
 
     static void CreateInitialPlayerPatterns()
     {
+        /*
+            Sonic Wave
+        */
         playerPatterns.Add(new PlayerPattern());
-        playerPatterns[0].name = "Move tutorial";
-        playerPatterns[0].endTime = 8;
-
+        playerPatterns[0].name = "Sonic Wave Lv1";
         playerPatterns[0].shots.Add(new PlayerShot
         {
             data = GetPlayerShot(0),
-            startTime = 0,
-            endTime = 2.375f,
-            loopDelay = 0.02f
+            startTime = 0f
+        });
+        playerPatterns[0].shots.Add(new PlayerShot
+        {
+            data = GetPlayerShot(1),
+            startTime = 0.025f
+        });
+        playerPatterns[0].shots.Add(new PlayerShot
+        {
+            data = GetPlayerShot(2),
+            startTime = 0.05f
+        });
+        playerPatterns[0].shots.Add(new PlayerShot
+        {
+            data = GetPlayerShot(3),
+            startTime = 0.075f
+        });
+
+        /*
+            Magic Missile
+        */
+        playerPatterns.Add(new PlayerPattern());
+        playerPatterns[1].name = "Sonic Wave Lv1";
+        playerPatterns[1].shots.Add(new PlayerShot
+        {
+            data = GetPlayerShot(4),
+            startTime = 0f
+        });
+        playerPatterns[1].shots.Add(new PlayerShot
+        {
+            data = GetPlayerShot(5),
+            startTime = 0.25f
         });
     }
 

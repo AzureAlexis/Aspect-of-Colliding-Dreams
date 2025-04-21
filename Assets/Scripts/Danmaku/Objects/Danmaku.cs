@@ -38,6 +38,7 @@ public class Danmaku
     public void Update()
     {
         UpdatePosition();
+        UpdateSpeed();
         UpdateDir();
         UpdateTime();
         UpdateCollision();
@@ -52,6 +53,11 @@ public class Danmaku
         moveVector *= speed;
 
         position += moveVector;
+    }
+
+    void UpdateSpeed()
+    {
+        speed += speedAcc * Time.deltaTime;
     }
 
     void UpdateDir()

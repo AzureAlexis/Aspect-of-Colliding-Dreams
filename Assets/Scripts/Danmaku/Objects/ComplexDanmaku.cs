@@ -7,6 +7,11 @@ public class ComplexDanmaku : MonoBehaviour
     public float cooldown = 0.1f;
     public bool active = false;
     public bool spell = false;
+        public float dirAcc = 0;
+    public string dirMod;                  // If not null, used in conjunction with dir for more complex movements
+    public string dirBehavior = "normal";  // The way the danmaku figures out where to move
+    public float speedAcc = 0;
+    public float time = 0;                      // How long has the danmaku existed (seconds)
 
     void Start()
     {
@@ -19,6 +24,8 @@ public class ComplexDanmaku : MonoBehaviour
         if(active)
         {
             UpdatePosition();
+            UpdateSpeed();
+            UpdateDir();
             UpdateDestroy();
         }
     }
@@ -31,6 +38,16 @@ public class ComplexDanmaku : MonoBehaviour
         moveVector *= speed;
 
         transform.position += moveVector;
+    }
+
+    void UpdateSpeed()
+    {
+        speed += speedAcc * Time.deltaTime;
+    }
+
+    void UpdateDir()
+    {
+        transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + dirAcc * Time.deltaTime);
     }
 
     void UpdateDestroy()
@@ -46,6 +63,8 @@ public class ComplexDanmaku : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, data.dir);
         
         speed = data.speed;
+        speedAcc = data.speedAcc;
+        dirAcc = data.dirAcc;
         active = true;
     }
 

@@ -35,6 +35,7 @@ public class ItemManager
             name = "Sonic Wave",
             sprite = Resources.Load<Sprite>("sprites/icons/sonicWaveIcon"),
             pattern = PatternManager.GetPlayerPattern(0),
+            length = 0.1f,
             publicPower = "D+",
             publicSpeed = "C+",
             publicRange = "D+",
@@ -47,6 +48,8 @@ public class ItemManager
         attackData.Add(new PlayerAttack(){
             name = "Magic Missile",
             sprite = Resources.Load<Sprite>("sprites/icons/magicMissileIcon"),
+            pattern = PatternManager.GetPlayerPattern(1),
+            length = 0.5f,
             publicPower = "B",
             publicSpeed = "D+",
             publicRange = "D",

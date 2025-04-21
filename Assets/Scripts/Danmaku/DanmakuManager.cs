@@ -81,7 +81,7 @@ public class DanmakuManager : MonoBehaviour
         Danmaku danmaku = new Danmaku();
 
         danmaku.speed = danmakuData.speed;
-        danmaku.complex = danmakuData.complex;
+        danmaku.complex = danmakuData.complex || danmakuData.player == true;
         danmaku.material = danmakuData.material;
         danmaku.dirAcc = danmakuData.dirAcc;
         danmaku.speedAcc = danmakuData.speedAcc;
@@ -100,6 +100,9 @@ public class DanmakuManager : MonoBehaviour
                     case "sinX":
                         float x = Mathf.Sin(PlayerShoot.patternTime * 4);
                         mod += new Vector3(x * danmakuData.position.x,0,0);
+                        break;
+                    default:
+                        mod = danmakuData.position;
                         break;
                 }
 
@@ -121,6 +124,22 @@ public class DanmakuManager : MonoBehaviour
                 Vector2 playerPos = PlayerStats.player.transform.position;
                 Vector2 dif = danmaku.position - playerPos;
                 danmaku.dir = (Mathf.Atan2(dif.x, dif.y) * 180 / Mathf.PI) + danmakuData.dir;
+                break;
+
+            case "enemy":
+                var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+                Vector2 bestPos = enemies[0].transform.position;
+                float priority = Vector2.Distance(danmaku.position, bestPos);
+                for(int i = 0; i < enemies.Length; i++)
+                {
+                    Vector2 tempPos = enemies[i].transform.position;
+                    if(Vector2.Distance(danmaku.position, tempPos) < priority)
+                    {
+                        bestPos = tempPos;
+                        priority = Vector2.Distance(danmaku.position, tempPos);
+                    }
+                }
+                danmaku.dir = Mathf.Atan2(bestPos.x, bestPos.y) * 180 / Mathf.PI;
                 break;
         }
 
