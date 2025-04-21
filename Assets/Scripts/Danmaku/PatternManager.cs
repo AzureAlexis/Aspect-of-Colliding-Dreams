@@ -15,7 +15,10 @@ public class PatternManager : MonoBehaviour
     static List<PlayerShotData> playerShots = new List<PlayerShotData>();
     public static Material smallBulletRed;
     public static Material bigBulletRed;
-    public static GameObject playerBullet;
+
+    public static GameObject sonicWave;
+    public static GameObject magicMissile;
+    public static GameObject riftbinder;
 
     public AudioSource smallAttack;
     public AudioSource bigAttack;
@@ -46,7 +49,10 @@ public class PatternManager : MonoBehaviour
     {
         smallBulletRed = Resources.Load("bullets/smallBulletRed", typeof(Material)) as Material;
         bigBulletRed = Resources.Load("bullets/bigBulletRed", typeof(Material)) as Material;
-        playerBullet = Resources.Load("bullets/playerBullet", typeof(GameObject)) as GameObject;
+
+        sonicWave = Resources.Load("bullets/sonicWave", typeof(GameObject)) as GameObject;
+        magicMissile = Resources.Load("bullets/magicMissile", typeof(GameObject)) as GameObject;
+        riftbinder = Resources.Load("bullets/riftbinder", typeof(GameObject)) as GameObject;
 
     }
 
@@ -658,7 +664,7 @@ public class PatternManager : MonoBehaviour
             playerShots[0].danmaku[i].position = new Vector2(-0.5f + i, 0);
             playerShots[0].danmaku[i].posBehavior = "normalMod";
 
-            playerShots[0].danmaku[i].prefab = playerBullet;
+            playerShots[0].danmaku[i].prefab = sonicWave;
         }
         playerShots.Add(new PlayerShotData()); // Sonic wave pt2
         for(int i = 0; i < 2; i++)
@@ -669,7 +675,7 @@ public class PatternManager : MonoBehaviour
 
             playerShots[1].danmaku[i].dir = 87.5f + (i * 5);
 
-            playerShots[1].danmaku[i].prefab = playerBullet;
+            playerShots[1].danmaku[i].prefab = sonicWave;
         }
         playerShots.Add(new PlayerShotData()); // Sonic wave pt3
         for(int i = 0; i < 2; i++)
@@ -682,7 +688,7 @@ public class PatternManager : MonoBehaviour
             playerShots[2].danmaku[i].position = new Vector2(-0.5f + i, 0);
             playerShots[2].danmaku[i].posBehavior = "normalMod";
 
-            playerShots[2].danmaku[i].prefab = playerBullet;
+            playerShots[2].danmaku[i].prefab = sonicWave;
         }
         playerShots.Add(new PlayerShotData()); // Sonic wave pt4
         for(int i = 0; i < 2; i++)
@@ -694,7 +700,7 @@ public class PatternManager : MonoBehaviour
             playerShots[3].danmaku[i].dir = 75 + (i * 30);
             playerShots[3].danmaku[i].posBehavior = "normal";
 
-            playerShots[3].danmaku[i].prefab = playerBullet;
+            playerShots[3].danmaku[i].prefab = sonicWave;
         }
 
         /*
@@ -712,7 +718,7 @@ public class PatternManager : MonoBehaviour
             playerShots[4].danmaku[i].position = new Vector2(-0.25f + i * 0.5f, 0);
             playerShots[4].danmaku[i].posBehavior = "normalMod";
 
-            playerShots[4].danmaku[i].prefab = playerBullet;
+            playerShots[4].danmaku[i].prefab = magicMissile;
         }
         playerShots.Add(new PlayerShotData());
         for(int i = 0; i < 2; i++)
@@ -726,7 +732,25 @@ public class PatternManager : MonoBehaviour
             playerShots[5].danmaku[i].position = new Vector2(-0.5f + i, 0);
             playerShots[5].danmaku[i].posBehavior = "normalMod";
 
-            playerShots[5].danmaku[i].prefab = playerBullet;
+            playerShots[5].danmaku[i].prefab = magicMissile;
+        }
+
+        /*
+            Magic Missile (lv2)
+        */
+        playerShots.Add(new PlayerShotData());
+        for(int i = 0; i < 2; i++)
+        {
+            playerShots[6].danmaku.Add(new DanmakuData());
+            playerShots[6].danmaku[i].speed = 0;
+            playerShots[6].danmaku[i].speedAcc = 30;
+            playerShots[6].danmaku[i].player = true;
+
+            playerShots[6].danmaku[i].dirBehavior = "enemy";
+            playerShots[6].danmaku[i].position = new Vector2(2, 1);
+            playerShots[6].danmaku[i].posBehavior = "randomMod";
+
+            playerShots[6].danmaku[i].prefab = riftbinder;
         }
 
     }
@@ -773,6 +797,17 @@ public class PatternManager : MonoBehaviour
         {
             data = GetPlayerShot(5),
             startTime = 0.25f
+        });
+
+        /*
+            Riftbinder
+        */
+        playerPatterns.Add(new PlayerPattern());
+        playerPatterns[2].name = "Riftbinder Lv1";
+        playerPatterns[2].shots.Add(new PlayerShot
+        {
+            data = GetPlayerShot(6),
+            startTime = 0f
         });
     }
 

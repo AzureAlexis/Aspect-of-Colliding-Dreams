@@ -108,6 +108,13 @@ public class DanmakuManager : MonoBehaviour
 
                 danmaku.position = owner.transform.position + mod;
                 break;
+
+            case "randomMod":
+                float randX = Random.Range(-danmakuData.position.x, danmakuData.position.x);
+                float randY = Random.Range(-danmakuData.position.y, danmakuData.position.y);
+
+                danmaku.position = (Vector2)owner.transform.position + new Vector2(randX, randY);
+                break;
         }
 
         switch (danmakuData.dirBehavior)
@@ -128,18 +135,24 @@ public class DanmakuManager : MonoBehaviour
 
             case "enemy":
                 var enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-                Vector2 bestPos = enemies[0].transform.position;
-                float priority = Vector2.Distance(danmaku.position, bestPos);
-                for(int i = 0; i < enemies.Length; i++)
+                Vector2 bestPos = danmaku.position + new Vector2(-1, 0);
+
+                if(enemies.Length > 0)
                 {
-                    Vector2 tempPos = enemies[i].transform.position;
-                    if(Vector2.Distance(danmaku.position, tempPos) < priority)
+                    bestPos = enemies[0].transform.position;
+                    float priority = Vector2.Distance(danmaku.position, bestPos);
+                    for(int i = 0; i < enemies.Length; i++)
                     {
-                        bestPos = tempPos;
-                        priority = Vector2.Distance(danmaku.position, tempPos);
+                        Vector2 tempPos = enemies[i].transform.position;
+                        if(Vector2.Distance(danmaku.position, tempPos) < priority)
+                        {
+                            bestPos = tempPos;
+                            priority = Vector2.Distance(danmaku.position, tempPos);
+                        }
                     }
                 }
-                danmaku.dir = Mathf.Atan2(bestPos.x, bestPos.y) * 180 / Mathf.PI;
+
+                danmaku.dir = Mathf.Atan2(danmaku.position.x - bestPos.x, danmaku.position.y - bestPos.y) * 180 / Mathf.PI;
                 break;
         }
 

@@ -62,6 +62,8 @@ public class ItemManager
         attackData.Add(new PlayerAttack(){
             name = "Riftbinder",
             sprite = Resources.Load<Sprite>("sprites/icons/riftbinderIcon"),
+            pattern = PatternManager.GetPlayerPattern(2),
+            length = 0.2f,
             publicPower = "D",
             publicSpeed = "C",
             publicRange = "A-",

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6357c3373c9acb042a8bff09e0e7049c
+guid: b9630ab9f4b4a479b9b7072e51d1f9a9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5785760756988928042
-    second: sonicWave_0
+      213: 7101898066312783532
+    second: riftbinder_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sonicWave_0
+      name: riftbinder_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 0
-        width: 21
-        height: 24
+        x: 1
+        y: 1
+        width: 22
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2068b311c62b4050800000000000000
-      internalID: 5785760756988928042
+      spriteID: ca66b91f9a20f8260800000000000000
+      internalID: 7101898066312783532
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sonicWave_0: 5785760756988928042
+      riftbinder_0: 7101898066312783532
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

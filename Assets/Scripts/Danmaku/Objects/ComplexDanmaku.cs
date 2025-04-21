@@ -48,6 +48,9 @@ public class ComplexDanmaku : MonoBehaviour
     void UpdateDir()
     {
         transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z + dirAcc * Time.deltaTime);
+
+        if(transform.childCount == 1)
+            transform.GetChild(0).Rotate(0, 0, Time.deltaTime * 1080);
     }
 
     void UpdateDestroy()
