@@ -1,16 +1,26 @@
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    static GameObject item;
+
+    public static void Start()
     {
-        
+        LoadResources();
     }
 
-    // Update is called once per frame
-    void Update()
+    static void LoadResources()
     {
-        
+        item = Resources.Load<GameObject>("bullets/fieldItem");
+    }
+
+    public static void Play(string id)
+    {
+        switch(id)
+        {
+            case "item":
+                GameObject.Instantiate(item, PlayerStats.player.transform, false);
+                break;
+        }
     }
 }

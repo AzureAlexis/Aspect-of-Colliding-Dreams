@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
         PlayerStats.EquipItem(ItemManager.GetItemByName("Anima Dust"), 4);
         PlayerStats.EquipItem(ItemManager.GetItemByName("Anima Shard"), 5);
         PlayerStats.EquipItem(ItemManager.GetItemByName("Rising Inferno"), 6);
+
+        PlayerAnimator.Start();
     }
     void Update()
     {

@@ -70,7 +70,7 @@ public class PlayerShoot
                 case "PlayerSpell":
                     StartSpell((PlayerSpell)currentAction);
                     break;
-                case "PlayerItem":
+                case "Consumable":
                     UseItem((Consumable)currentAction);
                     break;
             }
@@ -235,8 +235,10 @@ public class PlayerShoot
                     break;
             }
 
-            PlayerStats.battleSlots[currentIndex].count -= 1;
+            item.count -= 1;
+            PlayerAnimator.Play("item");
         }
+
     }
 
     bool IsActive()
