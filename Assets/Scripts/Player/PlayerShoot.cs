@@ -222,21 +222,20 @@ public class PlayerShoot
     
     static void UseItem(Consumable item)
     {
-        switch (item.effect) 
+        if(item.count > 0)
         {
-            case "hp":
-                PlayerStats.hp += item.value * PlayerStats.mhp;
-                break;
+            switch (item.effect) 
+            {
+                case "hp":
+                    PlayerStats.hp += item.value * PlayerStats.mhp;
+                    break;
 
-            case "ap":
-                PlayerStats.ap += item.value * PlayerStats.map;
-                break;
-        }
+                case "ap":
+                    PlayerStats.ap += item.value * PlayerStats.map;
+                    break;
+            }
 
-        PlayerStats.consumables[PlayerStats.GetItemIndex(item.name)].count -= 1;
-        if(PlayerStats.consumables[PlayerStats.GetItemIndex(item.name)].count <= 0)
-        {
-            PlayerStats.consumables.RemoveAt(PlayerStats.GetItemIndex(item.name));
+            PlayerStats.battleSlots[currentIndex].count -= 1;
         }
     }
 

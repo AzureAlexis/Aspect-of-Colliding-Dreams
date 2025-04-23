@@ -21,6 +21,11 @@ public static class AzalUtil
         float factor = 1 - Mathf.Pow(1 - t, 2);
         return a + (diff * factor);
     }
+
+    public static float Bounce1D(float max, float t)
+    {
+        return -Mathf.Pow((2 / max) * t - 1, 2) + 1;
+    }
 }
 
 
