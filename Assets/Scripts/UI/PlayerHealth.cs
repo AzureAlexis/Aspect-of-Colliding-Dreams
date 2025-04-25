@@ -10,10 +10,10 @@ public class PlayerHealth : MonoBehaviour
     Image animaInner;
     Image animaOuter;
 
-    float hp;
-    float mhp;
-    float ap;
-    float map;
+    public float hp;
+    public float mhp;
+    public float ap;
+    public float map;
 
     void Start()
     {
@@ -23,6 +23,11 @@ public class PlayerHealth : MonoBehaviour
         lineInner = lineOuter.transform.GetChild(0).GetComponent<Image>();
         animaOuter = transform.GetChild(2).GetComponent<Image>();
         animaInner = transform.GetChild(2).GetChild(0).GetComponent<Image>();
+
+        hp = PlayerStats.hp;
+        mhp = PlayerStats.mhp;
+        ap = PlayerStats.ap;
+        map = PlayerStats.map;
     }
 
     void Update()
