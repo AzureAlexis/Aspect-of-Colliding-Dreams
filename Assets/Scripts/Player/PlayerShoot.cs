@@ -150,11 +150,15 @@ public class PlayerShoot
 
     static void UpdateShot(PlayerAttack shot)
     {
-        Debug.Log(shot.time);
-        FireShotsReady(shot);
-        shot.time += Time.smoothDeltaTime;
-        if(shot.time >= shot.length)
-            shot.time = 0;
+        if(PlayerStats.ap >= shot.cost * Time.deltaTime)
+        {
+            FireShotsReady(shot);
+
+            shot.time += Time.deltaTime;
+            PlayerStats.ap -= shot.cost * Time.deltaTime;
+            if(shot.time >= shot.length)
+                shot.time = 0;
+        }
     }
 
     static void StartSpell(PlayerSpell spell)

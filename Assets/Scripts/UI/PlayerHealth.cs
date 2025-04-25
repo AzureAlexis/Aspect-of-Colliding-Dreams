@@ -7,10 +7,13 @@ public class PlayerHealth : MonoBehaviour
     Image circleOuter;
     Image lineInner; 
     Image lineOuter; 
-    Image anima;
+    Image animaInner;
+    Image animaOuter;
 
     float hp;
     float mhp;
+    float ap;
+    float map;
 
     void Start()
     {
@@ -18,7 +21,8 @@ public class PlayerHealth : MonoBehaviour
         circleInner = circleOuter.transform.GetChild(0).GetComponent<Image>();
         lineOuter = transform.GetChild(1).GetComponent<Image>();
         lineInner = lineOuter.transform.GetChild(0).GetComponent<Image>();
-        anima = transform.GetChild(2).GetChild(0).GetComponent<Image>();
+        animaOuter = transform.GetChild(2).GetComponent<Image>();
+        animaInner = transform.GetChild(2).GetChild(0).GetComponent<Image>();
     }
 
     void Update()
@@ -26,12 +30,15 @@ public class PlayerHealth : MonoBehaviour
         UpdateStats();
         UpdateCircle();
         UpdateLine();
+        UpdateAnima();
     }
 
     void UpdateStats()
     {
         hp = PlayerStats.hp;
         mhp = PlayerStats.mhp;
+        ap = PlayerStats.ap;
+        map = PlayerStats.map;
     }
 
     void UpdateCircle()
@@ -44,5 +51,11 @@ public class PlayerHealth : MonoBehaviour
     {
         lineOuter.fillAmount = Mathf.Clamp((mhp - 60) / 140, 0, 1);
         lineInner.fillAmount = Mathf.Clamp((hp - 60) / 140, 0, 1);
+    }
+
+    void UpdateAnima()
+    {
+        animaOuter.fillAmount = Mathf.Clamp((map + 2) / 200, 0, 1);
+        animaInner.fillAmount = Mathf.Clamp(ap / 200, 0, 1);
     }
 }
