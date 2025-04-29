@@ -91,7 +91,6 @@ public class PlayerStats
             ap = map;
         //CalculateInv();
         //UIManager.UpdatePlayerHp(hp);
-        Debug.Log(hp);
     }
 
     static void CalculateStats()

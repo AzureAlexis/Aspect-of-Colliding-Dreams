@@ -133,12 +133,8 @@ public class Enemy : MonoBehaviour
     {
         if(waypointPosition != transform.position && waypointPosition != new Vector3(0, 0, 0))
         {
-            float factor;
-            factor = waypointTime / waypointDuration;
-            if(factor < 0.5)
-                factor = Mathf.SmoothStep(0, 1, factor);
-
-            transform.position = Vector3.Lerp(waypointOld, waypointPosition, factor);
+            float factor = waypointTime / waypointDuration;
+            transform.position = AzalUtil.QuadOut(waypointOld, waypointPosition, factor);
             waypointTime += Time.deltaTime;
         }
     }
@@ -195,6 +191,12 @@ public class Enemy : MonoBehaviour
                 wayX = home.x;
                 wayY = home.y;
                 wayD = 1;
+                break;
+
+            case "random":
+                wayX = Random.Range(-4, 4) + home.x;
+                wayY = Random.Range(-1, 1) + home.y;
+                wayD = 1f;
                 break;
         }
 

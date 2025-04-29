@@ -8,7 +8,7 @@ public static class DanmakuRenderer
     static Mesh defaultMesh;
     public static void Start(Mesh debugMesh)
     {
-        spriteAtlas = Resources.Load("_spriteAtlas", typeof(SpriteAtlas)) as SpriteAtlas;
+        spriteAtlas = Resources.Load("sprites/_spriteAtlas", typeof(SpriteAtlas)) as SpriteAtlas;
         defaultMesh = debugMesh;
     }
 
