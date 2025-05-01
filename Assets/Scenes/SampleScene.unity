@@ -1450,7 +1450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f5cc502db434e3c90d4a08152acd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activate: 1
+  activate: 0
 --- !u!1 &194577597
 GameObject:
   m_ObjectHideFlags: 0
@@ -2902,7 +2902,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -64
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -5893,11 +5893,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6314019766745025244, guid: 261cffdd3ecd74143a0982c555c4335f, type: 3}
       propertyPath: m_Name
-      value: doremy
+      value: baseEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 6314019766745025244, guid: 261cffdd3ecd74143a0982c555c4335f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8425938778803056531, guid: 261cffdd3ecd74143a0982c555c4335f, type: 3}
       propertyPath: hp
@@ -6185,7 +6185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70f43b8c3b91469793c7465da5e4a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
 --- !u!1 &883457786
 GameObject:
   m_ObjectHideFlags: 0

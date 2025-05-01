@@ -154,7 +154,7 @@ public class ItemManager
             effect = "hp",
             value = 0.3f,
             limit = 2,
-            flavorShort = "Restores a lot of HP",
+            flavorShort = "Restore a lot of HP",
             flavor = "Restores a lot of health. These are pretty rare, so I shouldn't waste them. That makes me think, where did this life come from? Maybe I shouldn't think about it too much."
         });
 
@@ -164,7 +164,7 @@ public class ItemManager
             effect = "ap",
             value = 0.2f,
             limit = 8,
-            flavorShort = "Restores a little AP",
+            flavorShort = "Restore a little AP",
             flavor = "Restores a little anima. Almost everyone stores a little bit of anima, but it's really hard to manifest it physically."
         });
 
@@ -174,7 +174,7 @@ public class ItemManager
             effect = "ap",
             value = 0.4f,
             limit = 6,
-            flavorShort = "Restores some AP",
+            flavorShort = "Restore some AP",
             flavor = "Restores some anima. Even when I crush this, I can't identify where this anima came from. How is there a type of amina I don't know?"
         });
 
@@ -184,7 +184,7 @@ public class ItemManager
             effect = "ap",
             value = 0.8f,
             limit = 4,
-            flavorShort = "Restores a lot of AP",
+            flavorShort = "Restore a lot of AP",
             flavor = "Restores a lot of anima. I know that amina is formed from the borders of concepts, so this much condensed amina has to come from a huge, base idea."
         });
     }
@@ -193,11 +193,12 @@ public class ItemManager
     {
         resourceData.Add(new Resource(){
             name = "Spark",
-            flavor = "An almost universal currency that nearly everyone accepts. I can never have too much!"
+            flavor = "An universal currency that almost everyone accepts. You can never have too much!"
         });
 
+
         resourceData.Add(new Resource(){
-            name = "Smoldering Cinders",
+            name = "Intert Ashes",
             flavor = "A weak material aquired by disenchanting fire-attunned items. Can be used to upgrade a lot of things"
         });
 
@@ -217,8 +218,87 @@ public class ItemManager
         });
 
         resourceData.Add(new Resource(){
-            name = "Crumbled Stone",
+            name = "Crumbled Pebbles",
             flavor = "A weak material aquired by disenchanting earth-attunned items. Can be used to upgrade a lot of things"
+        });
+
+
+
+        resourceData.Add(new Resource(){
+            name = "Smoldering Cinders",
+            flavor = "A fair material aquired by disenchanting uncommon fire-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Cystal Drop",
+            flavor = "A fair material aquired by disenchanting uncommon water-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Harmonized Twig",
+            flavor = "A fair material aquired by disenchanting uncommon wood-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Purified Metal",
+            flavor = "A fair material aquired by disenchanting uncommon metal-attunned items. Can be used to upgrade a lot of things"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Engraved Stone",
+            flavor = "A fair material aquired by disenchanting uncommon earth-attunned items. Can be used to upgrade a lot of things"
+        });
+
+
+        resourceData.Add(new Resource(){
+            name = "Burning Spark",
+            flavor = "A strong material aquired by disenchanting rare fire-attunned items. Can be used to upgrade the most powerful items"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Mystic Water",
+            flavor = "A strong material aquired by disenchanting rare water-attunned items. Can be used to upgrade the most powerful items"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Ancient Branch",
+            flavor = "A strong material aquired by disenchanting rare wood-attunned items. Can be used to upgrade the most powerful items"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Unbreakable Steel",
+            flavor = "A strong material aquired by disenchanting rare metal-attunned items. Can be used to upgrade the most powerful items"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Runed Tablet",
+            flavor = "A strong material aquired by disenchanting rare earth-attunned items. Can be used to upgrade the most powerful items"
+        });
+
+
+        resourceData.Add(new Resource(){
+            name = "Fire Soul",
+            flavor = "An almighty material aquired by disenchanting legendary fire-attunned items. Can be used to reach my items' ultimate form"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Water Soul",
+            flavor = "An almighty material aquired by disenchanting legendary water-attunned items. Can be used to reach my items' ultimate form"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Wood Soul",
+            flavor = "An almighty material aquired by disenchanting legendary wood-attunned items. Can be used to reach my items' ultimate form"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Metal Soul",
+            flavor = "An almighty material aquired by disenchanting legendary metal-attunned items. Can be used to reach my items' ultimate form"
+        });
+
+        resourceData.Add(new Resource(){
+            name = "Earth Soul",
+            flavor = "An almighty material aquired by disenchanting legendary earth-attunned items. Can be used to reach my items' ultimate form"
         });
     }
 
@@ -265,8 +345,20 @@ public class ItemManager
             case "Resolute":
                 return "Increases your power signifigantly while fighting bosses. Multiequip to further increase power gain";
 
+            case "Invincible":
+                return "Extends the time you're invincible after getting hit. Multiequip to extend further";
+
+            case "Health Boost":
+                return "Increases your max HP. Multiequip to increase further";
+
+            case "Anima Boost":
+                return "Increases your max AP. Multiequip to increase further";
+
+            case "Focus Boost":
+                return "Increases your max FP. Multiequip to increase further";
+
             case "Phantasm":
-                return "Reduce all stats to what they were at level 1. Also grants Faithguard and Resolute. WARNING: This makes combat extremely diffcult, and is only reccomended for very experienced players";
+                return "Reduce all stats to what they were at level 1. Also grants Faithguard, Resolute, and Invincible";
 
             default:
                 return "No Description Found";
