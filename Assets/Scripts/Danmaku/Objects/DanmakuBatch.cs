@@ -6,7 +6,7 @@ public class DanmakuBatch
 {
     public bool complex;       // Marks this batch as either simple (false) or complex (true)
     public Material material;  // Only danmakus with the same material can be added
-    public List<Danmaku> batch = new List<Danmaku>(1024); // The actual list of danmakus
+    public List<Danmaku> batch = new List<Danmaku>(2048); // The actual list of danmakus
 
     public DanmakuBatch(bool isComplex, Material defaultMaterial)   // Simple constructer
     {

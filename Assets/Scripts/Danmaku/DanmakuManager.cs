@@ -154,6 +154,10 @@ public class DanmakuManager : MonoBehaviour
 
                 danmaku.dir = Mathf.Atan2(danmaku.position.x - bestPos.x, danmaku.position.y - bestPos.y) * 180 / Mathf.PI;
                 break;
+                
+            case "patternTime":
+                danmaku.dir = owner.GetComponent<Enemy>().patternTime * 360 * danmakuData.dir % 360;
+                break;
         }
 
         return danmaku;
@@ -170,7 +174,7 @@ public class DanmakuManager : MonoBehaviour
     {
         for(int i = 0; i < simpleDanmaku.Count; i++)
         {
-            if(danmaku.material == simpleDanmaku[i].material || simpleDanmaku[i].Count == 0)
+            if((danmaku.material == simpleDanmaku[i].material || simpleDanmaku[i].Count == 0) && simpleDanmaku[i].Count < 2047)
             {
                 return i;
             }

@@ -314,6 +314,29 @@ public class PatternManager : MonoBehaviour
             }
         }
         #endregion
+        #region Nozomi Nonspell 2
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 12; i++)
+        {
+            enemyShots[21].danmaku.Add(new DanmakuData());
+            enemyShots[21].danmaku[i].speed = 5;
+            enemyShots[21].danmaku[i].dir = 2;
+            enemyShots[21].danmaku[i].dirBehavior = "patternTime";
+            enemyShots[21].danmaku[i].position = new Vector2(Mathf.Cos(i * (Mathf.PI / 6)) * 0.4f, Mathf.Sin(i * (Mathf.PI / 6)) * 0.4f);
+            enemyShots[21].danmaku[i].posBehavior = "normalMod";
+            enemyShots[21].danmaku[i].material = smallBulletRed;
+        }
+        for(int i = 12; i < 24; i++)
+        {
+            enemyShots[21].danmaku.Add(new DanmakuData());
+            enemyShots[21].danmaku[i].speed = 2;
+            enemyShots[21].danmaku[i].dir = -1.5f;
+            enemyShots[21].danmaku[i].dirBehavior = "patternTime";
+            enemyShots[21].danmaku[i].position = new Vector2(Mathf.Cos(i * (Mathf.PI / 6)) * 0.4f, Mathf.Sin(i * (Mathf.PI / 6)) * 0.4f);
+            enemyShots[21].danmaku[i].posBehavior = "normalMod";
+            enemyShots[21].danmaku[i].material = smallBulletRed;
+        }
+        #endregion
     }
 
     static void CreateInitialEnemyPatterns()
@@ -708,6 +731,22 @@ public class PatternManager : MonoBehaviour
             endTime = 99,
             loopDelay = 1.5f,
         });
+
+        enemyPatterns.Add(new EnemyPattern());
+        enemyPatterns[10].name = "Nozomi Nonspell 2";
+
+        enemyPatterns[10].shots.Add(new EnemyShot{
+            data = GetEnemyShot(21),
+            startTime = 0f,
+            endTime = 99,
+            loopDelay = 0.05f,
+        });
+        enemyPatterns[10].shots.Add(new EnemyShot{
+            movement = "random",
+            startTime = 0.5f,
+            endTime = 99,
+            loopDelay = 1.5f,
+        });
     }
 
     static void CreateInitialPlayerShots()
@@ -900,6 +939,4 @@ public class PatternManager : MonoBehaviour
             BuildDatabase();
         return playerPatterns[id];
     }
-
-
 }

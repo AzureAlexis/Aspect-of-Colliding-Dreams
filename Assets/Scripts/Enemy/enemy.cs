@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     private int currentPatternId;
     private EnemyPattern pattern;
     float loopTime;
-    float patternTime;
+    public float patternTime;
 
     // Misc vars
     float mhp;
