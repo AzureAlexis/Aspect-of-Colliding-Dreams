@@ -11,6 +11,7 @@ public class DanmakuData // The raw data of a danmaku, before it's applied to a 
     public List<Movement> movements;
 
     // General stuff
+    public string type;
     public bool player = false;             // Who owns this? enemy = false, player = true
     public bool complex = false;            // Will this be batch rendered or instantiated as a gameobject? player danmaku is always complex
     public string name;                     // Name of the danmaku, for debug purposes
@@ -35,6 +36,10 @@ public class DanmakuData // The raw data of a danmaku, before it's applied to a 
         -normal: Strictly follows dir
     */
 
+    // Speed stuff
     public float speed = 1;                     // How fast the danmaku will move when this movement is triggered (unity units/sec)
     public float speedAcc = 0;
+
+    // Lightning stuff - only used for lightning bullets
+    public float length = 1;                // How long the lightning is
 }

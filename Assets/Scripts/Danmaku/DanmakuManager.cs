@@ -65,9 +65,10 @@ public class DanmakuManager : MonoBehaviour
             if(danmaku.complex)
             {
                 GameObject complexDanmaku = Instantiate(danmakuData.prefab, GameObject.Find("DanmakuManager").transform);
-                complexDanmaku.GetComponent<ComplexDanmaku>().AddData(danmaku);
-                if(PlayerShoot.spellActive)
-                    complexDanmaku.GetComponent<ComplexDanmaku>().spell = true;
+                if(complexDanmaku.GetComponent<LightningDanmaku>())
+                    complexDanmaku.GetComponent<LightningDanmaku>().AddData(danmaku);
+                else
+                    complexDanmaku.GetComponent<ComplexDanmaku>().AddData(danmaku);
             }
             else
             {
@@ -80,11 +81,13 @@ public class DanmakuManager : MonoBehaviour
     {
         Danmaku danmaku = new Danmaku();
 
+        danmaku.type = danmakuData.type;
         danmaku.speed = danmakuData.speed;
         danmaku.complex = danmakuData.complex || danmakuData.player == true;
         danmaku.material = danmakuData.material;
         danmaku.dirAcc = danmakuData.dirAcc;
         danmaku.speedAcc = danmakuData.speedAcc;
+        danmaku.length = danmakuData.length;
 
         switch (danmakuData.posBehavior)
         {
@@ -128,9 +131,15 @@ public class DanmakuManager : MonoBehaviour
                 break;
 
             case "player":
-                Vector2 playerPos = PlayerStats.player.transform.position;
-                Vector2 dif = danmaku.position - playerPos;
-                danmaku.dir = (Mathf.Atan2(dif.x, dif.y) * 180 / Mathf.PI) + danmakuData.dir;
+                Vector2 playerPos1 = PlayerStats.player.transform.position;
+                Vector2 dif1 = danmaku.position - playerPos1;
+                danmaku.dir = (Mathf.Atan2(dif1.x, dif1.y) * 180 / Mathf.PI) + danmakuData.dir;
+                break;
+
+            case "playerRandom":
+                Vector2 playerPos2 = PlayerStats.player.transform.position;
+                Vector2 dif2 = danmaku.position - playerPos2;
+                danmaku.dir = (Mathf.Atan2(dif2.x, dif2.y) * 180 / Mathf.PI) + Random.Range(-danmakuData.dir, danmakuData.dir);
                 break;
 
             case "enemy":

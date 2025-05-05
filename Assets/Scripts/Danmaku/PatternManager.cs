@@ -14,6 +14,8 @@ public class PatternManager : MonoBehaviour
     static List<EnemyShotData> enemyShots = new List<EnemyShotData>();
     static List<PlayerShotData> playerShots = new List<PlayerShotData>();
     public static Material smallBulletRed;
+    public static Material smallBulletYel;
+    public static GameObject lightning;
     public static Material bigBulletRed;
 
     public static GameObject sonicWave;
@@ -48,8 +50,10 @@ public class PatternManager : MonoBehaviour
     static void LoadMaterials()
     {
         smallBulletRed = Resources.Load("bullets/smallBulletRed", typeof(Material)) as Material;
+        smallBulletYel = Resources.Load("bullets/smallBulletYel", typeof(Material)) as Material;
         bigBulletRed = Resources.Load("bullets/bigBulletRed", typeof(Material)) as Material;
-        Debug.Log(bigBulletRed);
+
+        lightning = Resources.Load("bullets/lightning", typeof(GameObject)) as GameObject;
         sonicWave = Resources.Load("bullets/sonicWave", typeof(GameObject)) as GameObject;
         magicMissile = Resources.Load("bullets/magicMissile", typeof(GameObject)) as GameObject;
         riftbinder = Resources.Load("bullets/riftbinder", typeof(GameObject)) as GameObject;
@@ -322,7 +326,7 @@ public class PatternManager : MonoBehaviour
             enemyShots[21].danmaku[i].speed = 5;
             enemyShots[21].danmaku[i].dir = 2;
             enemyShots[21].danmaku[i].dirBehavior = "patternTime";
-            enemyShots[21].danmaku[i].position = new Vector2(Mathf.Cos(i * (Mathf.PI / 6)) * 0.4f, Mathf.Sin(i * (Mathf.PI / 6)) * 0.4f);
+            enemyShots[21].danmaku[i].position = new Vector2(Mathf.Cos(i * (Mathf.PI / 6)) * 0.4f, Mathf.Sin(i * (Mathf.PI / 6)) * 0.35f);
             enemyShots[21].danmaku[i].posBehavior = "normalMod";
             enemyShots[21].danmaku[i].material = smallBulletRed;
         }
@@ -332,9 +336,64 @@ public class PatternManager : MonoBehaviour
             enemyShots[21].danmaku[i].speed = 2;
             enemyShots[21].danmaku[i].dir = -1.5f;
             enemyShots[21].danmaku[i].dirBehavior = "patternTime";
-            enemyShots[21].danmaku[i].position = new Vector2(Mathf.Cos(i * (Mathf.PI / 6)) * 0.4f, Mathf.Sin(i * (Mathf.PI / 6)) * 0.4f);
+            enemyShots[21].danmaku[i].position = new Vector2(Mathf.Cos(i * (Mathf.PI / 6)) * 0.4f, Mathf.Sin(i * (Mathf.PI / 6)) * 0.35f);
             enemyShots[21].danmaku[i].posBehavior = "normalMod";
-            enemyShots[21].danmaku[i].material = smallBulletRed;
+            enemyShots[21].danmaku[i].material = smallBulletYel;
+        }
+        #endregion
+        #region Earth Shaking Bolt
+        enemyShots.Add(new EnemyShotData());
+        enemyShots[22].danmaku.Add(new DanmakuData());
+        enemyShots[22].danmaku[0].complex = true;
+        enemyShots[22].danmaku[0].type = "lightning";
+        enemyShots[22].danmaku[0].prefab = lightning;
+        enemyShots[22].danmaku[0].speed = 10;
+        enemyShots[22].danmaku[0].length = 5;
+        enemyShots[22].danmaku[0].dirBehavior = "player";
+        for(int i = 1; i < 65; i++)
+        {
+            enemyShots[22].danmaku.Add(new DanmakuData());
+            enemyShots[22].danmaku[i].speed = (float)i / 10;
+            enemyShots[22].danmaku[i].dir = 30;
+            enemyShots[22].danmaku[i].dirBehavior = "playerRandom";
+            if(i % 2 == 0)
+                enemyShots[22].danmaku[i].material = smallBulletYel;
+            else
+                enemyShots[22].danmaku[i].material = smallBulletRed;
+        }
+        #endregion
+        #region Nozomi Nonspell 3
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 10; i++)
+        {
+            enemyShots[23].danmaku.Add(new DanmakuData());
+            enemyShots[23].danmaku[i].speed = 5;
+            enemyShots[23].danmaku[i].dir = i * 36;
+            enemyShots[23].danmaku[i].complex = true;
+            enemyShots[23].danmaku[i].type = "lightning";
+            enemyShots[23].danmaku[i].prefab = lightning;
+            enemyShots[23].danmaku[i].speed = 4;
+            enemyShots[23].danmaku[i].length = 2;
+        }
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 10; i++)
+        {
+            enemyShots[24].danmaku.Add(new DanmakuData());
+            enemyShots[24].danmaku[i].speed = 5;
+            enemyShots[24].danmaku[i].dir = i * 36 + 18;
+            enemyShots[24].danmaku[i].complex = true;
+            enemyShots[24].danmaku[i].type = "lightning";
+            enemyShots[24].danmaku[i].prefab = lightning;
+            enemyShots[24].danmaku[i].speed = 6;
+            enemyShots[24].danmaku[i].length = 2;
+        }
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 36; i++)
+        {
+            enemyShots[25].danmaku.Add(new DanmakuData());
+            enemyShots[25].danmaku[i].speed = 3;
+            enemyShots[25].danmaku[i].dir = i * 10;
+            enemyShots[25].danmaku[i].material = smallBulletYel;
         }
         #endregion
     }
@@ -742,6 +801,60 @@ public class PatternManager : MonoBehaviour
             loopDelay = 0.05f,
         });
         enemyPatterns[10].shots.Add(new EnemyShot{
+            movement = "random",
+            startTime = 0.5f,
+            endTime = 99,
+            loopDelay = 1.5f,
+        });
+        
+        enemyPatterns.Add(new EnemyPattern());
+        enemyPatterns[11].name = "Earth Shaking Bolt";
+        enemyPatterns[11].shots.Add(new EnemyShot{
+            data = GetEnemyShot(22),
+            startTime = 1f,
+            endTime = 99,
+            loopDelay = 4f,
+        });
+        enemyPatterns[11].shots.Add(new EnemyShot{
+            movement = "random",
+            startTime = 1f,
+            endTime = 99,
+            loopDelay = 4f,
+        });
+        enemyPatterns[11].shots.Add(new EnemyShot{
+            data = GetEnemyShot(20),
+            startTime = 1.5f,
+            endTime = 99,
+            loopDelay = 4f,
+        });
+        enemyPatterns[11].shots.Add(new EnemyShot{
+            data = GetEnemyShot(19),
+            startTime = 2f,
+            endTime = 99,
+            loopDelay = 4f,
+        });
+
+        enemyPatterns.Add(new EnemyPattern());
+        enemyPatterns[12].name = "Nozomi Nonspell 3";
+        enemyPatterns[12].shots.Add(new EnemyShot{
+            data = GetEnemyShot(23),
+            startTime = 0.3f,
+            endTime = 99,
+            loopDelay = 0.6f,
+        });
+        enemyPatterns[12].shots.Add(new EnemyShot{
+            data = GetEnemyShot(24),
+            startTime = 0.6f,
+            endTime = 99,
+            loopDelay = 0.6f,
+        });
+        enemyPatterns[12].shots.Add(new EnemyShot{
+            data = GetEnemyShot(25),
+            startTime = 0.5f,
+            endTime = 99,
+            loopDelay = 1.5f,
+        });
+        enemyPatterns[12].shots.Add(new EnemyShot{
             movement = "random",
             startTime = 0.5f,
             endTime = 99,

@@ -17,6 +17,21 @@ public class LightningDanmaku : ComplexDanmaku
         line = GetComponent<LineRenderer>();
     }
 
+    new public void AddData(Danmaku data)
+    {
+        base.AddData(data);
+        line = GetComponent<LineRenderer>();
+
+        length = data.length;
+        dir = data.dir;
+        startMoveTime = length / speed;
+        transform.localPosition = new(0, 0);   
+        line.SetPosition(0, data.position);
+        line.SetPosition(1, data.position);  
+
+        Debug.Log(dir);
+    }
+
     void Update()
     {
         UpdateTime();
@@ -31,7 +46,7 @@ public class LightningDanmaku : ComplexDanmaku
 
     void UpdatePosition()
     {
-        Vector3 moveVector = Quaternion.Euler(0, 0, dir) * Vector2.right;
+        Vector3 moveVector = Quaternion.Euler(0, 0, -dir) * Vector2.down;
 
         moveVector *= Time.deltaTime;
         moveVector *= speed;

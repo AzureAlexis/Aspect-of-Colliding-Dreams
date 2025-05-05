@@ -6,6 +6,7 @@ public class Danmaku
 {
     public List<Movement> movements;
     public string name;                         // Name of the movement, for debug purposes
+    public string type;
     public Material material;
     public bool complex = false;
 
@@ -33,6 +34,7 @@ public class Danmaku
     public float speed = 1;                     // How fast the danmaku will move when this movement is triggered (unity units/sec)
     public float speedAcc = 0;
     public float time = 0;                      // How long has the danmaku existed (seconds)
+    public float length;
     public DanmakuBatch batch;
 
     public void Update()
@@ -47,7 +49,7 @@ public class Danmaku
 
     void UpdatePosition()
     {
-        Vector2 moveVector = new Vector2(Mathf.Sin(dir*Mathf.PI/180), Mathf.Cos(dir*Mathf.PI/180));
+        Vector2 moveVector = Quaternion.Euler(0, 0, -dir) * Vector2.down;
 
         moveVector *= Time.deltaTime;
         moveVector *= speed;
