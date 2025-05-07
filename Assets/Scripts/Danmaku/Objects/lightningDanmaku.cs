@@ -32,11 +32,12 @@ public class LightningDanmaku : ComplexDanmaku
         Debug.Log(dir);
     }
 
-    void Update()
+    new void Update()
     {
         UpdateTime();
         UpdatePosition();
         UpdateAnimation();
+        UpdateDestroy();
     }
 
     void UpdateTime()
@@ -75,5 +76,13 @@ public class LightningDanmaku : ComplexDanmaku
                 line.material = materials[materialIndex];
             }
         }
+    }
+
+    void UpdateDestroy()
+    {
+        Vector2 camPos1 = UIManager.cam.GetComponent<Camera>().WorldToViewportPoint(line.GetPosition(0));
+        Vector2 camPos2 = UIManager.cam.GetComponent<Camera>().WorldToViewportPoint(line.GetPosition(1));
+        if((camPos1.x > 1.1 || camPos1.x < -0.1 || camPos1.y > 1.1 || camPos1.y < -0.1) && (camPos2.x > 1.1 || camPos2.x < -0.1 || camPos2.y > 1.1 || camPos2.y < -0.1))
+            Destroy(gameObject);
     }
 }

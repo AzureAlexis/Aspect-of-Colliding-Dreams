@@ -17,6 +17,7 @@ public class PatternManager : MonoBehaviour
     public static Material smallBulletYel;
     public static GameObject lightning;
     public static Material bigBulletRed;
+    public static GameObject ballLightning;
 
     public static GameObject sonicWave;
     public static GameObject magicMissile;
@@ -54,6 +55,7 @@ public class PatternManager : MonoBehaviour
         bigBulletRed = Resources.Load("bullets/bigBulletRed", typeof(Material)) as Material;
 
         lightning = Resources.Load("bullets/lightning", typeof(GameObject)) as GameObject;
+        ballLightning = Resources.Load("bullets/ballLightning", typeof(GameObject)) as GameObject;
         sonicWave = Resources.Load("bullets/sonicWave", typeof(GameObject)) as GameObject;
         magicMissile = Resources.Load("bullets/magicMissile", typeof(GameObject)) as GameObject;
         riftbinder = Resources.Load("bullets/riftbinder", typeof(GameObject)) as GameObject;
@@ -394,6 +396,38 @@ public class PatternManager : MonoBehaviour
             enemyShots[25].danmaku[i].speed = 3;
             enemyShots[25].danmaku[i].dir = i * 10;
             enemyShots[25].danmaku[i].material = smallBulletYel;
+        }
+        #endregion
+        #region Arc Lightning
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 10; i++)
+        {
+            enemyShots[26].danmaku.Add(new DanmakuData());
+            enemyShots[26].danmaku[i].speed = 0.5f;
+            enemyShots[26].danmaku[i].position = new Vector2(0, 0);
+            enemyShots[26].danmaku[i].distance = 4;
+            enemyShots[26].danmaku[i].dir = i * Mathf.PI / 5;
+            enemyShots[26].danmaku[i].complex = true;
+            enemyShots[26].danmaku[i].type = "ballLightning";
+            enemyShots[26].danmaku[i].prefab = ballLightning;
+        }
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 60; i += 6)
+        {
+            for(int j = 0; j < 6; j++)
+            {
+                enemyShots[27].danmaku.Add(new DanmakuData());
+                enemyShots[27].danmaku[i + j].speed = 0.8f;
+                enemyShots[27].danmaku[i + j].position = new Vector2(i * Mathf.PI / 15, i * Mathf.PI / 15);
+                enemyShots[27].danmaku[i + j].posBehavior = "circle";
+                enemyShots[27].danmaku[i + j].distance = 4;
+                enemyShots[27].danmaku[i + j].length = 0.5f;
+                enemyShots[27].danmaku[i + j].dir = j * 60;
+                enemyShots[27].danmaku[i + j].dirBehavior = "patternTime";
+                enemyShots[27].danmaku[i + j].complex = true;
+                enemyShots[27].danmaku[i + j].type = "lightning";
+                enemyShots[27].danmaku[i + j].prefab = lightning;
+            }
         }
         #endregion
     }
@@ -859,6 +893,21 @@ public class PatternManager : MonoBehaviour
             startTime = 0.5f,
             endTime = 99,
             loopDelay = 1.5f,
+        });
+
+        enemyPatterns.Add(new EnemyPattern());
+        enemyPatterns[13].name = "Arc Lightning";
+        enemyPatterns[13].shots.Add(new EnemyShot{
+            data = GetEnemyShot(26),
+            startTime = 0.5f,
+            endTime = 99,
+            loopDelay = 99,
+        });
+        enemyPatterns[13].shots.Add(new EnemyShot{
+            data = GetEnemyShot(27),
+            startTime = 1f,
+            endTime = 99,
+            loopDelay = 1.6f,
         });
     }
 

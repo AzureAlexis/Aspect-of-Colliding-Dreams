@@ -67,6 +67,8 @@ public class DanmakuManager : MonoBehaviour
                 GameObject complexDanmaku = Instantiate(danmakuData.prefab, GameObject.Find("DanmakuManager").transform);
                 if(complexDanmaku.GetComponent<LightningDanmaku>())
                     complexDanmaku.GetComponent<LightningDanmaku>().AddData(danmaku);
+                else if(complexDanmaku.GetComponent<BallLightningDanmaku>())
+                    complexDanmaku.GetComponent<BallLightningDanmaku>().AddData(danmaku);
                 else
                     complexDanmaku.GetComponent<ComplexDanmaku>().AddData(danmaku);
             }
@@ -88,6 +90,8 @@ public class DanmakuManager : MonoBehaviour
         danmaku.dirAcc = danmakuData.dirAcc;
         danmaku.speedAcc = danmakuData.speedAcc;
         danmaku.length = danmakuData.length;
+        danmaku.distance = danmakuData.distance;
+        danmaku.owner = owner;
 
         switch (danmakuData.posBehavior)
         {
@@ -118,6 +122,13 @@ public class DanmakuManager : MonoBehaviour
 
                 danmaku.position = (Vector2)owner.transform.position + new Vector2(randX, randY);
                 break;
+
+            case "circle":
+                float cirY = Mathf.Sin(owner.GetComponent<Enemy>().patternTime * Mathf.PI / 2 + danmakuData.position.y) * danmakuData.distance;
+                float cirX = Mathf.Cos(owner.GetComponent<Enemy>().patternTime * Mathf.PI / 2 + danmakuData.position.x) * danmakuData.distance;
+
+                danmaku.position = (Vector2)owner.transform.position + new Vector2(cirX, cirY);
+            break;
         }
 
         switch (danmakuData.dirBehavior)
@@ -165,7 +176,7 @@ public class DanmakuManager : MonoBehaviour
                 break;
                 
             case "patternTime":
-                danmaku.dir = owner.GetComponent<Enemy>().patternTime * 360 * danmakuData.dir % 360;
+                danmaku.dir = owner.GetComponent<Enemy>().patternTime * 360 + danmakuData.dir;
                 break;
         }
 

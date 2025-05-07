@@ -34,7 +34,11 @@ public class Danmaku
     public float speed = 1;                     // How fast the danmaku will move when this movement is triggered (unity units/sec)
     public float speedAcc = 0;
     public float time = 0;                      // How long has the danmaku existed (seconds)
+
+    // Vars for special types
     public float length;
+    public float distance;
+    public GameObject owner;
     public DanmakuBatch batch;
 
     public void Update()

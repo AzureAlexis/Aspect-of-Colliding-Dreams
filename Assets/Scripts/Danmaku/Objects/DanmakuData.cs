@@ -42,4 +42,5 @@ public class DanmakuData // The raw data of a danmaku, before it's applied to a 
 
     // Lightning stuff - only used for lightning bullets
     public float length = 1;                // How long the lightning is
+    public float distance = 1;
 }
