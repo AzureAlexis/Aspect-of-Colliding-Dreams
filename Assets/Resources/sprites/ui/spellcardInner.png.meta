@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bcca378727435f746a46e3f9531ecf86
+guid: 30ecf5d428f3546c4a3ca7d911356469
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1143554089513189384
-    second: smallArrowYel_0
+      213: -937920557846814286
+    second: spellcardInner_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: smallArrowYel_0
+      name: spellcardInner_0
       rect:
         serializedVersion: 2
-        x: 7
+        x: 0
         y: 0
-        width: 10
-        height: 24
+        width: 150
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8fffe194d974120f0800000000000000
-      internalID: -1143554089513189384
+      spriteID: 2b12102d836dbf2f0800000000000000
+      internalID: -937920557846814286
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      smallArrowYel_0: -1143554089513189384
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
