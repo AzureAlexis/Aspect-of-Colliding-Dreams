@@ -12,6 +12,7 @@ public class DanmakuManager : MonoBehaviour
 {
     public static List<DanmakuBatch> simpleDanmaku;
     public Mesh mesh;
+    static float seed;
 
     // Just called when the "DanmakuManager" starts so all the other danmaku scripts can start
     void Start()
@@ -35,7 +36,13 @@ public class DanmakuManager : MonoBehaviour
     static void UpdateStatic()
     {
         DanmakuRenderer.Update();
+        UpdateSeed();
         UpdateBatches();
+    }
+
+    static void UpdateSeed()
+    {
+        seed = Random.Range(-1000000, 1000000) / 1000000f;
     }
 
     static void UpdateBatches()
@@ -139,6 +146,11 @@ public class DanmakuManager : MonoBehaviour
 
             case "random":
                 danmaku.dir = Random.Range(0, 360);
+                break;
+
+            case "randomSeeded":
+                Debug.Log(seed);
+                danmaku.dir = danmakuData.dir + seed * float.Parse(danmakuData.dirMod);
                 break;
 
             case "player":

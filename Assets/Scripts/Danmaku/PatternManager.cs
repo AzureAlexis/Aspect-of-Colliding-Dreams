@@ -15,6 +15,7 @@ public class PatternManager : MonoBehaviour
     static List<PlayerShotData> playerShots = new List<PlayerShotData>();
     public static Material smallBulletRed;
     public static Material smallBulletYel;
+    public static Material smallArrowRed;
     public static GameObject lightning;
     public static Material bigBulletRed;
     public static GameObject ballLightning;
@@ -52,6 +53,7 @@ public class PatternManager : MonoBehaviour
     {
         smallBulletRed = Resources.Load("bullets/smallBulletRed", typeof(Material)) as Material;
         smallBulletYel = Resources.Load("bullets/smallBulletYel", typeof(Material)) as Material;
+        smallArrowRed = Resources.Load("bullets/smallArrowRed", typeof(Material)) as Material;
         bigBulletRed = Resources.Load("bullets/bigBulletRed", typeof(Material)) as Material;
 
         lightning = Resources.Load("bullets/lightning", typeof(GameObject)) as GameObject;
@@ -428,6 +430,47 @@ public class PatternManager : MonoBehaviour
                 enemyShots[27].danmaku[i + j].type = "lightning";
                 enemyShots[27].danmaku[i + j].prefab = lightning;
             }
+        }
+        enemyShots.Add(new EnemyShotData());
+        enemyShots.Add(new EnemyShotData());
+        enemyShots.Add(new EnemyShotData());
+        #endregion
+        #region Nozomi Nonspell 1
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 24; i++)
+        {
+            enemyShots[31].danmaku.Add(new DanmakuData());
+            enemyShots[31].danmaku[i].material = smallArrowRed;
+
+            enemyShots[31].danmaku[i].speed = 2;
+
+            enemyShots[31].danmaku[i].dir = i * 15;
+            enemyShots[31].danmaku[i].dirBehavior = "randomSeeded";
+            enemyShots[31].danmaku[i].dirMod = "15";
+        }
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 24; i++)
+        {
+            enemyShots[32].danmaku.Add(new DanmakuData());
+            enemyShots[32].danmaku[i].material = smallBulletYel;
+
+            enemyShots[32].danmaku[i].speed = 3;
+
+            enemyShots[32].danmaku[i].dir = i * 15;
+            enemyShots[32].danmaku[i].dirBehavior = "randomSeeded";
+            enemyShots[32].danmaku[i].dirMod = "15";
+        }
+        enemyShots.Add(new EnemyShotData());
+        for(int i = 0; i < 24; i++)
+        {
+            enemyShots[33].danmaku.Add(new DanmakuData());
+            enemyShots[33].danmaku[i].material = smallBulletYel;
+
+            enemyShots[33].danmaku[i].speed = 3;
+
+            enemyShots[33].danmaku[i].dir = i * 15;
+            enemyShots[33].danmaku[i].dirBehavior = "randomSeeded";
+            enemyShots[33].danmaku[i].dirMod = "15";
         }
         #endregion
     }
@@ -908,6 +951,33 @@ public class PatternManager : MonoBehaviour
             startTime = 1f,
             endTime = 99,
             loopDelay = 1.6f,
+        });
+
+        enemyPatterns.Add(new EnemyPattern());
+        enemyPatterns[14].name = "Nozomi Nonspell 1";
+        enemyPatterns[14].shots.Add(new EnemyShot{
+            data = GetEnemyShot(31),
+            startTime = 0.5f,
+            endTime = 99,
+            loopDelay = 0.5f,
+        });
+        enemyPatterns[14].shots.Add(new EnemyShot{
+            data = GetEnemyShot(32),
+            startTime = 1.75f,
+            endTime = 99,
+            loopDelay = 2.25f,
+        });
+        enemyPatterns[14].shots.Add(new EnemyShot{
+            movement = "random",
+            startTime = 1.75f,
+            endTime = 99,
+            loopDelay = 2.25f,
+        });
+        enemyPatterns[14].shots.Add(new EnemyShot{
+            data = GetEnemyShot(33),
+            startTime = 2.25f,
+            endTime = 99,
+            loopDelay = 2.25f,
         });
     }
 

@@ -42,7 +42,7 @@ public static class DanmakuRenderer
         for(int i = 0; i < batch.Count; i++)
         {
             Vector3 position = batch[i].position;
-            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            Quaternion rotation = Quaternion.Euler(0, 0, batch[i].dir * -1);
             Vector3 scale = new Vector3(sprite.rect.width / 96, sprite.rect.height / 96, 1);
 
             matrix.Add(Matrix4x4.TRS(position, rotation, scale));
