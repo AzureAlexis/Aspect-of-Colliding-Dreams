@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -21,11 +22,26 @@ public class Enemy : MonoBehaviour
     private int currentPatternIndex = 0;
     private int currentPatternId;
     private EnemyPattern pattern;
-    float loopTime;
     public float patternTime;
 
-    // Misc vars
-    float mhp;
+    // Refrences for UI
+    Image circleInner;
+    Image circleOuter;
+    Image circleSpellcard;
+    Image circleNotches;
+    Image lineInner;
+    Image lineOuter;
+    Image lineSpellcard;
+    Image animaInner;
+    Image animaOuter;
+
+
+    // Stats
+    float patternHp;
+    float patternMhp;
+    float totalHp;
+    float totalMhp;
+    float spellsLeft = 0;
 
     public bool boss = false;
     bool dying;
@@ -36,8 +52,41 @@ public class Enemy : MonoBehaviour
     {
         currentPatternId = patternIDs[0];
         player = PlayerStats.player;
-        mhp = hp;
+        totalMhp = hp;
         home = transform.position;
+        BuildHp();
+        BuildRefrences();
+    }
+
+    void BuildHp()
+    {
+        totalMhp = 0;
+        for(int i = 0; i < patternIDs.Length; i++)
+        {
+            totalMhp += PatternManager.GetEnemyPattern(patternIDs[i]).endValue;
+            if(PatternManager.GetEnemyPattern(patternIDs[i]).spell)
+                spellsLeft++;
+        }
+        totalHp = totalMhp;
+        patternMhp = PatternManager.GetEnemyPattern(patternIDs[0]).endValue;
+        patternHp = patternMhp;
+    }
+
+    void BuildRefrences()
+    {
+        Transform enemyHealth = GameObject.Find("BossHealth").transform;
+
+        circleOuter = enemyHealth.GetChild(0).GetComponent<Image>();
+        circleInner = enemyHealth.GetChild(0).GetChild(0).GetComponent<Image>();
+        circleSpellcard = enemyHealth.GetChild(0).GetChild(1).GetComponent<Image>();
+        circleNotches = enemyHealth.GetChild(0).GetChild(2).GetComponent<Image>();
+
+        lineOuter = enemyHealth.GetChild(1).GetComponent<Image>();
+        lineInner = enemyHealth.GetChild(1).GetChild(0).GetComponent<Image>();
+        lineSpellcard = enemyHealth.GetChild(1).GetChild(1).GetComponent<Image>();
+
+        animaOuter = enemyHealth.GetChild(2).GetComponent<Image>();
+        animaInner = enemyHealth.GetChild(2).GetChild(0).GetComponent<Image>();
     }
 
     // Update is called once per frame
@@ -46,7 +95,6 @@ public class Enemy : MonoBehaviour
         player = PlayerStats.player;
         if(IsActive() && !dying)
         {
-            // UpdatePosition();
             UpdateHP();
             UpdatePosition();
             UpdatePattern();
@@ -67,7 +115,6 @@ public class Enemy : MonoBehaviour
             if(deathTick >= 2.5f)
             {
                 DanmakuManager.ClearAllBullets();
-                TextManager.StartConversation("postFight");
             }
         }
     }
@@ -82,9 +129,8 @@ public class Enemy : MonoBehaviour
         switch (pattern.endCondition)
         {
             case "hp":
-                if(hp < pattern.endValue)
+                if(patternHp < 0)
                 {
-                    hp = pattern.endValue;
                     NextPattern();
                 }
                 break;
@@ -101,13 +147,17 @@ public class Enemy : MonoBehaviour
     {
         if(pattern.endEvent != "none")
             TextManager.StartConversation(pattern.endEvent);
+        if(pattern.spell)
+            spellsLeft--;
 
         currentPatternIndex += 1;
 
         currentPatternId = patternIDs[currentPatternIndex];
-        loopTime = 0;
         patternTime = 0;
         pattern = PatternManager.GetEnemyPattern(currentPatternId);
+
+        patternMhp = pattern.endValue;
+        patternHp = patternMhp;
         DanmakuManager.ClearAllBullets();
         MakeWaypoint("home");
         
@@ -120,12 +170,7 @@ public class Enemy : MonoBehaviour
         if(IsActive())
         {
             patternTime += Time.deltaTime;
-            loopTime += Time.deltaTime;
             FireShotsReady();
-            if(loopTime >= pattern.loopTime)
-            {
-                loopTime = 0;
-            }
         }
     }
 
@@ -144,8 +189,47 @@ public class Enemy : MonoBehaviour
         if(hp <= 0)
             StartDeath();
 
-        if(boss)
-            UIManager.UpdateBossHp(hp, mhp);
+        if(boss && pattern != null)
+        {
+            if(pattern.lastWord)
+            {
+                circleSpellcard.fillAmount = Mathf.Clamp(patternHp / (patternMhp * 0.4f), 0, 1);
+                lineSpellcard.fillAmount = Mathf.Clamp((patternHp - patternMhp * 0.4f) / (patternMhp * 0.6f), 0, 1);
+            }
+            else
+            {
+                
+                circleSpellcard.fillAmount = 0;
+                for(int i = 0; i < spellsLeft; i++)
+                {
+                    circleSpellcard.fillAmount += 1f/8f;
+                }
+
+                circleNotches.fillAmount = 1f/16f;
+                for(int i = 0; i < spellsLeft; i++)
+                    circleNotches.fillAmount += 1f/8f;
+
+                lineSpellcard.fillAmount = 0;
+                
+                if(pattern.spell)
+                {
+                    lineInner.fillAmount = 0;
+                    circleInner.fillAmount = 0;
+                    circleSpellcard.fillAmount -= 0.125f * (1 - patternHp / patternMhp);
+                    Debug.Log(patternHp / patternMhp);
+                }
+                else
+                {
+                    float percentToCircle = (1 - circleSpellcard.fillAmount) * 0.4f;
+                    float percentToLine = 1 - percentToCircle;
+                    float amountToCircle = patternMhp * percentToCircle;
+                    float amountToLine = patternMhp - amountToCircle;
+
+                    circleInner.fillAmount = circleSpellcard.fillAmount + Mathf.Clamp(patternHp / amountToCircle, 0, 1);
+                    lineInner.fillAmount = Mathf.Clamp((patternHp - amountToCircle) / amountToLine, 0, 1);
+                }
+            }
+        }
     }
 
     void StartDeath()
@@ -262,7 +346,7 @@ public class Enemy : MonoBehaviour
         {
             if(pattern.endCondition == "hp")
             {
-                hp -= damage;
+                patternHp -= damage;
             }
         }
     }

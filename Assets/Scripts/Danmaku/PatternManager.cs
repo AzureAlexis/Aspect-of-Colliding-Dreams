@@ -876,7 +876,8 @@ public class PatternManager : MonoBehaviour
         enemyPatterns.Add(new EnemyPattern());
         enemyPatterns[9].name = "Nozomi Nonspell 1";
         enemyPatterns[9].endCondition = "hp";
-        enemyPatterns[9].endValue = 600;
+        enemyPatterns[9].endValue = 100;
+        enemyPatterns[9].spell = true;
         enemyPatterns[9].shots.Add(new EnemyShot{
             data = GetEnemyShot(19),
             startTime = 2,
@@ -921,7 +922,8 @@ public class PatternManager : MonoBehaviour
         enemyPatterns.Add(new EnemyPattern());
         enemyPatterns[11].name = "Earth Shaking Bolt";
         enemyPatterns[11].endCondition = "hp";
-        enemyPatterns[11].endValue = 800;
+        enemyPatterns[11].endValue = 100;
+        enemyPatterns[11].spell = true;
         enemyPatterns[11].shots.Add(new EnemyShot{
             data = GetEnemyShot(22),
             startTime = 1f,
@@ -976,6 +978,9 @@ public class PatternManager : MonoBehaviour
 
         enemyPatterns.Add(new EnemyPattern());
         enemyPatterns[13].name = "Arc Lightning";
+        enemyPatterns[13].endCondition = "hp";
+        enemyPatterns[13].endValue = 200;
+        enemyPatterns[13].lastWord = true;
         enemyPatterns[13].shots.Add(new EnemyShot{
             data = GetEnemyShot(26),
             startTime = 0.5f,
@@ -992,7 +997,8 @@ public class PatternManager : MonoBehaviour
         enemyPatterns.Add(new EnemyPattern());
         enemyPatterns[14].name = "Nozomi Nonspell 1";
         enemyPatterns[14].endCondition = "hp";
-        enemyPatterns[14].endValue = 900;
+        enemyPatterns[14].endValue = 100;
+        enemyPatterns[14].spell = false;
         enemyPatterns[14].shots.Add(new EnemyShot{
             data = GetEnemyShot(31),
             startTime = 0.5f,
@@ -1021,7 +1027,8 @@ public class PatternManager : MonoBehaviour
         enemyPatterns.Add(new EnemyPattern());
         enemyPatterns[15].name = "Nozomi Nonspell 2";
         enemyPatterns[15].endCondition = "hp";
-        enemyPatterns[15].endValue = 700;
+        enemyPatterns[15].endValue = 100;
+        enemyPatterns[15].spell = false;
         enemyPatterns[15].shots.Add(new EnemyShot{
             data = GetEnemyShot(34),
             startTime = 0.5f,

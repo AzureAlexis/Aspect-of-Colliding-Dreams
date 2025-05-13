@@ -149,7 +149,6 @@ public class DanmakuManager : MonoBehaviour
                 break;
 
             case "randomSeeded":
-                Debug.Log(seed);
                 danmaku.dir = danmakuData.dir + seed * float.Parse(danmakuData.dirMod);
                 break;
 

@@ -56,7 +56,6 @@ public class DanmakuBatch
     void ReassignBatch(Danmaku danmaku)
     {
         complex = danmaku.complex;
-        Debug.Log(material);
         material = danmaku.material;
         batch.Add(danmaku);
     }
