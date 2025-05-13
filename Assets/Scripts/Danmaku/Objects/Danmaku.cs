@@ -6,6 +6,7 @@ public class Danmaku
 {
     public List<Movement> movements;
     public string name;                         // Name of the movement, for debug purposes
+    public float power;
     public string type;
     public Material material;
     public bool complex = false;

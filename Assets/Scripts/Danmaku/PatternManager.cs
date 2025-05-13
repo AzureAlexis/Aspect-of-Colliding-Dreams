@@ -1064,6 +1064,7 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[0].danmaku.Add(new DanmakuData());
+            playerShots[0].danmaku[i].power = 0.0125f;
             playerShots[0].danmaku[i].speed = 30;
             playerShots[0].danmaku[i].player = true;
 
@@ -1077,6 +1078,7 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[1].danmaku.Add(new DanmakuData());
+            playerShots[1].danmaku[i].power = 0.0125f;
             playerShots[1].danmaku[i].speed = 30;
             playerShots[1].danmaku[i].player = true;
 
@@ -1088,10 +1090,11 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[2].danmaku.Add(new DanmakuData());
+            playerShots[2].danmaku[i].power = 0.0125f;
             playerShots[2].danmaku[i].speed = 30;
             playerShots[2].danmaku[i].player = true;
 
-            playerShots[2].danmaku[i].dir = 65 + (i * 50);
+            playerShots[2].danmaku[i].dir = 115 + (-i * 50);
             playerShots[2].danmaku[i].position = new Vector2(-0.5f + i, 0);
             playerShots[2].danmaku[i].posBehavior = "normalMod";
 
@@ -1101,10 +1104,12 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[3].danmaku.Add(new DanmakuData());
+            playerShots[3].danmaku[i].power = 0.0125f;
             playerShots[3].danmaku[i].speed = 30;
             playerShots[3].danmaku[i].player = true;
 
-            playerShots[3].danmaku[i].dir = 75 + (i * 30);
+            playerShots[3].danmaku[i].dir = 95 - (i * 10);
+            playerShots[0].danmaku[i].position = new Vector2(-0.5f + i, 0);
             playerShots[3].danmaku[i].posBehavior = "normal";
 
             playerShots[3].danmaku[i].prefab = sonicWave;
@@ -1117,6 +1122,7 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[4].danmaku.Add(new DanmakuData());
+            playerShots[4].danmaku[i].power = 0.225f;
             playerShots[4].danmaku[i].speed = 0;
             playerShots[4].danmaku[i].speedAcc = 60;
             playerShots[4].danmaku[i].player = true;
@@ -1131,6 +1137,7 @@ public class PatternManager : MonoBehaviour
         for(int i = 0; i < 2; i++)
         {
             playerShots[5].danmaku.Add(new DanmakuData());
+            playerShots[5].danmaku[i].power = 0.225f;
             playerShots[5].danmaku[i].speed = 0;
             playerShots[5].danmaku[i].speedAcc = 60;
             playerShots[5].danmaku[i].player = true;

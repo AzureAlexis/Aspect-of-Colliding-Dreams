@@ -91,6 +91,7 @@ public class DanmakuManager : MonoBehaviour
         Danmaku danmaku = new Danmaku();
 
         danmaku.type = danmakuData.type;
+        danmaku.power = danmakuData.power;
         danmaku.speed = danmakuData.speed;
         danmaku.complex = danmakuData.complex || danmakuData.player == true;
         danmaku.material = danmakuData.material;

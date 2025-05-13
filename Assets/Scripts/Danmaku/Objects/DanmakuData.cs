@@ -15,6 +15,7 @@ public class DanmakuData // The raw data of a danmaku, before it's applied to a 
     public bool player = false;             // Who owns this? enemy = false, player = true
     public bool complex = false;            // Will this be batch rendered or instantiated as a gameobject? player danmaku is always complex
     public string name;                     // Name of the danmaku, for debug purposes
+    public float power;                     // How much damage this deals
     public Material material;               // What material the danmaku is made of, if simple
     public GameObject prefab;               // What prefab the danmaku is made of, if complex
 

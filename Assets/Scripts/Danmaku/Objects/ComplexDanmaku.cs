@@ -3,11 +3,12 @@ using UnityEngine;
 public class ComplexDanmaku : MonoBehaviour
 {
     public float speed = 1;                     // How fast the danmaku will move (unity units/sec)
+    public float power = 0;
     public bool player;
     public float cooldown = 0.1f;
     public bool active = false;
     public bool spell = false;
-        public float dirAcc = 0;
+    public float dirAcc = 0;
     public string dirMod;                  // If not null, used in conjunction with dir for more complex movements
     public string dirBehavior = "normal";  // The way the danmaku figures out where to move
     public float speedAcc = 0;
@@ -65,6 +66,7 @@ public class ComplexDanmaku : MonoBehaviour
         transform.position = data.position;
         transform.rotation = Quaternion.Euler(0, 0, data.dir);
         
+        power = data.power * PlayerStats.totalPower;
         speed = data.speed;
         speedAcc = data.speedAcc;
         dirAcc = data.dirAcc;
@@ -73,9 +75,9 @@ public class ComplexDanmaku : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.GetComponent<Enemy>() != null)
+        if(other.gameObject.GetComponent<Enemy>() != null && player)
         {
-            other.gameObject.GetComponent<Enemy>().TakeDamage(0.5f);
+            other.gameObject.GetComponent<Enemy>().TakeDamage(power);
             Destroy(gameObject);
         }
     }

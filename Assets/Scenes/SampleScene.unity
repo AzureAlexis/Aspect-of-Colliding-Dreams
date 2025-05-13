@@ -1600,7 +1600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f5cc502db434e3c90d4a08152acd03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activate: 1
+  activate: 0
 --- !u!1 &194577597
 GameObject:
   m_ObjectHideFlags: 0
@@ -6351,7 +6351,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6314019766745025244, guid: 261cffdd3ecd74143a0982c555c4335f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8425938778803056531, guid: 261cffdd3ecd74143a0982c555c4335f, type: 3}
       propertyPath: hp
@@ -6527,7 +6527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &859663156
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6692,7 +6692,7 @@ RectTransform:
   m_GameObject: {fileID: 877445987}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1510398259}
@@ -15811,9 +15811,9 @@ SceneRoots:
   - {fileID: 2000933425}
   - {fileID: 152288826}
   - {fileID: 64439887}
+  - {fileID: 42840743}
   - {fileID: 349730177}
   - {fileID: 1326111358}
-  - {fileID: 42840743}
   - {fileID: 519420032}
   - {fileID: 320871214}
   - {fileID: 810234227}
