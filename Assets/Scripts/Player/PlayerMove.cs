@@ -52,8 +52,7 @@ public class PlayerMove
     }
     static void DoMapMovement()
     {
-        player.transform.position += MakeMoveVector();
-        // UpdateAnimation(MakeMoveVector());
+        player.GetComponent<Rigidbody2D>().linearVelocity = MakeMoveVector();
     }
     static void DoBattleMovement()
     {
@@ -120,24 +119,25 @@ public class PlayerMove
 
         if(Input.GetKey(KeyCode.RightArrow))
         {
-            moveVector.x += Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
+            moveVector.x += PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.LeftArrow))
         {
-            moveVector.x -= Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
+            moveVector.x -= PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.UpArrow))
         {
-            moveVector.y += Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
+            moveVector.y += PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.DownArrow))
         {
-            moveVector.y -= Time.deltaTime * PlayerStats.totalSpeed * 0.4f;
+            moveVector.y -= PlayerStats.totalSpeed * 0.4f;
         }
         if(Input.GetKey(KeyCode.LeftShift))
         {
             moveVector /= 3;
         }
+        Debug.Log(moveVector);
         return moveVector;
     }
 }
