@@ -16,7 +16,7 @@ public class PlayerStats
     public static float baseMagic = 23;      // Determines how much a spell's power is multiplied by when calculating damage. Also increases AP by 1 per point
     public static float baseStamina = 33;    // Determines how much HP the player has. Increases HP by 1 per point
     public static float baseEvasion = 10;   // Determines how big the player's hitbox is. Decreases hitbox size by 1% per point (past base)
-    public static float baseSpeed = 10;     // Determines how fast the player moves. Increases speed by 0.4 units/sec per point
+    public static float baseSpeed = 20;     // Determines how fast the player moves. Increases speed by 0.4 units/sec per point
     public static float baseCharge = 10;    // Determines how much temp HP/AP is gained by grazing. Increases gain by 1% per point
     
     // Total stats (after equipment)
