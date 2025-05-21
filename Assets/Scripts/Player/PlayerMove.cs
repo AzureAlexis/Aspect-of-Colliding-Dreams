@@ -137,7 +137,6 @@ public class PlayerMove
         {
             moveVector /= 3;
         }
-        Debug.Log(moveVector);
         return moveVector;
     }
 }

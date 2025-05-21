@@ -1,16 +1,22 @@
 using System.ComponentModel.Design;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BattleManager : MonoBehaviour
 {
     static public bool active;
     public bool activate;
 
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Update()
     {
-        if(activate != BattleManager.active)
+        if (activate != BattleManager.active)
         {
-            if(activate)
+            if (activate)
             {
                 BattleManager.EnterBattle();
             }
@@ -18,6 +24,11 @@ public class BattleManager : MonoBehaviour
             {
                 BattleManager.ExitBattle();
             }
+        }
+
+        if (PlayerStats.player.scene != SceneManager.GetActiveScene())
+        {
+            SceneManager.MoveGameObjectToScene(PlayerStats.player, SceneManager.GetActiveScene());
         }
     }
 

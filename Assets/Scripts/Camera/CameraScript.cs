@@ -10,6 +10,7 @@ public class CameraScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
+        DontDestroyOnLoad(gameObject);
     }
 
     void Update()

@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         PlayerManager.player = gameObject;
+        DontDestroyOnLoad(gameObject);
 
         PlayerStats.EquipItem(ItemManager.GetItemByName("Sonic Wave"), 0);
         PlayerStats.EquipItem(ItemManager.GetItemByName("Magic Missile"), 1);

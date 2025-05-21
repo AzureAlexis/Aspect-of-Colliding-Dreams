@@ -36,7 +36,8 @@ public class PatternManager : MonoBehaviour
 
     void Start()
     {
-        if(!PatternManager.built)
+        DontDestroyOnLoad(gameObject);
+        if (!PatternManager.built)
             BuildDatabase();
     }
     private static void BuildDatabase()

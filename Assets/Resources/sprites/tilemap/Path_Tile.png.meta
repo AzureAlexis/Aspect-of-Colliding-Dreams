@@ -108,7 +108,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -130,14 +130,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17257b24942796e4d92c2fb7a0b072c8
+      spriteID: 0c548ef582f554b9a8e839e12edde1f9
       internalID: 1397444783
       vertices: []
       indices: 
@@ -152,14 +152,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e885e96b04d58bb4886edb1c7ae52102
+      spriteID: 39f1b668eb50a415b800cf42921d026d
       internalID: 1042170201
       vertices: []
       indices: 
@@ -174,14 +174,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6aaec5dcc471e3d43be3caa4b4a5b328
+      spriteID: 72700de5230ec4ced94f37dc51a11826
       internalID: -487382594
       vertices: []
       indices: 
@@ -196,14 +196,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 59b9346dc6bbab44ea8ebd17269c869f
+      spriteID: 666e71b99712841b0b2f4e805623f6e3
       internalID: -1701262359
       vertices: []
       indices: 
@@ -218,14 +218,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b4e57ab7e927ed43946869b7b939857
+      spriteID: 5cb2f0927d01f4a62becccec20e50c04
       internalID: 246232276
       vertices: []
       indices: 
@@ -240,14 +240,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b71554399dcde554cb6bd9c02834e6fc
+      spriteID: 2d95f469dc6334121b89f1754cd2c2b3
       internalID: 460072680
       vertices: []
       indices: 
@@ -262,14 +262,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 066bc8e62c5c1714d807b24187b13b52
+      spriteID: 2ebf7731acabe4f18a989b067d532a5c
       internalID: 823370547
       vertices: []
       indices: 
@@ -284,14 +284,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fdf549230f1336b47b33f661d4ddef27
+      spriteID: 85f456ac05b1d45358bfce004e5f1261
       internalID: 760397181
       vertices: []
       indices: 
@@ -306,14 +306,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 460ee30efa95fb140b0620afae9afe6b
+      spriteID: 2724cca71c53e4a51809e134d4473f1f
       internalID: -1508618135
       vertices: []
       indices: 
@@ -328,14 +328,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50c157f4ec9c0b047a874ea6f2708b37
+      spriteID: 374f243555e834e65bee323acc3859b7
       internalID: 444012987
       vertices: []
       indices: 
@@ -350,14 +350,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a446b8c2d8b5dac40820b1ef9b37d447
+      spriteID: 7b9f68a210b8641edb9478fde1d3bf3f
       internalID: 1579971102
       vertices: []
       indices: 
@@ -372,14 +372,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32a199a93838c274f90d4a201c0ddc5d
+      spriteID: e2a75e11f865d452ba061abfa2ac1e1c
       internalID: 1945987886
       vertices: []
       indices: 
@@ -389,19 +389,19 @@ TextureImporter:
       name: Path_Tile_13
       rect:
         serializedVersion: 2
-        x: 0
+        x: 32
         y: 0
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66792d5a27018d94d8b869e3aafbf61f
+      spriteID: be7e89aed38914c71955ba78a5ed613d
       internalID: -930786169
       vertices: []
       indices: 
@@ -416,14 +416,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8b9d8960110730b4d82c662d6bfc443d
+      spriteID: 98bd0b846e359444593937d4dec3292a
       internalID: 711159278
       vertices: []
       indices: 
@@ -433,20 +433,42 @@ TextureImporter:
       name: Path_Tile_15
       rect:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 0
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0cc082d87b2ccb94698829ce07141863
+      spriteID: 60a7d4c3beb6e4766a8eee1a0d06a192
       internalID: 539970185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Path_Tile_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3feb1bdce419b40bc8a5f0e47284611d
+      internalID: -54701678
       vertices: []
       indices: 
       edges: []
@@ -473,6 +495,7 @@ TextureImporter:
       Path_Tile_13: -930786169
       Path_Tile_14: 711159278
       Path_Tile_15: 539970185
+      Path_Tile_16: -54701678
       Path_Tile_2: 1042170201
       Path_Tile_3: -487382594
       Path_Tile_4: -1701262359

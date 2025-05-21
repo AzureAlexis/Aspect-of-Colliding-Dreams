@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        
         UIManager.battlebox = GameObject.Find("Battlebox");
         UIManager.cam = GameObject.Find("Camera");
         UIManager.inner = GameObject.Find("InnerCircle");

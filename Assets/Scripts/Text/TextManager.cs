@@ -22,6 +22,8 @@ public class TextManager : MonoBehaviour
 
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
+        
         TextManager.fight = fightMusic;
         TextManager.tutorial = tutorialMusic;
         TextManager.confirm = confirmSound;
